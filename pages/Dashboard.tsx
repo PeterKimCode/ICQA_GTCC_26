@@ -46,7 +46,7 @@ export const Dashboard: React.FC = () => {
           <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
           <input
             type="text"
-            placeholder="Search by Name, ICQA No, or Type..."
+            placeholder="Search by Name, KCQA No, or Type..."
             className="pl-10 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:outline-none"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -73,7 +73,7 @@ export const Dashboard: React.FC = () => {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ICQA No.</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">KCQA No.</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Qualification</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Issued</th>
@@ -94,8 +94,8 @@ export const Dashboard: React.FC = () => {
                   const expired = isExpired(cert.expirationDate);
                   return (
                     <tr key={cert.id} className="hover:bg-gray-50 transition-colors">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-icqa-red">
-                        {cert.icqaNumber}
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-kcqa-red">
+                        {cert.kcqaNumber}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-semibold">
                         {cert.name}

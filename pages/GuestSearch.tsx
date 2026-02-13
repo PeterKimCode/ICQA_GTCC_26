@@ -2,16 +2,17 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CertificateService } from '../services/dataService';
 import { isExpired } from '../utils';
-import { Search, Shield, ArrowRight, X, Users } from 'lucide-react';
+import { Search, Shield, ArrowRight, X, Users, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Certificate } from '../types';
-import { ICQA_NAME } from '../constants';
+import { KCQA_NAME } from '../constants';
 
 export const GuestSearch: React.FC = () => {
   const [name, setName] = useState('');
-  const [icqaNumber, setIcqaNumber] = useState('');
+  const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const [foundCert, setFoundCert] = useState<Certificate | null>(null);
+  const [foundCerts, setFoundCerts] = useState<Certificate[]>([]);
+  const [certIndex, setCertIndex] = useState(0);
   const navigate = useNavigate();
 
   const handleSearch = async (e: React.FormEvent) => {
@@ -19,20 +20,18 @@ export const GuestSearch: React.FC = () => {
     setError('');
 
     try {
-      const cert = await CertificateService.getByNumberAndName(icqaNumber, name);
+      const certs = await CertificateService.getByNameAndEmail(name, email);
 
-      if (!cert) {
-        setError('Certificate not found. Please check the Name and ICQA Number.');
+      if (!certs || certs.length === 0) {
+        setError('No qualification found. Please check the Name and Email.');
         return;
       }
 
-      if (isExpired(cert.expirationDate) || cert.status === 'REVOKED' || cert.status === 'EXPIRED') {
-        setError('This certificate has expired or is invalid.');
-        return;
-      }
+      // Optional: Check expiration logic if needed, currently allowing access to view history
 
       // Success - show modal
-      setFoundCert(cert);
+      setFoundCerts(certs);
+      setCertIndex(0);
       setShowModal(true);
     } catch (err: any) {
       setError('An error occurred during verification. Please try again later.');
@@ -49,13 +48,13 @@ export const GuestSearch: React.FC = () => {
           </div>
           <div>
             <h1 className="text-xl font-bold text-gray-900">Certificate Verification</h1>
-            <p className="text-sm text-gray-500">International Civil Qualification Association</p>
+            <p className="text-sm text-gray-500">Korea Civil Qualification Association</p>
           </div>
         </div>
 
         <div className="p-8">
           <p className="mb-6 text-gray-600 text-sm">
-            Please enter the exact Name and ICQA Number as they appear on the certificate to verify authenticity and view details.
+            Please enter your Name and Email to verify authenticity and view details.
           </p>
 
           {error && (
@@ -68,15 +67,15 @@ export const GuestSearch: React.FC = () => {
           <form onSubmit={handleSearch} className="space-y-5">
             <div>
               <label className="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-1">
-                ICQA Number
+                Email Address
               </label>
               <input
-                type="text"
+                type="email"
                 required
-                placeholder="e.g., GC01-24"
+                placeholder="e.g., user@example.com"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
-                value={icqaNumber}
-                onChange={(e) => setIcqaNumber(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
 
@@ -107,11 +106,11 @@ export const GuestSearch: React.FC = () => {
             <div className="space-y-2">
               <div className="flex justify-between items-center border-b border-gray-200 pb-1">
                 <span className="font-semibold text-green-700">Active</span>
-                <span className="font-mono text-gray-800">GC01-24 / AN CHANG NAM</span>
+                <span className="font-mono text-gray-800">AN CHANG NAM / kim@example.com</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="font-semibold text-red-700">Expired</span>
-                <span className="font-mono text-gray-800">GC02-99 / JANE DOE</span>
+                <span className="font-mono text-gray-800">JANE DOE / park@example.com</span>
               </div>
             </div>
           </div>
@@ -123,7 +122,7 @@ export const GuestSearch: React.FC = () => {
       </div>
 
       {/* Personal Info Modal */}
-      {showModal && foundCert && (
+      {showModal && foundCerts.length > 0 && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onClick={() => setShowModal(false)}></div>
           <div className="relative w-full max-w-md max-h-[90vh] flex flex-col bg-white rounded-3xl shadow-2xl overflow-hidden transition-all transform animate-in zoom-in-95 duration-300">
@@ -132,7 +131,14 @@ export const GuestSearch: React.FC = () => {
               <div className="shrink-0 flex justify-between items-start mb-6">
                 <div>
                   <h3 className="text-2xl font-bold text-gray-900">Verification</h3>
-                  <p className="text-sm text-gray-500 font-medium">Candidate Profile Found</p>
+                  <div className="flex items-center gap-2">
+                    <p className="text-sm text-gray-500 font-medium">Candidate Profile Found</p>
+                    {foundCerts.length > 1 && (
+                      <span className="text-xs px-2 py-0.5 rounded-full font-bold bg-blue-100 text-blue-800">
+                        {certIndex + 1}/{foundCerts.length}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <button onClick={() => setShowModal(false)} className="p-2 hover:bg-gray-100 rounded-full text-gray-400">
                   <X className="w-6 h-6" />
@@ -140,62 +146,80 @@ export const GuestSearch: React.FC = () => {
               </div>
 
               <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar space-y-8">
-                <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center relative">
+                  {/* Navigation Arrows */}
+                  {foundCerts.length > 1 && (
+                    <>
+                      <button
+                        onClick={() => setCertIndex(prev => (prev - 1 + foundCerts.length) % foundCerts.length)}
+                        className="absolute left-0 top-1/2 -translate-y-1/2 p-2 rounded-full z-10 bg-white hover:bg-gray-100 text-gray-900 shadow-md border border-gray-100"
+                      >
+                        <ChevronLeft className="w-5 h-5" />
+                      </button>
+                      <button
+                        onClick={() => setCertIndex(prev => (prev + 1) % foundCerts.length)}
+                        className="absolute right-0 top-1/2 -translate-y-1/2 p-2 rounded-full z-10 bg-white hover:bg-gray-100 text-gray-900 shadow-md border border-gray-100"
+                      >
+                        <ChevronRight className="w-5 h-5" />
+                      </button>
+                    </>
+                  )}
+
                   <div className="w-52 h-64 md:w-60 md:h-72 rounded-2xl overflow-hidden mb-4 shadow-lg border-4 border-white">
-                    {foundCert.photoUrl ? (
-                      <img src={foundCert.photoUrl} alt={foundCert.name} className="w-full h-full object-cover" />
+                    {foundCerts[certIndex].photoUrl ? (
+                      <img src={foundCerts[certIndex].photoUrl} alt={foundCerts[certIndex].name} className="w-full h-full object-cover" />
                     ) : (
                       <div className="w-full h-full bg-gray-100 flex items-center justify-center">
                         <Users className="w-24 h-24 text-gray-300" />
                       </div>
                     )}
                   </div>
-                  <h4 className="text-xl font-bold uppercase text-gray-900 tracking-tight">{foundCert.name}</h4>
+                  <h4 className="text-xl font-bold uppercase text-gray-900 tracking-tight">{foundCerts[certIndex].name}</h4>
                 </div>
 
                 <div className="space-y-3 pb-4">
                   <div className="p-3 bg-blue-50/50 rounded-xl border border-blue-100/50">
-                    <p className="text-[10px] uppercase font-bold text-blue-600 mb-0.5">ICQA Number</p>
-                    <p className="text-base font-bold text-gray-900 font-mono">{foundCert.icqaNumber}</p>
+                    <p className="text-[10px] uppercase font-bold text-blue-600 mb-0.5">KCQA Number</p>
+                    <p className="text-base font-bold text-gray-900 font-mono">{foundCerts[certIndex].kcqaNumber}</p>
                   </div>
                   <div className="p-3 bg-gray-50 rounded-xl border border-gray-100">
                     <p className="text-[10px] uppercase font-bold text-gray-400 mb-0.5">Civil Qualification Number</p>
-                    <p className="text-sm font-bold text-gray-800">{foundCert.ncqaNumber}</p>
+                    <p className="text-sm font-bold text-gray-800">{foundCerts[certIndex].ncqaNumber}</p>
                   </div>
                   <div className="p-3 bg-gray-50 rounded-xl border border-gray-100">
                     <p className="text-[10px] uppercase font-bold text-gray-400 mb-0.5">Qualification Type</p>
-                    <p className="text-sm font-bold text-gray-800">{foundCert.qualificationType}</p>
+                    <p className="text-sm font-bold text-gray-800">{foundCerts[certIndex].qualificationType}</p>
                   </div>
                   <div className="p-3 bg-gray-50 rounded-xl border border-gray-100">
                     <p className="text-[10px] uppercase font-bold text-gray-400 mb-0.5">Date Issue</p>
-                    <p className="text-sm font-bold text-gray-800">{foundCert.issueDate}</p>
+                    <p className="text-sm font-bold text-gray-800">{foundCerts[certIndex].issueDate}</p>
                   </div>
                   <div className="p-3 bg-gray-50 rounded-xl border border-gray-100">
                     <p className="text-[10px] uppercase font-bold text-gray-400 mb-0.5">Education Department</p>
-                    <p className="text-sm font-bold text-gray-800">{foundCert.eduDept}</p>
+                    <p className="text-sm font-bold text-gray-800">{foundCerts[certIndex].eduDept}</p>
                   </div>
                   <div className="p-3 bg-gray-50 rounded-xl border border-gray-100">
                     <p className="text-[10px] uppercase font-bold text-gray-400 mb-0.5">Issuing Office</p>
-                    <p className="text-sm font-bold text-gray-800">{foundCert.issuingOffice}</p>
+                    <p className="text-sm font-bold text-gray-800">{foundCerts[certIndex].issuingOffice}</p>
                   </div>
                   <div className="p-3 bg-gray-50 rounded-xl border border-gray-100">
                     <p className="text-[10px] uppercase font-bold text-gray-400 mb-0.5">Issuing Country</p>
-                    <p className="text-sm font-bold text-gray-800">{foundCert.issuingCountry}</p>
+                    <p className="text-sm font-bold text-gray-800">{foundCerts[certIndex].issuingCountry}</p>
                   </div>
                   <div className="p-3 bg-gray-50 rounded-xl border border-gray-100">
                     <p className="text-[10px] uppercase font-bold text-gray-400 mb-0.5">Expiration Date</p>
-                    <p className="text-sm font-bold text-gray-800">{foundCert.expirationDate || 'N/A'}</p>
+                    <p className="text-sm font-bold text-gray-800">{foundCerts[certIndex].expirationDate || 'N/A'}</p>
                   </div>
                   <div className="p-3 bg-gray-50 rounded-xl border border-gray-100">
                     <p className="text-[10px] uppercase font-bold text-gray-400 mb-0.5">Verified Body</p>
-                    <p className="text-sm font-bold text-gray-800">{ICQA_NAME}</p>
+                    <p className="text-sm font-bold text-gray-800">{KCQA_NAME}</p>
                   </div>
                 </div>
               </div>
 
               <div className="shrink-0 pt-6">
                 <button
-                  onClick={() => navigate(`/guest/view/${foundCert.id}`)}
+                  onClick={() => navigate(`/guest/view/${foundCerts[certIndex].id}`)}
                   className="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-bold text-lg shadow-lg shadow-blue-600/20 transform transition active:scale-95"
                 >
                   Certificate

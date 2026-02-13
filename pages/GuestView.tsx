@@ -43,7 +43,7 @@ export const GuestView: React.FC = () => {
                 <CheckCircle className="w-5 h-5 text-green-600" />
                 Valid Certificate
               </h1>
-              <p className="text-xs text-gray-500">Verified by International Civil Qualification Association</p>
+              <p className="text-xs text-gray-500">Verified by Korea Civil Qualification Association</p>
             </div>
           </div>
           <button

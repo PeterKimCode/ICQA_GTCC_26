@@ -1,10 +1,11 @@
-import { Certificate, CertificateSearchParams, CertificateStatus } from '../types';
+import { Certificate, CertificateSearchParams, CertificateStatus, Holder } from '../types';
 import { supabase } from './supabase';
 
 // Map database snake_case to frontend camelCase
 const mapFromDB = (data: any): Certificate => ({
   id: data.id,
-  icqaNumber: data.icqa_number,
+  holderId: data.holder_id,
+  kcqaNumber: data.icqa_number,
   name: data.name,
   dob: data.dob,
   ncqaNumber: data.ncqa_number,
@@ -22,7 +23,8 @@ const mapFromDB = (data: any): Certificate => ({
 
 const mapToDB = (cert: Partial<Certificate>) => {
   const mapped: any = {};
-  if (cert.icqaNumber) mapped.icqa_number = cert.icqaNumber;
+  if (cert.holderId) mapped.holder_id = cert.holderId;
+  if (cert.kcqaNumber) mapped.icqa_number = cert.kcqaNumber;
   if (cert.name) mapped.name = cert.name;
   if (cert.dob) mapped.dob = cert.dob;
   if (cert.ncqaNumber) mapped.ncqa_number = cert.ncqaNumber;
@@ -66,20 +68,108 @@ export const CertificateService = {
     return mapFromDB(data);
   },
 
-  getByNumberAndName: async (icqaNumber: string, name: string): Promise<Certificate | undefined> => {
-    const { data, error } = await supabase
+  // Updated to return multiple certificates
+  getByNumberAndName: async (kcqaNumber: string, name: string): Promise<Certificate[]> => {
+    // 1. Verify existence of at least one matching certificate (authentication step)
+    const { data: authCert, error: authError } = await supabase
+      .from('certificates')
+      .select('holder_id')
+      .eq('icqa_number', kcqaNumber.trim().toUpperCase())
+      .eq('name', name.trim().toUpperCase()) // Case-insensitive might be better but let's stick to exact for security
+      .maybeSingle();
+
+    if (authError || !authCert) return [];
+
+    // 2. Fetch all certificates for the holder
+    if (authCert.holder_id) {
+      const { data: allCerts, error: fetchError } = await supabase
+        .from('certificates')
+        .select('*')
+        .eq('holder_id', authCert.holder_id);
+
+      if (fetchError) throw fetchError;
+      return (allCerts || []).map(mapFromDB);
+    }
+
+    // Fallback for legacy records without holder_id (just return the single match)
+    // Re-fetch full object
+    const { data: legacyCert } = await supabase
       .from('certificates')
       .select('*')
-      .eq('icqa_number', icqaNumber.trim().toUpperCase())
+      .eq('icqa_number', kcqaNumber.trim().toUpperCase())
       .eq('name', name.trim().toUpperCase())
-      .maybeSingle(); // Better for guest search
+      .single();
 
-    if (error || !data) return undefined;
-    return mapFromDB(data);
+    return legacyCert ? [mapFromDB(legacyCert)] : [];
+  },
+
+  // New: Search by Name + Email (for "Find My Certs")
+  getByNameAndEmail: async (name: string, email: string): Promise<Certificate[]> => {
+    // 1. Find Holder (Case-insensitive)
+    const { data: holder } = await supabase
+      .from('holders')
+      .select('id')
+      .ilike('name', name.trim())
+      .ilike('email', email.trim())
+      .maybeSingle();
+
+    if (!holder) return [];
+
+    // 2. Fetch Certs
+    const { data: certs, error } = await supabase
+      .from('certificates')
+      .select('*')
+      .eq('holder_id', holder.id)
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+    return (certs || []).map(mapFromDB);
   },
 
   create: async (cert: Omit<Certificate, 'id' | 'createdAt' | 'updatedAt'>): Promise<Certificate> => {
-    const dbData = mapToDB(cert);
+    // Normalize data
+    const normalizedName = cert.name.trim().toUpperCase();
+    const normalizedDob = cert.dob.trim();
+    const normalizedEmail = cert.holderEmail ? cert.holderEmail.trim() : undefined;
+
+    // Check if holder exists, if not create
+    let holderId = cert.holderId;
+
+    if (!holderId && normalizedName && normalizedDob) {
+      let query = supabase.from('holders').select('id').eq('name', normalizedName).eq('dob', normalizedDob);
+
+      // If email is provided, include it in search (more specific)
+      if (normalizedEmail) {
+        query = query.eq('email', normalizedEmail);
+      }
+
+      const { data: existingHolder } = await query.maybeSingle();
+
+      if (existingHolder) {
+        holderId = existingHolder.id;
+      } else {
+        const { data: newHolder, error: holderError } = await supabase
+          .from('holders')
+          .insert({
+            name: normalizedName,
+            dob: normalizedDob,
+            email: normalizedEmail || null
+          })
+          .select()
+          .single();
+
+        if (holderError) throw holderError;
+        holderId = newHolder.id;
+      }
+    }
+
+    // Create Cert with holder_id
+    const dbData = mapToDB({
+      ...cert,
+      name: normalizedName, // Ensure cert also has uppercase name
+      holderId
+    });
+
     const { data, error } = await supabase
       .from('certificates')
       .insert(dbData)

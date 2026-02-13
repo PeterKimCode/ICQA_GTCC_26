@@ -1,0 +1,87 @@
+-- FIXED DATABASE SETUP SCRIPT
+-- This script avoids "DO $$" blocks to prevent parsing errors in Supabase SQL Editor.
+
+-- 1. Create Tables
+CREATE TABLE IF NOT EXISTS holders (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name text NOT NULL,
+  dob text NOT NULL,
+  email text,
+  created_at timestamp with time zone DEFAULT timezone('utc'::text, now()) NOT NULL,
+  updated_at timestamp with time zone DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS certificates (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  holder_id uuid REFERENCES holders(id),
+  icqa_number text NOT NULL,
+  name text,
+  dob text,
+  ncqa_number text,
+  qualification_type text,
+  issue_date text,
+  edu_dept text,
+  issuing_office text,
+  issuing_country text,
+  expiration_date text,
+  photo_url text,
+  status text DEFAULT 'ACTIVE',
+  created_at timestamp with time zone DEFAULT timezone('utc'::text, now()) NOT NULL,
+  updated_at timestamp with time zone DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+-- 2. Create Unique Indexes (Required for ON CONFLICT to work)
+CREATE UNIQUE INDEX IF NOT EXISTS idx_holders_email ON holders(email);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_certificates_icqa ON certificates(icqa_number);
+
+-- 3. Insert Holders (Using ON CONFLICT to avoid duplicates)
+INSERT INTO holders (name, dob, email) VALUES 
+('KIM CHUL SOO', '1980-01-01', 'kim@example.com'),
+('LEE YOUNG HEE', '1990-05-15', 'lee@example.com'),
+('PARK JI SUNG', '1985-02-20', 'park@example.com'),
+('CHOI MIN SU', '1995-12-10', 'choi@example.com'),
+('JUNG DA BIN', '2000-07-07', 'jung@example.com')
+ON CONFLICT (email) DO NOTHING;
+
+-- 4. Insert Certificates (Linking via Subquery)
+-- Kim's Cert 1
+INSERT INTO certificates (holder_id, icqa_number, name, dob, ncqa_number, qualification_type, issue_date, edu_dept, issuing_office, issuing_country, expiration_date, status)
+VALUES (
+  (SELECT id FROM holders WHERE email = 'kim@example.com'), 
+  'KCQA-2024-001', 'KIM CHUL SOO', '1980-01-01', 'NCQA-001', 'Certified Evaluator', '2024-01-01', 'Education Dept', 'Seoul Office', 'Korea', '2026-01-01', 'ACTIVE'
+) ON CONFLICT (icqa_number) DO NOTHING;
+
+-- Kim's Cert 2
+INSERT INTO certificates (holder_id, icqa_number, name, dob, ncqa_number, qualification_type, issue_date, edu_dept, issuing_office, issuing_country, expiration_date, status)
+VALUES (
+  (SELECT id FROM holders WHERE email = 'kim@example.com'), 
+  'KCQA-2023-050', 'KIM CHUL SOO', '1980-01-01', 'NCQA-099', 'Advanced Instructor', '2023-06-01', 'Education Dept', 'Seoul Office', 'Korea', '2028-06-01', 'ACTIVE'
+) ON CONFLICT (icqa_number) DO NOTHING;
+
+-- Lee's Cert
+INSERT INTO certificates (holder_id, icqa_number, name, dob, ncqa_number, qualification_type, issue_date, edu_dept, issuing_office, issuing_country, expiration_date, status)
+VALUES (
+  (SELECT id FROM holders WHERE email = 'lee@example.com'), 
+  'KCQA-2024-002', 'LEE YOUNG HEE', '1990-05-15', 'NCQA-002', 'Safety Manager', '2024-02-01', 'Safety Dept', 'Busan Office', 'Korea', '2026-02-01', 'ACTIVE'
+) ON CONFLICT (icqa_number) DO NOTHING;
+
+-- Park's Cert (Revoked)
+INSERT INTO certificates (holder_id, icqa_number, name, dob, ncqa_number, qualification_type, issue_date, edu_dept, issuing_office, issuing_country, expiration_date, status)
+VALUES (
+  (SELECT id FROM holders WHERE email = 'park@example.com'), 
+  'KCQA-2024-003', 'PARK JI SUNG', '1985-02-20', 'NCQA-003', 'Health Specialist', '2024-03-01', 'Health Dept', 'Incheon Office', 'Korea', '2026-03-01', 'REVOKED'
+) ON CONFLICT (icqa_number) DO NOTHING;
+
+-- Choi's Cert
+INSERT INTO certificates (holder_id, icqa_number, name, dob, ncqa_number, qualification_type, issue_date, edu_dept, issuing_office, issuing_country, expiration_date, status)
+VALUES (
+  (SELECT id FROM holders WHERE email = 'choi@example.com'), 
+  'KCQA-2024-004', 'CHOI MIN SU', '1995-12-10', 'NCQA-004', 'Environmental Expert', '2024-04-01', 'Env Dept', 'Daegu Office', 'Korea', '2026-04-01', 'ACTIVE'
+) ON CONFLICT (icqa_number) DO NOTHING;
+
+-- Jung's Cert
+INSERT INTO certificates (holder_id, icqa_number, name, dob, ncqa_number, qualification_type, issue_date, edu_dept, issuing_office, issuing_country, expiration_date, status)
+VALUES (
+  (SELECT id FROM holders WHERE email = 'jung@example.com'), 
+  'KCQA-2024-005', 'JUNG DA BIN', '2000-07-07', 'NCQA-005', 'Quality Control', '2024-05-01', 'QC Dept', 'Gwangju Office', 'Korea', '2025-05-01', 'ACTIVE'
+) ON CONFLICT (icqa_number) DO NOTHING;

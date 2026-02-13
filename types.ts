@@ -17,11 +17,23 @@ export interface User {
   role: UserRole;
 }
 
+export interface Holder {
+  id: string;
+  name: string;
+  dob: string;
+  email?: string;
+  createdAt: string;
+  updatedAt: string;
+  certificates?: Certificate[];
+}
+
 export interface Certificate {
   id: string;
-  icqaNumber: string; // Red text
-  name: string; // Blue text
-  dob: string; // MMM DD, YYYY
+  holderId?: string; // New FK
+  holderEmail?: string; // Optional: For creating/linking holder
+  kcqaNumber: string; // Red text
+  name: string; // Blue text (Legacy/Display redundancy)
+  dob: string; // MMM DD, YYYY (Legacy/Display redundancy)
   ncqaNumber: string;
   qualificationType: string; // Blue text
   issueDate: string; // MMM DD, YYYY

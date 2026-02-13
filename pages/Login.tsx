@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../App';
+import { useAuth } from '../context/AuthContext';
 import { ShieldCheck } from 'lucide-react';
 
 export const Login: React.FC = () => {
@@ -16,7 +16,7 @@ export const Login: React.FC = () => {
     if (success) {
       navigate('/dashboard');
     } else {
-      setError('Invalid email or password. Try admin@icqa.org / password');
+      setError('Invalid email or password. Try admin@kcqa.org / password');
     }
   };
 
@@ -29,7 +29,7 @@ export const Login: React.FC = () => {
               <ShieldCheck className="w-10 h-10 text-blue-900" />
             </div>
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">ICQA Certificate Manager</h1>
+          <h1 className="text-2xl font-bold text-gray-900">KCQA Certificate Manager</h1>
           <p className="text-gray-500 mt-2">Internal System Access</p>
         </div>
 
@@ -48,7 +48,7 @@ export const Login: React.FC = () => {
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="staff@icqa.org"
+              placeholder="staff@kcqa.org"
             />
           </div>
 
@@ -77,11 +77,11 @@ export const Login: React.FC = () => {
           <div className="space-y-1 font-mono">
             <div className="flex justify-between">
               <span className="font-semibold text-gray-600">Admin:</span>
-              <span>admin@icqa.org / password</span>
+              <span>admin@kcqa.org / password</span>
             </div>
             <div className="flex justify-between">
               <span className="font-semibold text-gray-600">Staff:</span>
-              <span>staff@icqa.org / password</span>
+              <span>staff@kcqa.org / password</span>
             </div>
           </div>
         </div>

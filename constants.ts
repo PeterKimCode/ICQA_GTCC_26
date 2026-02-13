@@ -1,20 +1,20 @@
 import { Certificate, CertificateStatus, UserRole } from './types';
 
-export const ICQA_NAME = "International Civil Qualification Association";
+export const KCQA_NAME = "Korea Civil Qualification Association";
 export const DIRECTOR_NAME = "William Alexander Davis";
-export const DIRECTOR_TITLE = "ICQA Director";
+export const DIRECTOR_TITLE = "KCQA Director";
 export const ASIAN_DIRECTOR_NAME = "Jonalyn Cacanindin";
 export const ASIAN_DIRECTOR_TITLE = "Asian Director";
 
 export const MOCK_USERS = [
-  { id: '1', email: 'admin@icqa.org', name: 'Admin User', role: UserRole.ADMIN, password: 'password' },
-  { id: '2', email: 'staff@icqa.org', name: 'Staff User', role: UserRole.STAFF, password: 'password' },
+  { id: '1', email: 'admin@kcqa.org', name: 'Admin User', role: UserRole.ADMIN, password: 'password' },
+  { id: '2', email: 'staff@kcqa.org', name: 'Staff User', role: UserRole.STAFF, password: 'password' },
 ];
 
 export const INITIAL_CERTIFICATES: Certificate[] = [
   {
     id: '1',
-    icqaNumber: 'GC01-24',
+    kcqaNumber: 'GC01-24',
     name: 'AN CHANG NAM',
     dob: 'JUL 13, 1952',
     ncqaNumber: '414',
@@ -31,7 +31,7 @@ export const INITIAL_CERTIFICATES: Certificate[] = [
   },
   {
     id: '2',
-    icqaNumber: 'GC02-99',
+    kcqaNumber: 'GC02-99',
     name: 'JANE DOE',
     dob: 'JAN 01, 1980',
     ncqaNumber: '882',

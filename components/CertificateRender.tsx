@@ -1,6 +1,6 @@
 import React from 'react';
 import { Certificate } from '../types';
-import { ICQA_NAME } from '../constants';
+import { KCQA_NAME } from '../constants';
 
 interface Props {
   data: Certificate;
@@ -22,7 +22,7 @@ export const CertificateRender: React.FC<Props> = ({ data, isPreview = false }) 
   const FONT_LABEL = "26px";
   const FONT_VALUE = "28px";
   const FONT_NAME = "36px";
-  const FONT_ICQA = "32px";
+  const FONT_KCQA = "32px";
   const FONT_PARAGRAPH = "35px";
 
   // Line Height / Spacing
@@ -76,11 +76,11 @@ export const CertificateRender: React.FC<Props> = ({ data, isPreview = false }) 
 
       {/* Row 1: ICQA Number (Red) */}
       <div className="absolute z-[10]" style={{ top: `${ROW_1_Y}px`, left: `${LABEL_X}px` }}>
-        <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>ICQA Number :</span>
+        <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>KCQA Number :</span>
       </div>
       <div className="absolute z-[10]" style={{ top: `${ROW_1_Y}px`, left: `${VALUE_X}px`, width: '500px', height: '34px' }}>
-        <span className="font-serif font-bold text-icqa-red block" style={{ fontSize: FONT_ICQA, lineHeight: LEADING_NORMAL }}>
-          {data.icqaNumber}
+        <span className="font-serif font-bold text-kcqa-red block" style={{ fontSize: FONT_KCQA, lineHeight: LEADING_NORMAL }}>
+          {data.kcqaNumber}
         </span>
       </div>
 
@@ -170,7 +170,7 @@ export const CertificateRender: React.FC<Props> = ({ data, isPreview = false }) 
       </div>
       <div className="absolute z-[10]" style={{ top: `${ROW_10_Y}px`, left: `${VALUE_X}px`, width: MAX_TEXT_WIDTH, height: '34px' }}>
         <span className="font-serif font-extrabold text-black block tracking-tight" style={{ fontSize: FONT_VALUE, lineHeight: LEADING_NORMAL }}>
-          {ICQA_NAME}
+          {KCQA_NAME}
         </span>
       </div>
 
@@ -214,7 +214,7 @@ export const CertificateRender: React.FC<Props> = ({ data, isPreview = false }) 
         }}
       >
         <p className="mb-4">
-          The above person obtains this certificate by passing the domestic private qualification test and confirms that the obtained private qualification after passing the document examination by the <strong>{ICQA_NAME}</strong> has been replaced with the international private certificate and is being qualified and managed.
+          The above person obtains this certificate by passing the domestic private qualification test and confirms that the obtained private qualification after passing the document examination by the <strong>{KCQA_NAME}</strong> has been replaced with the international private certificate and is being qualified and managed.
         </p>
       </div>
 

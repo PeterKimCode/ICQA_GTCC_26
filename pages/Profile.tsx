@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../App';
+import { useAuth } from '../context/AuthContext';
 import { Save, User, Mail, Shield, CheckCircle, Lock, AlertCircle } from 'lucide-react';
 
 export const Profile: React.FC = () => {
   const { user, updateUser, changePassword } = useAuth();
-  
+
   // Profile Info State
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -137,12 +137,12 @@ export const Profile: React.FC = () => {
         </div>
 
         <form onSubmit={handlePasswordSubmit} className="p-6 space-y-6">
-           {passMessage && (
+          {passMessage && (
             <div className="p-3 bg-green-50 text-green-700 text-sm rounded border border-green-200 flex items-center gap-2">
               <CheckCircle className="w-4 h-4" /> {passMessage}
             </div>
           )}
-          
+
           {passError && (
             <div className="p-3 bg-red-50 text-red-700 text-sm rounded border border-red-200 flex items-center gap-2">
               <AlertCircle className="w-4 h-4" /> {passError}

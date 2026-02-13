@@ -9,7 +9,7 @@ import { Save, Printer, ArrowLeft, Upload } from 'lucide-react';
 
 const INITIAL_FORM: Certificate = {
   id: '',
-  icqaNumber: '',
+  kcqaNumber: '',
   name: '',
   dob: '',
   ncqaNumber: '',
@@ -70,7 +70,17 @@ export const CertificateEditor: React.FC = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    let finalValue = value;
+
+    // Force uppercase for specific fields
+    if (name === 'name' || name === 'kcqaNumber' || name === 'ncqaNumber') {
+      finalValue = value.toUpperCase();
+    }
+
+    setFormData(prev => ({
+      ...prev,
+      [name]: finalValue
+    }));
   };
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -96,8 +106,8 @@ export const CertificateEditor: React.FC = () => {
     setLoading(true);
 
     // Simple validation
-    if (!formData.icqaNumber || !formData.name) {
-      alert("Please fill in required fields");
+    if (!formData.kcqaNumber || !formData.name || !formData.dob || !formData.holderEmail) {
+      alert("Please fill in all required fields (Name, DOB, Email, KCQA Number)");
       setLoading(false);
       return;
     }
@@ -139,13 +149,26 @@ export const CertificateEditor: React.FC = () => {
         <form onSubmit={handleSave} className="bg-white p-6 rounded-lg shadow border border-gray-200 space-y-4">
 
           <div>
-            <label className="block text-xs font-semibold text-gray-700 uppercase mb-1">ICQA Number (Red)</label>
-            <input name="icqaNumber" value={formData.icqaNumber} onChange={handleInputChange} required className={inputClassName} placeholder="GC01-24" />
+            <label className="block text-xs font-semibold text-gray-700 uppercase mb-1">KCQA Number (Red)</label>
+            <input name="kcqaNumber" value={formData.kcqaNumber} onChange={handleInputChange} required className={inputClassName} placeholder="GC01-24" />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-semibold text-gray-700 uppercase mb-1">Name (Blue)</label>
+              <input name="name" value={formData.name} onChange={handleInputChange} required className={`${inputClassName} uppercase`} placeholder="FULL NAME" />
+            </div>
+            <div>
+              <label className="block text-xs font-semibold text-gray-700 uppercase mb-1">Date of Birth</label>
+              <input name="dob" value={formData.dob} onChange={handleInputChange} required className={inputClassName} placeholder="YYYY-MM-DD" />
+              <p className="text-[10px] text-gray-500 mt-1">Required for linking to user profile</p>
+            </div>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-gray-700 uppercase mb-1">Name (Blue)</label>
-            <input name="name" value={formData.name} onChange={handleInputChange} required className={`${inputClassName} uppercase`} placeholder="FULL NAME" />
+            <label className="block text-xs font-semibold text-gray-700 uppercase mb-1">Email (Required)</label>
+            <input type="email" name="holderEmail" value={formData.holderEmail || ''} onChange={handleInputChange} required className={inputClassName} placeholder="user@example.com" />
+            <p className="text-[10px] text-gray-500 mt-1">Required for user identification and search</p>
           </div>
 
           <div className="grid grid-cols-1 gap-4">

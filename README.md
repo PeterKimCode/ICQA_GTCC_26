@@ -1,75 +1,68 @@
-# ICQA Certificate Manager
+# Korea Civil Qualification Association (KCQA) - GTCC
 
-International Civil Qualification Association (ICQA) Certificate Management System.
+This project is a certificate verification and issuance system for the Korea Civil Qualification Association. It allows users to verify certificates and admins to issue/manage them.
 
-## Project Overview
+## Key Features
 
-This is a comprehensive system for managing and verifying international civil qualifications. It features a modern, trendy landing page for the public to verify certificates and an internal system for administrators to manage certificate data.
+### 1. Public Certificate Verification
+*   **Search by Name + Email**: Users can find their certificates by entering their full name and email address.
+*   **Multi-Certificate Support**: If a user holds multiple qualifications, they can view all of them in a carousel interface.
+*   **1:N Relationship**: One "Holder" (User) can have N "Certificates".
+*   **Digital Certificate View**: Provides a high-fidelity digital rendering of the certificate with anti-forgery features (animated background, watermark).
 
-## Features
+### 2. Admin Dashboard (Staff Access)
+*   **Log in**: Staff members can log in to manage certificates.
+*   **Issue Certificate**:
+    *   Create new certificates for existing or new users.
+    *   **Auto-Linking**: Entering Name + DOB checks for an existing user.
+    *   **Email Support**: Optional email field to distinguish users with the same Name + DOB.
+*   **Manage Certificates**: Search, edit, revoke, or print certificates.
 
-- **Trendy Landing Page**: A premium, high-impact landing page with Light/Dark mode support.
-- **Certificate Verification**: Public search tool for instantly verifying certificate authenticity.
-- **Internal System Access**: Secure login for staff and administrators.
-- **Certificate Management**: Tools for creating, editing, and managing certificates.
-- **Print/PDF Generation**: High-resolution certificate rendering for printing and saving as PDF.
+## Tech Stack
+*   **Frontend**: React, Vite, Tailwind CSS
+*   **Backend**: Supabase (Database & Auth)
+*   **Icons**: Lucide React
 
-## How to Use
+## Setup Instructions
 
-### Public Users
-1. Access the home page (`/`).
-2. Enter the **Full Name** and **ICQA Number** in the "QUALIFICATION SEARCH" section.
-3. Click "Search" to verify the certificate and view the professional details.
+### 1. Environment Variables (Supabase Dashboard)
+Create a `.env.local` file in the root directory and add your Supabase credentials:
 
-### Staff/Admin Users
-1. Click "INTERNAL ACCESS" or go to `/login`.
-2. Login with your credentials.
-3. Access the Dashboard to manage existing certificates or create new ones.
-4. Use the "Print" function on any certificate to generate the official document.
+```env
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_ANON_KEY=your-anon-key
+```
 
-## Data Storage (Supabase Integration)
+### 2. Database Schema
+You must set up the Supabase database tables (`holders`, `certificates`) before running the app.
+1.  Go to your Supabase Project Dashboard -> SQL Editor.
+2.  Copy the content of `supabase_migration.sql` from this project.
+3.  Run the query. This will create tables, indexes, and dummy data.
 
-This application has been migrated from local storage to **Supabase** for centralized data sharing across multiple users.
+### 3. Run Locally
+```bash
+npm install
+npm run dev
+```
 
-### Supabase Setup Instructions
+## Database Structure
 
-1.  **Create a Project**: Go to [Supabase](https://supabase.com/) and create a new project.
-2.  **Initialize Database**:
-    - Open the **SQL Editor** in your Supabase dashboard.
-    - Copy and run the contents of [init_supabase.sql](file:///C:/Users/ABC/.gemini/antigravity/brain/586b7c8e-205d-4295-8e31-b774187e794c/init_supabase.sql) to create the `certificates` table and set up access policies.
-3.  **Configure Environment Variables**:
-    - Get your **Project URL** and **Anon Key** from Project Settings -> API.
-    - Add them to your `.env.local` file:
-      ```env
-      VITE_SUPABASE_URL=your_project_url
-      VITE_SUPABASE_ANON_KEY=your_anon_key
-      ```
+### `holders` Table
+Stores user identity information.
+*   `id`: UUID (Primary Key)
+*   `name`: Text
+*   `dob`: Text (YYYY-MM-DD)
+*   `email`: Text (Optional, unique constraint with Name/DOB conceptually)
 
-### Persistence
-Data is now stored in a PostgreSQL database hosted by Supabase. Changes made by any admin are immediately visible to all users (public search and other admins).
+### `certificates` Table
+Stores qualification details.
+*   `id`: UUID (Primary Key)
+*   `holder_id`: UUID (Foreign Key -> holders.id)
+*   `icqa_number`: Text (Unique Certificate No.)
+*   `qualification_type`: Text
+*   `status`: Text (ACTIVE, REVOKED, EXPIRED)
+*   ... other certificate details (issue date, expiry, etc.)
 
-## Getting Started
-
-### Prerequisites
-- Node.js (v18+)
-
-### Installation & Run
-1. **Install dependencies**:
-   ```bash
-   npm install
-   ```
-2. **Setup environment**:
-   Set your `GEMINI_API_KEY` in `.env.local`.
-3. **Start development server**:
-   ```bash
-   npm run dev
-   ```
-4. **Build for production**:
-   ```bash
-   npm run build
-   ```
-
-## Development History
-
-- **1st Commit**: Initial system setup with core certificate management.
-- **2nd Commit**: Implementation of the trendy landing page, Light/Dark mode, and asset migration to the `public` folder for proper loading.
+## Development Notes
+*   **Authentication**: Currently uses a mock/local authentication context (`AuthContext.tsx`) for demonstration.
+*   **Theme**: Supports Light/Dark mode with persistence.

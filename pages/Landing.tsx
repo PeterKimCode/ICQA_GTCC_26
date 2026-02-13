@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import {
     Search,
     ChevronRight,
+    ChevronLeft,
     Users,
     Briefcase,
     Wrench,
@@ -21,53 +22,54 @@ import {
 import { CertificateService } from '../services/dataService';
 import { isExpired } from '../utils';
 import { Certificate } from '../types';
-import { ICQA_NAME } from '../constants';
+import { KCQA_NAME } from '../constants';
 
 export const Landing: React.FC = () => {
     const [isDarkMode, setIsDarkMode] = useState(true);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [searchName, setSearchName] = useState('');
-    const [searchNumber, setSearchNumber] = useState('');
+    const [searchEmail, setSearchEmail] = useState('');
     const [searchError, setSearchError] = useState('');
     const [showModal, setShowModal] = useState(false);
-    const [foundCert, setFoundCert] = useState<Certificate | null>(null);
+    const [foundCerts, setFoundCerts] = useState<Certificate[]>([]);
+    const [certIndex, setCertIndex] = useState(0);
     const navigate = useNavigate();
 
     // Handle theme persistence
     useEffect(() => {
-        const savedTheme = localStorage.getItem('icqa_theme');
+        const savedTheme = localStorage.getItem('kcqa_theme');
         if (savedTheme === 'light') setIsDarkMode(false);
     }, []);
 
     const toggleTheme = () => {
         const newTheme = !isDarkMode;
         setIsDarkMode(newTheme);
-        localStorage.setItem('icqa_theme', newTheme ? 'dark' : 'light');
+        localStorage.setItem('kcqa_theme', newTheme ? 'dark' : 'light');
     };
 
     const handleSearch = async (e: React.FormEvent) => {
         e.preventDefault();
         setSearchError('');
 
-        if (!searchName || !searchNumber) {
-            setSearchError('Please enter both Name and Certificate Number.');
+        if (!searchName || !searchEmail) {
+            setSearchError('Please enter both Name and Email.');
             return;
         }
 
         try {
-            const cert = await CertificateService.getByNumberAndName(searchNumber, searchName);
+            const certs = await CertificateService.getByNameAndEmail(searchName, searchEmail);
 
-            if (!cert) {
-                setSearchError('Certificate not found. Please check your details.');
+            if (!certs || certs.length === 0) {
+                setSearchError('No qualification found. Please check your Name and Email.');
                 return;
             }
 
-            if (isExpired(cert.expirationDate) || cert.status === 'REVOKED' || cert.status === 'EXPIRED') {
-                setSearchError('This certificate has expired or is invalid.');
-                return;
-            }
+            // Optional: Block if all are revoked? For now allow viewing.
+            // const valid = certs.some(c => !isExpired(c.expirationDate) && c.status === 'ACTIVE');
+            // if (!valid) ...
 
-            setFoundCert(cert);
+            setFoundCerts(certs);
+            setCertIndex(0);
             setShowModal(true);
         } catch (err: any) {
             setSearchError('An error occurred. Please try again later.');
@@ -109,8 +111,8 @@ export const Landing: React.FC = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-20">
                         <div className="flex items-center gap-3">
-                            <img src="/logo.png" alt="ICQA Logo" className="w-12 h-12 object-contain" />
-                            <span className={`text-lg sm:text-xl font-bold tracking-tight font-display ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>ICQA</span>
+                            <img src="/logo.png" alt="KCQA Logo" className="w-12 h-12 object-contain" />
+                            <span className={`text-lg sm:text-xl font-bold tracking-tight font-display ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>KCQA</span>
                         </div>
 
                         <div className="flex-1 flex justify-center px-2">
@@ -162,7 +164,7 @@ export const Landing: React.FC = () => {
                         GLOBAL STANDARDS OF EXCELLENCE
                     </div>
                     <h1 className={`text-5xl lg:text-8xl font-black mb-8 font-display tracking-tight leading-[1.1] ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>
-                        International Civil <br />
+                        Korea Civil <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 via-emerald-600 to-cyan-600">
                             Qualification Association
                         </span>
@@ -197,7 +199,7 @@ export const Landing: React.FC = () => {
 
                         <div className="text-center mb-12">
                             <h2 className={`text-4xl font-black mb-4 font-display ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>QUALIFICATION SEARCH</h2>
-                            <p className={isDarkMode ? 'text-slate-500' : 'text-slate-400'}>Instantly verify any ICQA professional credential.</p>
+                            <p className={isDarkMode ? 'text-slate-500' : 'text-slate-400'}>Instantly verify any KCQA professional credential.</p>
                         </div>
 
                         {searchError && (
@@ -219,16 +221,26 @@ export const Landing: React.FC = () => {
                                         }`}
                                 />
                             </div>
-                            <div className="md:col-span-3 space-y-2.5">
-                                <label className={`text-xs font-black tracking-widest uppercase ml-1 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>ICQA Number</label>
-                                <input
-                                    type="text"
-                                    value={searchNumber}
-                                    onChange={(e) => setSearchNumber(e.target.value)}
-                                    placeholder="e.g. GC01-24"
-                                    className={`w-full border rounded-2xl px-6 py-4.5 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all ${isDarkMode ? 'bg-slate-900/50 border-white/10 text-white placeholder:text-slate-700' : 'bg-slate-50 border-slate-200 text-slate-950 placeholder:text-slate-300'
-                                        }`}
-                                />
+                            <div className="md:col-span-3">
+                                <label className={`block text-xs font-bold uppercase tracking-wide mb-1 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                                    Email Address
+                                </label>
+                                <div className="relative">
+                                    <input
+                                        type="email"
+                                        required
+                                        placeholder="user@example.com"
+                                        className={`w-full pl-10 pr-4 py-3 rounded-xl focus:ring-2 focus:outline-none transition-all ${isDarkMode
+                                            ? 'bg-slate-800 border-slate-700 text-white focus:ring-emerald-500 placeholder-slate-500'
+                                            : 'bg-slate-50 border-slate-200 text-slate-800 focus:ring-blue-500 placeholder-slate-400'
+                                            } border`}
+                                        value={searchEmail}
+                                        onChange={(e) => setSearchEmail(e.target.value)}
+                                    />
+                                    <div className="absolute left-3 top-1/2 -translate-y-1/2">
+                                        <Briefcase className={`w-5 h-5 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`} />
+                                    </div>
+                                </div>
                             </div>
                             <div className="md:col-span-1 flex items-end">
                                 <button
@@ -256,7 +268,7 @@ export const Landing: React.FC = () => {
                         </div>
 
                         <p className={`text-xl leading-relaxed font-medium ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-                            The ICQA serves as a foundational pillar for professional growth, providing
+                            The KCQA serves as a foundational pillar for professional growth, providing
                             a standardized framework for assessing and certifying skillsets worldwide.
                         </p>
 
@@ -364,8 +376,8 @@ export const Landing: React.FC = () => {
                     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
                         <div className="col-span-1 lg:col-span-2 space-y-8">
                             <div className="flex items-center gap-3">
-                                <img src="/logo.png" alt="ICQA Logo" className="w-12 h-12 object-contain" />
-                                <span className={`text-3xl font-black font-display tracking-tighter ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>ICQA</span>
+                                <img src="/logo.png" alt="KCQA Logo" className="w-12 h-12 object-contain" />
+                                <span className={`text-3xl font-black font-display tracking-tighter ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>KCQA</span>
                             </div>
                             <p className={`text-lg max-w-sm leading-relaxed font-bold ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
                                 Designing the future of professional qualification through innovation and
@@ -384,7 +396,7 @@ export const Landing: React.FC = () => {
                         <div className="space-y-8">
                             <h4 className={`text-sm font-black tracking-[0.2em] uppercase ${isDarkMode ? 'text-white' : 'text-slate-400'}`}>Contact</h4>
                             <ul className={`space-y-4 font-bold ${isDarkMode ? 'text-slate-500' : 'text-slate-500'}`}>
-                                <li>contact@icqa.org</li>
+                                <li>contact@kcqa.org</li>
                                 <li>+1 (877) 287-5034</li>
                                 <li>580 Global Plaza, Suite 400 <br />San Francisco, CA 94105</li>
                             </ul>
@@ -393,7 +405,7 @@ export const Landing: React.FC = () => {
 
                     <div className={`pt-12 border-t flex flex-col md:flex-row justify-between items-center gap-8 text-xs font-black tracking-widest uppercase ${isDarkMode ? 'border-white/5 text-slate-600' : 'border-slate-100 text-slate-400'
                         }`}>
-                        <p>© 2025 INTERNATIONAL CIVIL QUALIFICATION ASSOCIATION</p>
+                        <p>© 2025 KOREA CIVIL QUALIFICATION ASSOCIATION</p>
                         <div className="flex gap-12">
                             <a href="#" className="hover:text-emerald-600 transition-colors">Privacy Policy</a>
                             <a href="#" className="hover:text-emerald-600 transition-colors">Terms of Service</a>
@@ -402,7 +414,7 @@ export const Landing: React.FC = () => {
                 </div>
             </footer>
             {/* Data Protection/Personal Info Modal */}
-            {showModal && foundCert && (
+            {showModal && foundCerts.length > 0 && (
                 <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
                     <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-md" onClick={() => setShowModal(false)}></div>
                     <div className={`relative w-full max-w-md max-h-[90vh] flex flex-col overflow-hidden rounded-3xl shadow-2xl transition-all transform animate-in zoom-in-95 duration-300 ${isDarkMode ? 'bg-slate-900 border border-slate-800' : 'bg-white border border-slate-100'}`}>
@@ -411,7 +423,16 @@ export const Landing: React.FC = () => {
                             <div className="shrink-0 flex justify-between items-start mb-6">
                                 <div>
                                     <h3 className={`text-2xl font-black font-display ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Verification</h3>
-                                    <p className={`text-sm font-bold ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>Candidate Profile Found</p>
+                                    <div className="flex items-center gap-2">
+                                        <p className={`text-sm font-bold ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
+                                            Candidate Profile Found
+                                        </p>
+                                        {foundCerts.length > 1 && (
+                                            <span className={`text-xs px-2 py-0.5 rounded-full font-bold ${isDarkMode ? 'bg-slate-800 text-emerald-400' : 'bg-slate-100 text-blue-600'}`}>
+                                                {certIndex + 1}/{foundCerts.length}
+                                            </span>
+                                        )}
+                                    </div>
                                 </div>
                                 <button onClick={() => setShowModal(false)} className={`p-2 rounded-full transition-colors ${isDarkMode ? 'hover:bg-slate-800 text-slate-500' : 'hover:bg-slate-100 text-slate-400'}`}>
                                     <X className="w-6 h-6" />
@@ -419,62 +440,80 @@ export const Landing: React.FC = () => {
                             </div>
 
                             <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar space-y-8">
-                                <div className="flex flex-col items-center">
+                                <div className="flex flex-col items-center relative">
+                                    {/* Navigation Arrows */}
+                                    {foundCerts.length > 1 && (
+                                        <>
+                                            <button
+                                                onClick={() => setCertIndex(prev => (prev - 1 + foundCerts.length) % foundCerts.length)}
+                                                className={`absolute left-0 top-1/2 -translate-y-1/2 p-2 rounded-full z-10 ${isDarkMode ? 'bg-slate-800 hover:bg-slate-700 text-white' : 'bg-white hover:bg-gray-100 text-slate-900 shadow-lg'}`}
+                                            >
+                                                <ChevronLeft className="w-5 h-5" />
+                                            </button>
+                                            <button
+                                                onClick={() => setCertIndex(prev => (prev + 1) % foundCerts.length)}
+                                                className={`absolute right-0 top-1/2 -translate-y-1/2 p-2 rounded-full z-10 ${isDarkMode ? 'bg-slate-800 hover:bg-slate-700 text-white' : 'bg-white hover:bg-gray-100 text-slate-900 shadow-lg'}`}
+                                            >
+                                                <ChevronRight className="w-5 h-5" />
+                                            </button>
+                                        </>
+                                    )}
+
                                     <div className={`w-52 h-64 md:w-64 md:h-72 rounded-2xl overflow-hidden mb-4 shadow-xl border-4 ${isDarkMode ? 'border-slate-800' : 'border-white'}`}>
-                                        {foundCert.photoUrl ? (
-                                            <img src={foundCert.photoUrl} alt={foundCert.name} className="w-full h-full object-cover" />
+                                        {foundCerts[certIndex].photoUrl ? (
+                                            <img src={foundCerts[certIndex].photoUrl} alt={foundCerts[certIndex].name} className="w-full h-full object-cover" />
                                         ) : (
                                             <div className={`w-full h-full flex items-center justify-center ${isDarkMode ? 'bg-slate-800' : 'bg-slate-100'}`}>
                                                 <Users className={`w-24 h-24 ${isDarkMode ? 'text-slate-700' : 'text-slate-300'}`} />
                                             </div>
                                         )}
                                     </div>
-                                    <h4 className={`text-xl font-black uppercase text-center ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{foundCert.name}</h4>
+                                    <h4 className={`text-xl font-black uppercase text-center ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{foundCerts[certIndex].name}</h4>
                                 </div>
 
                                 <div className="space-y-3 pb-4">
                                     <div className={`p-3 rounded-xl ${isDarkMode ? 'bg-slate-950/50 border border-slate-800' : 'bg-slate-50 border border-slate-100'}`}>
-                                        <p className={`text-[10px] uppercase font-black mb-0.5 cursor-default ${isDarkMode ? 'text-slate-600' : 'text-slate-400'}`}>ICQA Number</p>
-                                        <p className={`text-base font-black font-mono ${isDarkMode ? 'text-emerald-400' : 'text-blue-600'}`}>{foundCert.icqaNumber}</p>
+                                        <p className={`text-[10px] uppercase font-black mb-0.5 cursor-default ${isDarkMode ? 'text-slate-600' : 'text-slate-400'}`}>KCQA Number</p>
+                                        <p className={`text-base font-black font-mono ${isDarkMode ? 'text-emerald-400' : 'text-blue-600'}`}>{foundCerts[certIndex].kcqaNumber}</p>
                                     </div>
                                     <div className={`p-3 rounded-xl ${isDarkMode ? 'bg-slate-950/50 border border-slate-800' : 'bg-slate-50 border border-slate-100'}`}>
                                         <p className={`text-[10px] uppercase font-black mb-0.5 cursor-default ${isDarkMode ? 'text-slate-600' : 'text-slate-400'}`}>Civil Qualification Number</p>
-                                        <p className={`text-sm font-black ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{foundCert.ncqaNumber}</p>
+                                        <p className={`text-sm font-black ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{foundCerts[certIndex].ncqaNumber}</p>
                                     </div>
                                     <div className={`p-3 rounded-xl ${isDarkMode ? 'bg-slate-950/50 border border-slate-800' : 'bg-slate-50 border border-slate-100'}`}>
                                         <p className={`text-[10px] uppercase font-black mb-0.5 cursor-default ${isDarkMode ? 'text-slate-600' : 'text-slate-400'}`}>Qualification Type</p>
-                                        <p className={`text-sm font-black ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{foundCert.qualificationType}</p>
+                                        <p className={`text-sm font-black ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{foundCerts[certIndex].qualificationType}</p>
                                     </div>
                                     <div className={`p-3 rounded-xl ${isDarkMode ? 'bg-slate-950/50 border border-slate-800' : 'bg-slate-50 border border-slate-100'}`}>
                                         <p className={`text-[10px] uppercase font-black mb-0.5 cursor-default ${isDarkMode ? 'text-slate-600' : 'text-slate-400'}`}>Date Issue</p>
-                                        <p className={`text-sm font-black ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{foundCert.issueDate}</p>
+                                        <p className={`text-sm font-black ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{foundCerts[certIndex].issueDate}</p>
                                     </div>
                                     <div className={`p-3 rounded-xl ${isDarkMode ? 'bg-slate-950/50 border border-slate-800' : 'bg-slate-50 border border-slate-100'}`}>
                                         <p className={`text-[10px] uppercase font-black mb-0.5 cursor-default ${isDarkMode ? 'text-slate-600' : 'text-slate-400'}`}>Education Department</p>
-                                        <p className={`text-sm font-black ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{foundCert.eduDept}</p>
+                                        <p className={`text-sm font-black ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{foundCerts[certIndex].eduDept}</p>
                                     </div>
                                     <div className={`p-3 rounded-xl ${isDarkMode ? 'bg-slate-950/50 border border-slate-800' : 'bg-slate-50 border border-slate-100'}`}>
                                         <p className={`text-[10px] uppercase font-black mb-0.5 cursor-default ${isDarkMode ? 'text-slate-600' : 'text-slate-400'}`}>Issuing Office</p>
-                                        <p className={`text-sm font-black ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{foundCert.issuingOffice}</p>
+                                        <p className={`text-sm font-black ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{foundCerts[certIndex].issuingOffice}</p>
                                     </div>
                                     <div className={`p-3 rounded-xl ${isDarkMode ? 'bg-slate-950/50 border border-slate-800' : 'bg-slate-50 border border-slate-100'}`}>
                                         <p className={`text-[10px] uppercase font-black mb-0.5 cursor-default ${isDarkMode ? 'text-slate-600' : 'text-slate-400'}`}>Issuing Country</p>
-                                        <p className={`text-sm font-black ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{foundCert.issuingCountry}</p>
+                                        <p className={`text-sm font-black ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{foundCerts[certIndex].issuingCountry}</p>
                                     </div>
                                     <div className={`p-3 rounded-xl ${isDarkMode ? 'bg-slate-950/50 border border-slate-800' : 'bg-slate-50 border border-slate-100'}`}>
                                         <p className={`text-[10px] uppercase font-black mb-0.5 cursor-default ${isDarkMode ? 'text-slate-600' : 'text-slate-400'}`}>Expiration Date</p>
-                                        <p className={`text-sm font-black ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{foundCert.expirationDate || 'N/A'}</p>
+                                        <p className={`text-sm font-black ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{foundCerts[certIndex].expirationDate || 'N/A'}</p>
                                     </div>
                                     <div className={`p-3 rounded-xl ${isDarkMode ? 'bg-slate-950/50 border border-slate-800' : 'bg-slate-50 border border-slate-100'}`}>
                                         <p className={`text-[10px] uppercase font-black mb-0.5 cursor-default ${isDarkMode ? 'text-slate-600' : 'text-slate-400'}`}>Verified Body</p>
-                                        <p className={`text-sm font-black ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{ICQA_NAME}</p>
+                                        <p className={`text-sm font-black ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{KCQA_NAME}</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="shrink-0 pt-6">
                                 <button
-                                    onClick={() => navigate(`/guest/view/${foundCert.id}`)}
+                                    onClick={() => navigate(`/guest/view/${foundCerts[certIndex].id}`)}
                                     className={`w-full py-5 rounded-2xl font-black text-lg transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-xl ${isDarkMode
                                         ? 'bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-emerald-500/20'
                                         : 'bg-blue-600 hover:bg-blue-700 text-white shadow-blue-600/20'
