@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ICQA Certificate Manager</title>
+  <link rel="icon" type="image/png" href="/logo.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript"
+    src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Libre Baskerville', 'serif'],
+            display: ['Cinzel', 'serif'],
+          },
+          colors: {
+            icqa: {
+              red: '#D91F26',
+              blue: '#1E3A8A', // Standardized dark blue
+              gold: '#C5A059'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom Scrollbar for Popups */
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 10px;
+    }
+
+    .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #334155;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    /* Google Translate Styling */
+    .goog-te-banner-frame.skiptranslate {
+      display: none !important;
+    }
+
+    body {
+      top: 0 !important;
+    }
+
+    #google_translate_element {
+      display: flex;
+      align-items: center;
+    }
+
+    .goog-te-gadget-simple {
+      background-color: transparent !important;
+      border: 1px solid rgba(226, 232, 240, 0.8) !important;
+      padding: 0 16px !important;
+      border-radius: 9999px !important;
+      font-size: 0.8125rem !important;
+      font-family: 'Inter', sans-serif !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      height: 40px !important;
+      min-width: 160px !important;
+      overflow: hidden !important;
+      position: relative !important;
+      text-decoration: none !important;
+    }
+
+    @media (max-width: 640px) {
+      .goog-te-gadget-simple {
+        min-width: 120px !important;
+        padding: 0 8px !important;
+      }
+
+      .goog-te-gadget-simple span {
+        font-size: 0.7rem !important;
+      }
+    }
+
+    .dark .goog-te-gadget-simple {
+      border-color: rgba(255, 255, 255, 0.2) !important;
+      background-color: rgba(255, 255, 255, 0.05) !important;
+    }
+
+    .goog-te-gadget-simple:hover {
+      background-color: rgba(0, 0, 0, 0.05) !important;
+      border-color: rgba(226, 232, 240, 1) !important;
+    }
+
+    .dark .goog-te-gadget-simple:hover {
+      background-color: rgba(255, 255, 255, 0.1) !important;
+      border-color: rgba(255, 255, 255, 0.3) !important;
+    }
+
+    /* Hide Google Icons and junk */
+    .goog-te-gadget-simple img {
+      display: none !important;
+    }
+
+    .goog-te-gadget-simple span {
+      color: inherit !important;
+      font-weight: 600 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.025em !important;
+      border-left: none !important;
+    }
+
+    .goog-te-menu-value {
+      margin: 0 !important;
+      padding: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      line-height: 40px !important;
+      width: 100% !important;
+    }
+
+    /* Remove the default arrow and vertical separator */
+    .goog-te-menu-value span:nth-child(3),
+    .goog-te-menu-value span:nth-child(5) {
+      display: none !important;
+    }
+
+    /* Add a custom clean arrow if desired, or leave it minimal */
+    .goog-te-menu-value:after {
+      content: '▼' !important;
+      font-size: 8px !important;
+      margin-left: 8px !important;
+      opacity: 0.5 !important;
+    }
+
+    /* Hide "Powered by Google" */
+    .goog-logo-link {
+      display: none !important;
+    }
+
+    .goog-te-gadget {
+      color: transparent !important;
+      font-size: 0 !important;
+      margin: 0 !important;
+    }
+
+    .goog-te-gadget .goog-te-combo {
+      margin: 0 !important;
+    }
+
+    /* Dropdown clipping fix */
+    .goog-te-menu-frame {
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+      border: 1px solid #e2e8f0 !important;
+      border-radius: 12px !important;
+      z-index: 9999999 !important;
+    }
+
+    /* Prevent horizontal overflow of the language list */
+    .goog-te-menu2 {
+      max-width: 90vw !important;
+      overflow-x: auto !important;
+      white-space: normal !important;
+      padding: 10px !important;
+      border: none !important;
+    }
+
+    @media print {
+      @page {
+        size: landscape;
+        margin: 0;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+
+      .no-print {
+        display: none !important;
+      }
+
+      .print-only {
+        display: block !important;
+      }
+
+      /* 
+           Scaling for A4 Landscape
+           A4 Width (297mm) @ 96 DPI approx 1122px.
+           Source Width: 2480px.
+           Scale Factor: 1122 / 2480 approx 0.45.
+           Using 0.44 to be safe with printer margins.
+        */
+      .print-fit-a4 {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 2480px !important;
+        height: 1748px !important;
+        transform: scale(0.44) !important;
+        transform-origin: top left !important;
+        overflow: visible !important;
+      }
+    }
+  </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.10.1",
+    "lucide-react": "https://esm.sh/lucide-react@^0.561.0",
+    "date-fns": "https://esm.sh/date-fns@^4.1.0",
+    "react-dom": "https://esm.sh/react-dom@^19.2.3"
+  }
+}
+</script>
+  <link rel="stylesheet" href="/index.css">
+</head>
+
+<body class="bg-gray-50 text-gray-900">
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+
+</html>
