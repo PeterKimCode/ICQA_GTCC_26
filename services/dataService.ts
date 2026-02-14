@@ -103,7 +103,30 @@ export const CertificateService = {
     return legacyCert ? [mapFromDB(legacyCert)] : [];
   },
 
-  // New: Search by Name + Email (for "Find My Certs")
+  // New: Search by Name + Phone (for "Find My Certs")
+  getByNameAndPhone: async (name: string, phone: string): Promise<Certificate[]> => {
+    // 1. Find Holder (Case-insensitive)
+    const { data: holder } = await supabase
+      .from('holders')
+      .select('id')
+      .ilike('name', name.trim())
+      .eq('phone_number', phone.trim()) // Phone should be exact match usually, or sanitized
+      .maybeSingle();
+
+    if (!holder) return [];
+
+    // 2. Fetch Certs
+    const { data: certs, error } = await supabase
+      .from('certificates')
+      .select('*')
+      .eq('holder_id', holder.id)
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+    return (certs || []).map(mapFromDB);
+  },
+
+  // Deprecated: Search by Name + Email (kept for backward compatibility or admin if needed)
   getByNameAndEmail: async (name: string, email: string): Promise<Certificate[]> => {
     // 1. Find Holder (Case-insensitive)
     const { data: holder } = await supabase
@@ -131,6 +154,7 @@ export const CertificateService = {
     const normalizedName = cert.name.trim().toUpperCase();
     const normalizedDob = cert.dob.trim();
     const normalizedEmail = cert.holderEmail ? cert.holderEmail.trim() : undefined;
+    const normalizedPhone = cert.holderPhone ? cert.holderPhone.trim() : undefined;
 
     // Check if holder exists, if not create
     let holderId = cert.holderId;
@@ -141,6 +165,10 @@ export const CertificateService = {
       // If email is provided, include it in search (more specific)
       if (normalizedEmail) {
         query = query.eq('email', normalizedEmail);
+      }
+      // If phone is provided, include it in search
+      if (normalizedPhone) {
+        query = query.eq('phone_number', normalizedPhone);
       }
 
       const { data: existingHolder } = await query.maybeSingle();
@@ -153,7 +181,8 @@ export const CertificateService = {
           .insert({
             name: normalizedName,
             dob: normalizedDob,
-            email: normalizedEmail || null
+            email: normalizedEmail || null,
+            phone_number: normalizedPhone || null
           })
           .select()
           .single();

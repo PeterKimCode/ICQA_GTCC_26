@@ -22,6 +22,7 @@ export interface Holder {
   name: string;
   dob: string;
   email?: string;
+  phoneNumber?: string;
   createdAt: string;
   updatedAt: string;
   certificates?: Certificate[];
@@ -31,6 +32,7 @@ export interface Certificate {
   id: string;
   holderId?: string; // New FK
   holderEmail?: string; // Optional: For creating/linking holder
+  holderPhone?: string; // Optional: For creating/linking holder
   kcqaNumber: string; // Red text
   name: string; // Blue text (Legacy/Display redundancy)
   dob: string; // MMM DD, YYYY (Legacy/Display redundancy)

@@ -17,7 +17,9 @@ import {
     X,
     Sun,
     Moon,
-    AlertCircle
+    AlertCircle,
+    User,
+    Phone
 } from 'lucide-react';
 import { CertificateService } from '../services/dataService';
 import { isExpired } from '../utils';
@@ -28,7 +30,7 @@ export const Landing: React.FC = () => {
     const [isDarkMode, setIsDarkMode] = useState(true);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [searchName, setSearchName] = useState('');
-    const [searchEmail, setSearchEmail] = useState('');
+    const [searchPhone, setSearchPhone] = useState('');
     const [searchError, setSearchError] = useState('');
     const [showModal, setShowModal] = useState(false);
     const [foundCerts, setFoundCerts] = useState<Certificate[]>([]);
@@ -51,16 +53,16 @@ export const Landing: React.FC = () => {
         e.preventDefault();
         setSearchError('');
 
-        if (!searchName || !searchEmail) {
-            setSearchError('Please enter both Name and Email.');
+        if (!searchName || !searchPhone) {
+            setSearchError('성명과 전화번호를 모두 입력해주세요.');
             return;
         }
 
         try {
-            const certs = await CertificateService.getByNameAndEmail(searchName, searchEmail);
+            const certs = await CertificateService.getByNameAndPhone(searchName, searchPhone);
 
             if (!certs || certs.length === 0) {
-                setSearchError('No qualification found. Please check your Name and Email.');
+                setSearchError('일치하는 자격 정보를 찾을 수 없습니다. 성명과 전화번호를 확인해주세요.');
                 return;
             }
 
@@ -72,20 +74,20 @@ export const Landing: React.FC = () => {
             setCertIndex(0);
             setShowModal(true);
         } catch (err: any) {
-            setSearchError('An error occurred. Please try again later.');
+            setSearchError('오류가 발생했습니다. 나중에 다시 시도해주세요.');
             console.error(err);
         }
     };
 
     const services = [
-        { title: 'Counseling', icon: <Users className="w-8 h-8" />, desc: 'Expert guidance for your certification journey.', bg: isDarkMode ? 'bg-blue-900/40' : 'bg-blue-50' },
-        { title: 'Management', icon: <Briefcase className="w-8 h-8" />, desc: 'Systematic oversight of qualification standards.', bg: isDarkMode ? 'bg-emerald-900/40' : 'bg-emerald-50' },
-        { title: 'Specialization', icon: <Wrench className="w-8 h-8" />, desc: 'Focused training in high-demand technical fields.', bg: isDarkMode ? 'bg-indigo-900/40' : 'bg-indigo-50' },
-        { title: 'Research', icon: <Microscope className="w-8 h-8" />, desc: 'Advancing the science of professional competency.', bg: isDarkMode ? 'bg-cyan-900/40' : 'bg-cyan-50' },
-        { title: 'Welfare', icon: <Heart className="w-8 h-8" />, desc: 'Supporting the growth and well-being of our members.', bg: isDarkMode ? 'bg-rose-900/40' : 'bg-rose-50' },
-        { title: 'Administration', icon: <Shield className="w-8 h-8" />, desc: 'Robust infrastructure for credential verification.', bg: isDarkMode ? 'bg-slate-800/40' : 'bg-slate-50' },
-        { title: 'Education', icon: <BookOpen className="w-8 h-8" />, desc: 'World-class curricula for the modern workforce.', bg: isDarkMode ? 'bg-teal-900/40' : 'bg-teal-50' },
-        { title: 'Foreign Language', icon: <Globe className="w-8 h-8" />, desc: 'Breaking barriers with international communication.', bg: isDarkMode ? 'bg-violet-900/40' : 'bg-violet-50' },
+        { title: '상담', icon: <Users className="w-8 h-8" />, desc: '성공적인 자격 취득을 위한 전문 컨설팅.', bg: isDarkMode ? 'bg-blue-900/40' : 'bg-blue-50' },
+        { title: '관리', icon: <Briefcase className="w-8 h-8" />, desc: '자격 기준의 체계적인 관리 및 감독.', bg: isDarkMode ? 'bg-emerald-900/40' : 'bg-emerald-50' },
+        { title: '특성화', icon: <Wrench className="w-8 h-8" />, desc: '산업 수요 중심의 특성화 교육 훈련.', bg: isDarkMode ? 'bg-indigo-900/40' : 'bg-indigo-50' },
+        { title: '연구', icon: <Microscope className="w-8 h-8" />, desc: '직무 역량 평가 체계의 지속적 연구.', bg: isDarkMode ? 'bg-cyan-900/40' : 'bg-cyan-50' },
+        { title: '복지', icon: <Heart className="w-8 h-8" />, desc: '전문가의 지속적인 성장과 복지 지원.', bg: isDarkMode ? 'bg-rose-900/40' : 'bg-rose-50' },
+        { title: '행정', icon: <Shield className="w-8 h-8" />, desc: '신뢰할 수 있는 자격 검증 시스템.', bg: isDarkMode ? 'bg-slate-800/40' : 'bg-slate-50' },
+        { title: '교육', icon: <BookOpen className="w-8 h-8" />, desc: '글로벌 인재 양성을 위한 혁신적 커리큘럼.', bg: isDarkMode ? 'bg-teal-900/40' : 'bg-teal-50' },
+        { title: '외국어', icon: <Globe className="w-8 h-8" />, desc: '글로벌 소통을 위한 외국어 능력 평가.', bg: isDarkMode ? 'bg-violet-900/40' : 'bg-violet-50' },
     ];
 
     const themeClasses = isDarkMode
@@ -100,7 +102,7 @@ export const Landing: React.FC = () => {
                 onClick={toggleTheme}
                 className={`fixed right-6 bottom-10 z-[100] p-4 rounded-full shadow-2xl transition-all transform hover:scale-110 active:scale-95 ${isDarkMode ? 'bg-white text-slate-950' : 'bg-slate-900 text-white'
                     }`}
-                title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                title={isDarkMode ? "라이트 모드로 전환" : "다크 모드로 전환"}
             >
                 {isDarkMode ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
             </button>
@@ -126,7 +128,7 @@ export const Landing: React.FC = () => {
                                 className="flex items-center gap-2 px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-full transition-all transform hover:scale-105 shadow-lg shadow-emerald-600/20 text-sm font-semibold tracking-wide"
                             >
                                 <LogIn className="w-4 h-4" />
-                                <span>INTERNAL ACCESS</span>
+                                <span>관계자 시스템 접속</span>
                             </Link>
                         </div>
 
@@ -141,7 +143,7 @@ export const Landing: React.FC = () => {
                     <div className={`md:hidden p-4 space-y-4 border-b animate-in slide-in-from-top duration-300 ${isDarkMode ? 'bg-slate-900 border-white/10' : 'bg-white border-slate-100'
                         }`}>
                         <Link to="/login" className="block py-4 px-4 bg-emerald-600 text-white rounded-xl text-center font-bold">
-                            INTERNAL ACCESS
+                            관계자 시스템 접속
                         </Link>
                     </div>
                 )}
@@ -161,28 +163,27 @@ export const Landing: React.FC = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
                     <div className={`inline-block px-4 py-1.5 mb-8 rounded-full border text-sm font-bold tracking-widest animate-fade-in ${isDarkMode ? 'bg-white/5 border-white/10 text-emerald-400' : 'bg-emerald-50 border-emerald-100 text-emerald-600'
                         }`}>
-                        GLOBAL STANDARDS OF EXCELLENCE
+                        글로벌 역량 평가의 기준
                     </div>
-                    <h1 className={`text-5xl lg:text-8xl font-black mb-8 font-display tracking-tight leading-[1.1] ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>
+                    <h1 className={`text-5xl lg:text-7xl font-black mb-8 font-display tracking-tight leading-tight ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
                         Korea Civil <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 via-emerald-600 to-cyan-600">
                             Qualification Association
                         </span>
                     </h1>
                     <p className={`max-w-3xl mx-auto text-xl mb-12 leading-relaxed font-medium ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-                        We bridge the gap between talent and verification through rigorous,
-                        industry-recognized standards for professional certification.
+                        엄격하고 신뢰할 수 있는 글로벌 표준을 통해, 개인의 역량을 검증하고 전문성을 연결합니다.
                     </p>
 
                     <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
                         <a href="#checker" className={`group px-10 py-5 rounded-full font-black transition-all transform hover:scale-105 shadow-xl flex items-center gap-2 ${isDarkMode ? 'bg-white text-slate-950 hover:bg-emerald-400 shadow-white/5' : 'bg-slate-900 text-white hover:bg-emerald-600 shadow-slate-200'
                             }`}>
-                            VERIFY CERTIFICATION
+                            자격 진위 확인
                             <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </a>
                         <button className={`px-10 py-5 border rounded-full font-black transition-all ${isDarkMode ? 'bg-slate-800/40 border-white/10 text-white hover:bg-slate-800' : 'bg-white border-slate-200 text-slate-900 hover:bg-slate-50'
                             }`}>
-                            EXPLORE MISSION
+                            협회 소개
                         </button>
                     </div>
                 </div>
@@ -198,8 +199,8 @@ export const Landing: React.FC = () => {
                         </div>
 
                         <div className="text-center mb-12">
-                            <h2 className={`text-4xl font-black mb-4 font-display ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>QUALIFICATION SEARCH</h2>
-                            <p className={isDarkMode ? 'text-slate-500' : 'text-slate-400'}>Instantly verify any KCQA professional credential.</p>
+                            <h2 className={`text-4xl font-black mb-4 font-display ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>자격 진위 확인</h2>
+                            <p className={isDarkMode ? 'text-slate-500' : 'text-slate-400'}>KCQA에서 발급된 전문 자격의 유효성을 실시간으로 확인하실 수 있습니다.</p>
                         </div>
 
                         {searchError && (
@@ -210,35 +211,45 @@ export const Landing: React.FC = () => {
                         )}
 
                         <form onSubmit={handleSearch} className="grid grid-cols-1 md:grid-cols-7 gap-6">
-                            <div className="md:col-span-3 space-y-2.5">
-                                <label className={`text-xs font-black tracking-widest uppercase ml-1 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>Full Name</label>
-                                <input
-                                    type="text"
-                                    value={searchName}
-                                    onChange={(e) => setSearchName(e.target.value)}
-                                    placeholder="e.g. AN CHANG NAM"
-                                    className={`w-full border rounded-2xl px-6 py-4.5 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all ${isDarkMode ? 'bg-slate-900/50 border-white/10 text-white placeholder:text-slate-700' : 'bg-slate-50 border-slate-200 text-slate-950 placeholder:text-slate-300'
-                                        }`}
-                                />
-                            </div>
                             <div className="md:col-span-3">
                                 <label className={`block text-xs font-bold uppercase tracking-wide mb-1 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-                                    Email Address
+                                    성명
                                 </label>
                                 <div className="relative">
                                     <input
-                                        type="email"
+                                        type="text"
                                         required
-                                        placeholder="user@example.com"
+                                        placeholder="예: 홍길동"
                                         className={`w-full pl-10 pr-4 py-3 rounded-xl focus:ring-2 focus:outline-none transition-all ${isDarkMode
                                             ? 'bg-slate-800 border-slate-700 text-white focus:ring-emerald-500 placeholder-slate-500'
                                             : 'bg-slate-50 border-slate-200 text-slate-800 focus:ring-blue-500 placeholder-slate-400'
                                             } border`}
-                                        value={searchEmail}
-                                        onChange={(e) => setSearchEmail(e.target.value)}
+                                        value={searchName}
+                                        onChange={(e) => setSearchName(e.target.value)}
                                     />
                                     <div className="absolute left-3 top-1/2 -translate-y-1/2">
-                                        <Briefcase className={`w-5 h-5 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`} />
+                                        <User className={`w-5 h-5 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`} />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="md:col-span-3">
+                                <label className={`block text-xs font-bold uppercase tracking-wide mb-1 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                                    전화번호
+                                </label>
+                                <div className="relative">
+                                    <input
+                                        type="tel"
+                                        required
+                                        placeholder="010-1234-5678"
+                                        className={`w-full pl-10 pr-4 py-3 rounded-xl focus:ring-2 focus:outline-none transition-all ${isDarkMode
+                                            ? 'bg-slate-800 border-slate-700 text-white focus:ring-emerald-500 placeholder-slate-500'
+                                            : 'bg-slate-50 border-slate-200 text-slate-800 focus:ring-blue-500 placeholder-slate-400'
+                                            } border`}
+                                        value={searchPhone}
+                                        onChange={(e) => setSearchPhone(e.target.value)}
+                                    />
+                                    <div className="absolute left-3 top-1/2 -translate-y-1/2">
+                                        <Phone className={`w-5 h-5 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`} />
                                     </div>
                                 </div>
                             </div>
@@ -260,16 +271,15 @@ export const Landing: React.FC = () => {
                 <div className="grid lg:grid-cols-12 gap-20 items-center">
                     <div className="lg:col-span-7 space-y-10">
                         <div className="space-y-4" id="about-detail">
-                            <h4 className="text-emerald-600 font-black tracking-[0.2em] text-sm">AUTHENTICITY & INTEGRITY</h4>
+                            <h4 className="text-emerald-600 font-black tracking-[0.2em] text-sm">검증된 신뢰와 원칙</h4>
                             <h2 className={`text-5xl lg:text-6xl font-black font-display leading-tight ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>
-                                Global Impact. <br />
-                                Local Excellence.
+                                글로벌 비전. <br />
+                                지역적 혁신.
                             </h2>
                         </div>
 
                         <p className={`text-xl leading-relaxed font-medium ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-                            The KCQA serves as a foundational pillar for professional growth, providing
-                            a standardized framework for assessing and certifying skillsets worldwide.
+                            KCQA는 전 세계 전문가들의 직무 역량을 평가하고 인증하는 표준화된 프레임워크를 제공합니다.
                         </p>
 
                         <div className="grid sm:grid-cols-2 gap-8">
@@ -278,16 +288,16 @@ export const Landing: React.FC = () => {
                                 <div className="w-12 h-12 bg-emerald-600/20 rounded-xl flex items-center justify-center text-emerald-600 mb-6">
                                     <Shield className="w-6 h-6" />
                                 </div>
-                                <h3 className={`text-lg font-bold mb-2 ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>Verified Authority</h3>
-                                <p className={isDarkMode ? 'text-slate-500' : 'text-slate-500'}>Regulated standards ensuring absolute trust in every credential.</p>
+                                <h3 className={`text-lg font-bold mb-2 ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>검증된 자격</h3>
+                                <p className={isDarkMode ? 'text-slate-500' : 'text-slate-500'}>철저한 규제와 표준으로 모든 자격의 신뢰성을 보장합니다.</p>
                             </div>
                             <div className={`p-8 rounded-3xl border transition-all ${isDarkMode ? 'bg-white/5 border-white/5 hover:border-emerald-500/30' : 'bg-slate-50 border-slate-200 hover:border-emerald-500/30'
                                 }`}>
                                 <div className="w-12 h-12 bg-emerald-600/20 rounded-xl flex items-center justify-center text-emerald-600 mb-6">
                                     <Globe className="w-6 h-6" />
                                 </div>
-                                <h3 className={`text-lg font-bold mb-2 ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>Global Recognition</h3>
-                                <p className={isDarkMode ? 'text-slate-500' : 'text-slate-500'}>Credentials that carry weight across borders and industries.</p>
+                                <h3 className={`text-lg font-bold mb-2 ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>글로벌 인정</h3>
+                                <p className={isDarkMode ? 'text-slate-500' : 'text-slate-500'}>국경과 산업을 초월하여 인정받는 전문 자격입니다.</p>
                             </div>
                         </div>
                     </div>
@@ -310,11 +320,11 @@ export const Landing: React.FC = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex flex-col lg:flex-row justify-between items-end gap-8 mb-20">
                         <div className="space-y-4 max-w-2xl" id="services-detail">
-                            <h4 className="text-emerald-600 font-bold tracking-widest text-sm">EIGHT PILLARS</h4>
-                            <h2 className={`text-4xl lg:text-5xl font-black font-display ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>Our Specialized Domains</h2>
+                            <h4 className="text-emerald-600 font-bold tracking-widest text-sm">8대 핵심 가치</h4>
+                            <h2 className={`text-4xl lg:text-5xl font-black font-display ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>전문 역량 영역</h2>
                         </div>
                         <p className={`max-w-md text-lg font-medium lg:text-right ${isDarkMode ? 'text-slate-500' : 'text-slate-500'}`}>
-                            Explore our core areas where we set the benchmark for professional standards.
+                            각 분야별 최고 수준의 전문성을 제시하는 핵심 영역입니다.
                         </p>
                     </div>
 
@@ -333,7 +343,7 @@ export const Landing: React.FC = () => {
                                 <h3 className={`text-xl font-black mb-4 font-display tracking-wider uppercase ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>{service.title}</h3>
                                 <p className={`leading-relaxed font-bold transition-colors ${isDarkMode ? 'text-slate-400 group-hover:text-slate-300' : 'text-slate-500 hover:text-slate-700'}`}>{service.desc}</p>
                                 <div className="mt-8 flex items-center gap-2 text-emerald-600 text-sm font-black opacity-0 group-hover:opacity-100 transition-opacity">
-                                    READ MORE <ChevronRight className="w-4 h-4" />
+                                    더 보기 <ChevronRight className="w-4 h-4" />
                                 </div>
                             </div>
                         ))}
@@ -346,25 +356,25 @@ export const Landing: React.FC = () => {
                 <div className="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-[3.5rem] p-1 shadow-2xl shadow-emerald-600/20">
                     <div className={`rounded-[3.4rem] p-8 lg:p-20 grid lg:grid-cols-2 gap-16 items-center ${isDarkMode ? 'bg-slate-950' : 'bg-white'}`}>
                         <div className="space-y-8">
-                            <h2 className={`text-4xl lg:text-5xl font-black font-display ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>Ready to verify <br />your future?</h2>
+                            <h2 className={`text-4xl lg:text-5xl font-black font-display ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>전문성을 입증할 <br />준비가 되셨습니까?</h2>
                             <p className={`text-xl leading-relaxed font-bold ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-                                Join thousands who have validated their skills through our association.
+                                이미 수천 명의 전문가들이 KCQA를 통해 자신의 가치를 증명했습니다.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-4">
-                                <button className="px-10 py-5 bg-emerald-600 text-white rounded-full font-black hover:bg-emerald-500 transition-all shadow-xl shadow-emerald-600/20">GET STARTED</button>
+                                <button className="px-10 py-5 bg-emerald-600 text-white rounded-full font-black hover:bg-emerald-500 transition-all shadow-xl shadow-emerald-600/20">자격 신청</button>
                                 <button className={`px-10 py-5 border rounded-full font-black transition-all ${isDarkMode ? 'bg-white/5 border-white/10 text-white hover:bg-white/10' : 'bg-slate-50 border-slate-200 text-slate-950 hover:bg-slate-100'
-                                    }`}>TALK TO AN EXPERT</button>
+                                    }`}>상담 문의</button>
                             </div>
                         </div>
                         <div className={`border p-8 rounded-[2rem] space-y-4 shadow-sm ${isDarkMode ? 'bg-slate-900/50 border-white/10' : 'bg-slate-50 border-slate-200'}`}>
-                            <input type="text" placeholder="Your Name" className={`w-full border rounded-xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${isDarkMode ? 'bg-slate-950 border-white/5 text-white' : 'bg-white border-slate-200 text-slate-950'
+                            <input type="text" placeholder="성명 입력" className={`w-full border rounded-xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${isDarkMode ? 'bg-slate-950 border-white/5 text-white' : 'bg-white border-slate-200 text-slate-950'
                                 }`} />
-                            <input type="email" placeholder="Your Email" className={`w-full border rounded-xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${isDarkMode ? 'bg-slate-950 border-white/5 text-white' : 'bg-white border-slate-200 text-slate-950'
+                            <input type="email" placeholder="이메일 입력" className={`w-full border rounded-xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${isDarkMode ? 'bg-slate-950 border-white/5 text-white' : 'bg-white border-slate-200 text-slate-950'
                                 }`} />
-                            <textarea placeholder="Your Message" rows={4} className={`w-full border rounded-xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 resize-none ${isDarkMode ? 'bg-slate-950 border-white/5 text-white' : 'bg-white border-slate-200 text-slate-950'
+                            <textarea placeholder="문의 내용 입력" rows={4} className={`w-full border rounded-xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 resize-none ${isDarkMode ? 'bg-slate-950 border-white/5 text-white' : 'bg-white border-slate-200 text-slate-950'
                                 }`}></textarea>
                             <button className={`w-full py-4 rounded-xl font-black transition-all ${isDarkMode ? 'bg-white text-slate-950 hover:bg-emerald-400' : 'bg-slate-900 text-white hover:bg-emerald-600'
-                                }`}>SEND MESSAGE</button>
+                                }`}>문의하기</button>
                         </div>
                     </div>
                 </div>
@@ -380,25 +390,24 @@ export const Landing: React.FC = () => {
                                 <span className={`text-3xl font-black font-display tracking-tighter ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>KCQA</span>
                             </div>
                             <p className={`text-lg max-w-sm leading-relaxed font-bold ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
-                                Designing the future of professional qualification through innovation and
-                                global standard-setting.
+                                혁신적인 글로벌 표준 수립을 통해 전문 자격 제도의 미래를 선도합니다.
                             </p>
                         </div>
 
                         <div className="space-y-8">
-                            <h4 className={`text-sm font-black tracking-[0.2em] uppercase ${isDarkMode ? 'text-white' : 'text-slate-400'}`}>Navigation</h4>
+                            <h4 className={`text-sm font-black tracking-[0.2em] uppercase ${isDarkMode ? 'text-white' : 'text-slate-400'}`}>바로가기</h4>
                             <ul className={`space-y-4 font-bold ${isDarkMode ? 'text-slate-500' : 'text-slate-500'}`}>
-                                <li><a href="#" className="hover:text-emerald-600 transition-colors">HOME</a></li>
-                                <li><Link to="/login" className="hover:text-emerald-600 transition-colors underline decoration-emerald-500/50 underline-offset-8 uppercase">SYSTEM LOGIN</Link></li>
+                                <li><a href="#" className="hover:text-emerald-600 transition-colors">홈</a></li>
+                                <li><Link to="/login" className="hover:text-emerald-600 transition-colors underline decoration-emerald-500/50 underline-offset-8 uppercase">관계자 로그인</Link></li>
                             </ul>
                         </div>
 
                         <div className="space-y-8">
-                            <h4 className={`text-sm font-black tracking-[0.2em] uppercase ${isDarkMode ? 'text-white' : 'text-slate-400'}`}>Contact</h4>
+                            <h4 className={`text-sm font-black tracking-[0.2em] uppercase ${isDarkMode ? 'text-white' : 'text-slate-400'}`}>문의처</h4>
                             <ul className={`space-y-4 font-bold ${isDarkMode ? 'text-slate-500' : 'text-slate-500'}`}>
                                 <li>contact@kcqa.org</li>
-                                <li>+1 (877) 287-5034</li>
-                                <li>580 Global Plaza, Suite 400 <br />San Francisco, CA 94105</li>
+                                <li>010-5909-9320</li>
+                                <li>길주로270 <br />대한민국 경기도 부천시</li>
                             </ul>
                         </div>
                     </div>
@@ -407,8 +416,8 @@ export const Landing: React.FC = () => {
                         }`}>
                         <p>© 2025 KOREA CIVIL QUALIFICATION ASSOCIATION</p>
                         <div className="flex gap-12">
-                            <a href="#" className="hover:text-emerald-600 transition-colors">Privacy Policy</a>
-                            <a href="#" className="hover:text-emerald-600 transition-colors">Terms of Service</a>
+                            <a href="#" className="hover:text-emerald-600 transition-colors">개인정보처리방침</a>
+                            <a href="#" className="hover:text-emerald-600 transition-colors">이용약관</a>
                         </div>
                     </div>
                 </div>
@@ -422,10 +431,10 @@ export const Landing: React.FC = () => {
                         <div className="p-6 md:p-8 flex flex-col h-full overflow-hidden">
                             <div className="shrink-0 flex justify-between items-start mb-6">
                                 <div>
-                                    <h3 className={`text-2xl font-black font-display ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Verification</h3>
+                                    <h3 className={`text-2xl font-black font-display ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>자격 결과</h3>
                                     <div className="flex items-center gap-2">
                                         <p className={`text-sm font-bold ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
-                                            Candidate Profile Found
+                                            자격 정보 확인됨
                                         </p>
                                         {foundCerts.length > 1 && (
                                             <span className={`text-xs px-2 py-0.5 rounded-full font-bold ${isDarkMode ? 'bg-slate-800 text-emerald-400' : 'bg-slate-100 text-blue-600'}`}>
@@ -473,39 +482,39 @@ export const Landing: React.FC = () => {
 
                                 <div className="space-y-3 pb-4">
                                     <div className={`p-3 rounded-xl ${isDarkMode ? 'bg-slate-950/50 border border-slate-800' : 'bg-slate-50 border border-slate-100'}`}>
-                                        <p className={`text-[10px] uppercase font-black mb-0.5 cursor-default ${isDarkMode ? 'text-slate-600' : 'text-slate-400'}`}>KCQA Number</p>
+                                        <p className={`text-[10px] uppercase font-black mb-0.5 cursor-default ${isDarkMode ? 'text-slate-600' : 'text-slate-400'}`}>KCQA 등록번호</p>
                                         <p className={`text-base font-black font-mono ${isDarkMode ? 'text-emerald-400' : 'text-blue-600'}`}>{foundCerts[certIndex].kcqaNumber}</p>
                                     </div>
                                     <div className={`p-3 rounded-xl ${isDarkMode ? 'bg-slate-950/50 border border-slate-800' : 'bg-slate-50 border border-slate-100'}`}>
-                                        <p className={`text-[10px] uppercase font-black mb-0.5 cursor-default ${isDarkMode ? 'text-slate-600' : 'text-slate-400'}`}>Civil Qualification Number</p>
+                                        <p className={`text-[10px] uppercase font-black mb-0.5 cursor-default ${isDarkMode ? 'text-slate-600' : 'text-slate-400'}`}>민간자격 등록번호</p>
                                         <p className={`text-sm font-black ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{foundCerts[certIndex].ncqaNumber}</p>
                                     </div>
                                     <div className={`p-3 rounded-xl ${isDarkMode ? 'bg-slate-950/50 border border-slate-800' : 'bg-slate-50 border border-slate-100'}`}>
-                                        <p className={`text-[10px] uppercase font-black mb-0.5 cursor-default ${isDarkMode ? 'text-slate-600' : 'text-slate-400'}`}>Qualification Type</p>
+                                        <p className={`text-[10px] uppercase font-black mb-0.5 cursor-default ${isDarkMode ? 'text-slate-600' : 'text-slate-400'}`}>자격 종목</p>
                                         <p className={`text-sm font-black ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{foundCerts[certIndex].qualificationType}</p>
                                     </div>
                                     <div className={`p-3 rounded-xl ${isDarkMode ? 'bg-slate-950/50 border border-slate-800' : 'bg-slate-50 border border-slate-100'}`}>
-                                        <p className={`text-[10px] uppercase font-black mb-0.5 cursor-default ${isDarkMode ? 'text-slate-600' : 'text-slate-400'}`}>Date Issue</p>
+                                        <p className={`text-[10px] uppercase font-black mb-0.5 cursor-default ${isDarkMode ? 'text-slate-600' : 'text-slate-400'}`}>발급일자</p>
                                         <p className={`text-sm font-black ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{foundCerts[certIndex].issueDate}</p>
                                     </div>
                                     <div className={`p-3 rounded-xl ${isDarkMode ? 'bg-slate-950/50 border border-slate-800' : 'bg-slate-50 border border-slate-100'}`}>
-                                        <p className={`text-[10px] uppercase font-black mb-0.5 cursor-default ${isDarkMode ? 'text-slate-600' : 'text-slate-400'}`}>Education Department</p>
+                                        <p className={`text-[10px] uppercase font-black mb-0.5 cursor-default ${isDarkMode ? 'text-slate-600' : 'text-slate-400'}`}>교육 과정</p>
                                         <p className={`text-sm font-black ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{foundCerts[certIndex].eduDept}</p>
                                     </div>
                                     <div className={`p-3 rounded-xl ${isDarkMode ? 'bg-slate-950/50 border border-slate-800' : 'bg-slate-50 border border-slate-100'}`}>
-                                        <p className={`text-[10px] uppercase font-black mb-0.5 cursor-default ${isDarkMode ? 'text-slate-600' : 'text-slate-400'}`}>Issuing Office</p>
+                                        <p className={`text-[10px] uppercase font-black mb-0.5 cursor-default ${isDarkMode ? 'text-slate-600' : 'text-slate-400'}`}>발급 기관</p>
                                         <p className={`text-sm font-black ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{foundCerts[certIndex].issuingOffice}</p>
                                     </div>
                                     <div className={`p-3 rounded-xl ${isDarkMode ? 'bg-slate-950/50 border border-slate-800' : 'bg-slate-50 border border-slate-100'}`}>
-                                        <p className={`text-[10px] uppercase font-black mb-0.5 cursor-default ${isDarkMode ? 'text-slate-600' : 'text-slate-400'}`}>Issuing Country</p>
+                                        <p className={`text-[10px] uppercase font-black mb-0.5 cursor-default ${isDarkMode ? 'text-slate-600' : 'text-slate-400'}`}>발급 국가</p>
                                         <p className={`text-sm font-black ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{foundCerts[certIndex].issuingCountry}</p>
                                     </div>
                                     <div className={`p-3 rounded-xl ${isDarkMode ? 'bg-slate-950/50 border border-slate-800' : 'bg-slate-50 border border-slate-100'}`}>
-                                        <p className={`text-[10px] uppercase font-black mb-0.5 cursor-default ${isDarkMode ? 'text-slate-600' : 'text-slate-400'}`}>Expiration Date</p>
+                                        <p className={`text-[10px] uppercase font-black mb-0.5 cursor-default ${isDarkMode ? 'text-slate-600' : 'text-slate-400'}`}>유효기간</p>
                                         <p className={`text-sm font-black ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{foundCerts[certIndex].expirationDate || 'N/A'}</p>
                                     </div>
                                     <div className={`p-3 rounded-xl ${isDarkMode ? 'bg-slate-950/50 border border-slate-800' : 'bg-slate-50 border border-slate-100'}`}>
-                                        <p className={`text-[10px] uppercase font-black mb-0.5 cursor-default ${isDarkMode ? 'text-slate-600' : 'text-slate-400'}`}>Verified Body</p>
+                                        <p className={`text-[10px] uppercase font-black mb-0.5 cursor-default ${isDarkMode ? 'text-slate-600' : 'text-slate-400'}`}>검증 기관</p>
                                         <p className={`text-sm font-black ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{KCQA_NAME}</p>
                                     </div>
                                 </div>
@@ -519,7 +528,7 @@ export const Landing: React.FC = () => {
                                         : 'bg-blue-600 hover:bg-blue-700 text-white shadow-blue-600/20'
                                         }`}
                                 >
-                                    Certificate
+                                    증서 보기
                                 </button>
                             </div>
                         </div>
