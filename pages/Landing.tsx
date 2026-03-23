@@ -373,6 +373,32 @@ export const Landing: React.FC = () => {
                             <p className={`text-xl leading-relaxed font-bold ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
                                 이미 수백 명의 민간자격 보유자들이 등록하여 소중한 자신의 가치를 증명했습니다.
                             </p>
+
+
+<div className="flex flex-col sm:flex-row gap-4">
+  {/* 카카오톡 상담하기 버튼: 주석의 실제 주소를 적용했습니다 */}
+  <a 
+    href="https://open.kakao.com/o/sksqjRmi" 
+    target="_blank" 
+    rel="noopener noreferrer"
+    className="px-10 py-5 bg-emerald-600 text-white rounded-full font-black hover:bg-emerald-500 transition-all shadow-xl flex items-center justify-center"
+  >
+    카카오톡 상담하기
+  </a>
+
+  {/* 전화 문의 버튼: 전화번호만 실제 번호로 바꾸시면 됩니다 */}
+  <a 
+    href="tel:010-XXXX-XXXX" 
+    className={`px-10 py-5 border rounded-full font-black text-center ${isDarkMode ? 'bg-slate-800/40 border-white/10 text-white hover:bg-slate-800' : 'bg-white border-slate-200 text-slate-900 hover:bg-slate-50'}`}
+  >
+    전화 문의
+  </a>
+</div>
+
+
+
+
+                            
                             <div className="flex flex-col sm:flex-row gap-4">
                                 <button className="px-10 py-5 bg-emerald-600 text-white rounded-full font-black hover:bg-emerald-500 transition-all shadow-xl shadow-emerald-600/20">자격 신청</button>
                                 <button className={`px-10 py-5 border rounded-full font-black transition-all ${isDarkMode ? 'bg-white/5 border-white/10 text-white hover:bg-white/10' : 'bg-slate-50 border-slate-200 text-slate-950 hover:bg-slate-100'
