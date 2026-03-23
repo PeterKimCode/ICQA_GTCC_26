@@ -373,41 +373,7 @@ export const Landing: React.FC = () => {
                             <p className={`text-xl leading-relaxed font-bold ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
                                 이미 수백 명의 민간자격 보유자들이 등록하여 소중한 자신의 가치를 증명했습니다.
                             </p>
-
-
-const handleKakaoSubmit = () => {
-  // 1. 입력창에 있는 값들을 가져옵니다 (상태관리 변수 이름에 맞게 수정하세요)
-  const name = document.querySelector('input[placeholder="성명 입력"]').value;
-  const email = document.querySelector('input[placeholder="이메일 입력"]').value;
-  const message = document.querySelector('textarea[placeholder="문의 내용 입력"]').value;
-
-  if (!name || !message) {
-    alert("성함과 문의 내용을 입력해주세요.");
-    return;
-  }
-
-  // 2. 카카오톡으로 보낼 메시지 구성
-  const baseText = `[등록 문의]\n- 성함: ${name}\n- 이메일: ${email}\n- 내용: ${message}`;
-  
-  // 3. 카카오톡 오픈채팅 주소 (본인 주소로 확인)
-  const chatUrl = "https://open.kakao.com/o/sksqjRmi";
-
-  // 4. 알림 후 이동 (사용자가 내용을 복사할 수 있게 안내하거나 바로 이동)
-  alert("카카오톡 상담으로 연결됩니다. 상담창이 뜨면 내용을 다시 한번 말씀해 주세요!");
-  window.open(chatUrl, '_blank');
-};
-
-// ... 버튼 부분
-<button 
-  onClick={handleKakaoSubmit}
-  className={`w-full py-4 rounded-xl font-black transition-all ${isDarkMode ? 'bg-white text-slate-950' : 'bg-slate-900 text-white'}`}
->
-  문의하기
-</button>
-
-
-
-                            
+                        
                             <div className="flex flex-col sm:flex-row gap-4">
                                 <button className="px-10 py-5 bg-emerald-600 text-white rounded-full font-black hover:bg-emerald-500 transition-all shadow-xl shadow-emerald-600/20">자격 신청</button>
                                 <button className={`px-10 py-5 border rounded-full font-black transition-all ${isDarkMode ? 'bg-white/5 border-white/10 text-white hover:bg-white/10' : 'bg-slate-50 border-slate-200 text-slate-950 hover:bg-slate-100'
@@ -421,6 +387,40 @@ const handleKakaoSubmit = () => {
                                 }`} />
                             <textarea placeholder="문의 내용 입력" rows={4} className={`w-full border rounded-xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 resize-none ${isDarkMode ? 'bg-slate-950 border-white/5 text-white' : 'bg-white border-slate-200 text-slate-950'
                                 }`}></textarea>
+                           
+                            
+<button 
+  onClick={() => {
+    // 1. 입력창에 쓴 이름과 문의내용을 가져옵니다.
+    const name = document.querySelector('input[placeholder="성명 입력"]')?.value || "";
+    const content = document.querySelector('textarea[placeholder="문의 내용 입력"]')?.value || "";
+
+    if (!name || !content) {
+      alert("성함과 문의 내용을 입력해 주세요.");
+      return;
+    }
+
+    // 2. 알림창을 띄우고 본인의 카톡 오픈채팅으로 연결합니다.
+    alert(`${name}님, 문의 내용을 복사하여 카카오톡 상담창에 붙여넣어 주세요!`);
+    window.open("https://open.kakao.com/o/sksqjRmi", "_blank");
+  }}
+  className={`w-full py-4 rounded-xl font-black transition-all ${
+    isDarkMode 
+      ? 'bg-white text-slate-950 hover:bg-emerald-400' 
+      : 'bg-slate-900 text-white hover:bg-emerald-600'
+  }`}
+>
+  문의하기
+</button>                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
                             <button className={`w-full py-4 rounded-xl font-black transition-all ${isDarkMode ? 'bg-white text-slate-950 hover:bg-emerald-400' : 'bg-slate-900 text-white hover:bg-emerald-600'
                                 }`}>문의하기</button>
                         </div>
