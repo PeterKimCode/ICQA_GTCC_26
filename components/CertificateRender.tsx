@@ -26,27 +26,27 @@ export const CertificateRender: React.FC<Props> = ({ data, isPreview = false }) 
   const FONT_PARAGRAPH = "35px";
 
   // Line Height / Spacing
-  const LEADING_NORMAL = "30px";
-  const LEADING_DOUBLE = "34px";
+  const LEADING_NORMAL = "1.2";
+  const LEADING_DOUBLE = "1.5";
 
   // Max width for fields - Reduced to 760px to avoid hitting the photo at x=1660
   const MAX_TEXT_WIDTH = '760px';
 
   // --- COMPACT ROW POSITIONS ---
-  // Uniform spacing for ALL rows to ensure consistent padding
-  const START_Y = 420;
-  const ROW_STEP = 44; // Uniform gap
+  // Shifted down and spaced a bit more
+  const START_Y = 520;
+  const ROW_STEP = 50; // Uniform gap
 
-  const ROW_1_Y = START_Y;                // 420
-  const ROW_2_Y = START_Y + ROW_STEP * 1; // 464
-  const ROW_3_Y = START_Y + ROW_STEP * 2; // 508
-  const ROW_4_Y = START_Y + ROW_STEP * 3; // 552
-  const ROW_5_Y = START_Y + ROW_STEP * 4; // 596
-  const ROW_6_Y = START_Y + ROW_STEP * 5; // 640
-  const ROW_7_Y = START_Y + ROW_STEP * 6; // 684
-  const ROW_8_Y = START_Y + ROW_STEP * 7; // 728
-  const ROW_9_Y = START_Y + ROW_STEP * 8; // 772
-  const ROW_10_Y = START_Y + ROW_STEP * 9; // 816
+  const ROW_1_Y = START_Y;                
+  const ROW_2_Y = START_Y + ROW_STEP * 1; 
+  const ROW_3_Y = START_Y + ROW_STEP * 2; 
+  const ROW_4_Y = START_Y + ROW_STEP * 3; 
+  const ROW_5_Y = START_Y + ROW_STEP * 4; 
+  const ROW_6_Y = START_Y + ROW_STEP * 5; 
+  const ROW_7_Y = START_Y + ROW_STEP * 6; 
+  const ROW_8_Y = START_Y + ROW_STEP * 7; 
+  const ROW_9_Y = START_Y + ROW_STEP * 8; 
+  const ROW_10_Y = START_Y + ROW_STEP * 9; 
 
   return (
     <div
@@ -78,7 +78,7 @@ export const CertificateRender: React.FC<Props> = ({ data, isPreview = false }) 
       <div className="absolute z-[10]" style={{ top: `${ROW_1_Y}px`, left: `${LABEL_X}px` }}>
         <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>KCQA 번호 :</span>
       </div>
-      <div className="absolute z-[10]" style={{ top: `${ROW_1_Y}px`, left: `${VALUE_X}px`, width: '500px', height: '34px' }}>
+      <div className="absolute z-[10]" style={{ top: `${ROW_1_Y}px`, left: `${VALUE_X}px`, width: '500px', height: 'auto' }}>
         <span className="font-serif font-bold text-kcqa-red block" style={{ fontSize: FONT_KCQA, lineHeight: LEADING_NORMAL }}>
           {data.kcqaNumber}
         </span>
@@ -88,7 +88,7 @@ export const CertificateRender: React.FC<Props> = ({ data, isPreview = false }) 
       <div className="absolute z-[10]" style={{ top: `${ROW_2_Y}px`, left: `${LABEL_X}px` }}>
         <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>성명 :</span>
       </div>
-      <div className="absolute z-[10]" style={{ top: `${ROW_2_Y}px`, left: `${VALUE_X}px`, width: MAX_TEXT_WIDTH, height: '34px' }}>
+      <div className="absolute z-[10]" style={{ top: `${ROW_2_Y}px`, left: `${VALUE_X}px`, width: MAX_TEXT_WIDTH, height: 'auto' }}>
         <span className="font-serif font-bold text-black uppercase truncate block" style={{ fontSize: FONT_NAME, lineHeight: LEADING_NORMAL }}>
           {data.name}
         </span>
@@ -98,7 +98,7 @@ export const CertificateRender: React.FC<Props> = ({ data, isPreview = false }) 
       <div className="absolute z-[10]" style={{ top: `${ROW_3_Y}px`, left: `${LABEL_X}px` }}>
         <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>민간자격번호 :</span>
       </div>
-      <div className="absolute z-[10]" style={{ top: `${ROW_3_Y}px`, left: `${VALUE_X}px`, width: '500px', height: '34px' }}>
+      <div className="absolute z-[10]" style={{ top: `${ROW_3_Y}px`, left: `${VALUE_X}px`, width: '500px', height: 'auto' }}>
         <span className="font-serif font-bold text-black block" style={{ fontSize: FONT_VALUE, lineHeight: LEADING_NORMAL }}>
           {data.ncqaNumber}
         </span>
@@ -108,7 +108,7 @@ export const CertificateRender: React.FC<Props> = ({ data, isPreview = false }) 
       <div className="absolute z-[10]" style={{ top: `${ROW_4_Y}px`, left: `${LABEL_X}px` }}>
         <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>민간자격종목 :</span>
       </div>
-      <div className="absolute z-[10]" style={{ top: `${ROW_4_Y}px`, left: `${VALUE_X}px`, width: MAX_TEXT_WIDTH, height: '34px' }}>
+      <div className="absolute z-[10]" style={{ top: `${ROW_4_Y}px`, left: `${VALUE_X}px`, width: MAX_TEXT_WIDTH, height: 'auto' }}>
         <span className="font-serif font-bold text-black truncate block" style={{ fontSize: FONT_VALUE, lineHeight: LEADING_NORMAL }}>
           {data.qualificationType}
         </span>
@@ -118,7 +118,7 @@ export const CertificateRender: React.FC<Props> = ({ data, isPreview = false }) 
       <div className="absolute z-[10]" style={{ top: `${ROW_5_Y}px`, left: `${LABEL_X}px` }}>
         <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>발급일 :</span>
       </div>
-      <div className="absolute z-[10]" style={{ top: `${ROW_5_Y}px`, left: `${VALUE_X}px`, width: '500px', height: '34px' }}>
+      <div className="absolute z-[10]" style={{ top: `${ROW_5_Y}px`, left: `${VALUE_X}px`, width: '500px', height: 'auto' }}>
         <span className="font-serif font-bold text-black block" style={{ fontSize: FONT_VALUE, lineHeight: LEADING_NORMAL }}>
           {data.issueDate}
         </span>
@@ -128,7 +128,7 @@ export const CertificateRender: React.FC<Props> = ({ data, isPreview = false }) 
       <div className="absolute z-[10]" style={{ top: `${ROW_6_Y}px`, left: `${LABEL_X}px` }}>
         <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>교육기관 :</span>
       </div>
-      <div className="absolute z-[10]" style={{ top: `${ROW_6_Y}px`, left: `${VALUE_X}px`, width: MAX_TEXT_WIDTH, height: '40px' }}>
+      <div className="absolute z-[10]" style={{ top: `${ROW_6_Y}px`, left: `${VALUE_X}px`, width: MAX_TEXT_WIDTH, height: 'auto' }}>
         <span className="font-serif font-bold text-black block line-clamp-1" style={{ fontSize: FONT_VALUE, lineHeight: LEADING_NORMAL }}>
           {data.eduDept}
         </span>
@@ -138,7 +138,7 @@ export const CertificateRender: React.FC<Props> = ({ data, isPreview = false }) 
       <div className="absolute z-[10]" style={{ top: `${ROW_7_Y}px`, left: `${LABEL_X}px` }}>
         <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>발급기관 :</span>
       </div>
-      <div className="absolute z-[10]" style={{ top: `${ROW_7_Y}px`, left: `${VALUE_X}px`, width: MAX_TEXT_WIDTH, height: '40px' }}>
+      <div className="absolute z-[10]" style={{ top: `${ROW_7_Y}px`, left: `${VALUE_X}px`, width: MAX_TEXT_WIDTH, height: 'auto' }}>
         <span className="font-serif font-bold text-black block line-clamp-1" style={{ fontSize: FONT_VALUE, lineHeight: LEADING_NORMAL }}>
           {data.issuingOffice}
         </span>
@@ -148,7 +148,7 @@ export const CertificateRender: React.FC<Props> = ({ data, isPreview = false }) 
       <div className="absolute z-[10]" style={{ top: `${ROW_8_Y}px`, left: `${LABEL_X}px` }}>
         <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>발급국가 :</span>
       </div>
-      <div className="absolute z-[10]" style={{ top: `${ROW_8_Y}px`, left: `${VALUE_X}px`, width: '500px', height: '34px' }}>
+      <div className="absolute z-[10]" style={{ top: `${ROW_8_Y}px`, left: `${VALUE_X}px`, width: '500px', height: 'auto' }}>
         <span className="font-serif font-bold text-black block" style={{ fontSize: FONT_VALUE, lineHeight: LEADING_NORMAL }}>
           {data.issuingCountry}
         </span>
@@ -158,7 +158,7 @@ export const CertificateRender: React.FC<Props> = ({ data, isPreview = false }) 
       <div className="absolute z-[10]" style={{ top: `${ROW_9_Y}px`, left: `${LABEL_X}px` }}>
         <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>유효기간 :</span>
       </div>
-      <div className="absolute z-[10]" style={{ top: `${ROW_9_Y}px`, left: `${VALUE_X}px`, width: '500px', height: '34px' }}>
+      <div className="absolute z-[10]" style={{ top: `${ROW_9_Y}px`, left: `${VALUE_X}px`, width: '500px', height: 'auto' }}>
         <span className="font-serif font-bold text-black block" style={{ fontSize: FONT_VALUE, lineHeight: LEADING_NORMAL }}>
           {data.expirationDate || 'N/A'}
         </span>
@@ -168,7 +168,7 @@ export const CertificateRender: React.FC<Props> = ({ data, isPreview = false }) 
       <div className="absolute z-[10]" style={{ top: `${ROW_10_Y}px`, left: `${LABEL_X}px` }}>
         <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>검증기관 :</span>
       </div>
-      <div className="absolute z-[10]" style={{ top: `${ROW_10_Y}px`, left: `${VALUE_X}px`, width: MAX_TEXT_WIDTH, height: '34px' }}>
+      <div className="absolute z-[10]" style={{ top: `${ROW_10_Y}px`, left: `${VALUE_X}px`, width: MAX_TEXT_WIDTH, height: 'auto' }}>
         <span className="font-serif font-extrabold text-black block tracking-tight" style={{ fontSize: FONT_VALUE, lineHeight: LEADING_NORMAL }}>
           {KCQA_NAME}
         </span>
@@ -177,12 +177,10 @@ export const CertificateRender: React.FC<Props> = ({ data, isPreview = false }) 
 
       {/* ------------------------------------------------------------
           3. PHOTO ZONE (Z-Index: 20)
-          y: 464 (Starts at Row 2 Name), w: 420, h: 430 (Ends at y=894 approx)
-          Shifted x from 1600 to 1660
       ------------------------------------------------------------ */}
       <div
         className="absolute z-[20] bg-gray-50 flex items-center justify-center overflow-hidden"
-        style={{ top: '464px', left: '1660px', width: '420px', height: '430px' }}
+        style={{ top: `${ROW_2_Y}px`, left: '1660px', width: '420px', height: '430px' }}
       >
         {data.photoUrl ? (
           <img src={data.photoUrl} alt="Recipient" className="w-full h-full object-cover" />
@@ -194,17 +192,11 @@ export const CertificateRender: React.FC<Props> = ({ data, isPreview = false }) 
 
       {/* ------------------------------------------------------------
           4. PARAGRAPH (BODY) ZONE (Z-Index: 10)
-          Moved to 960px to clear the Photo (which ends at 940px)
-          Width matched to content boundaries:
-            Left: 400px (Label X)
-            Right: 2080px (Photo end: 1660 + 420)
-            Total Width: 1680px
-          Height increased to 450px to prevent truncation
       ------------------------------------------------------------ */}
       <div
         className="absolute z-[10] text-center font-serif text-gray-700"
         style={{
-          top: '960px',
+          top: '1100px',
           left: '400px',
           width: '1680px',
           height: '450px',
