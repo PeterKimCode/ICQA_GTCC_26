@@ -383,7 +383,7 @@ export const Landing: React.FC = () => {
     rel="noreferrer"
     className="px-10 py-5 bg-emerald-600 text-white rounded-full font-black hover:bg-emerald-500 transition-all shadow-xl shadow-emerald-600/20 text-center"
   >
-    자격 신청
+    자격등록절차
   </a>
 
   {/* 상담 문의 링크 (다크모드 대응 버튼) */}
