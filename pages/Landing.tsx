@@ -373,12 +373,34 @@ export const Landing: React.FC = () => {
                             <p className={`text-xl leading-relaxed font-bold ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
                                 이미 수백 명의 민간자격 보유자들이 등록하여 소중한 자신의 가치를 증명했습니다.
                             </p>
-                        
-                            <div className="flex flex-col sm:flex-row gap-4">
-                                <button className="px-10 py-5 bg-emerald-600 text-white rounded-full font-black hover:bg-emerald-500 transition-all shadow-xl shadow-emerald-600/20">자격 신청</button>
-                                <button className={`px-10 py-5 border rounded-full font-black transition-all ${isDarkMode ? 'bg-white/5 border-white/10 text-white hover:bg-white/10' : 'bg-slate-50 border-slate-200 text-slate-950 hover:bg-slate-100'
-                                    }`}>상담 문의</button>
-                            </div>
+
+
+<div className="flex flex-col sm:flex-row gap-4">
+  {/* 자격 신청 링크 (초록색 버튼) */}
+  <a 
+    href="http://yfloavmotj9hz8g2ivvxyqpfin2ciap.quickconnect.to/sharing/Mz6k7oxkB" 
+    target="_blank" 
+    rel="noreferrer"
+    className="px-10 py-5 bg-emerald-600 text-white rounded-full font-black hover:bg-emerald-500 transition-all shadow-xl shadow-emerald-600/20 text-center"
+  >
+    자격 신청
+  </a>
+
+  {/* 상담 문의 링크 (다크모드 대응 버튼) */}
+  <a 
+    href="http://yfloavmotj9hz8g2ivvxyqpfin2ciap.quickconnect.to/sharing/Mz6k7oxkB" 
+    target="_blank" 
+    rel="noreferrer"
+    className={`px-10 py-5 border rounded-full font-black transition-all text-center ${
+      isDarkMode 
+        ? 'bg-white/5 border-white/10 text-white hover:bg-white/10' 
+        : 'bg-slate-50 border-slate-200 text-slate-900 hover:bg-slate-100'
+    }`}
+  >
+    상담 문의
+  </a>
+</div>
+
                         </div>
                         <div className={`border p-8 rounded-[2rem] space-y-4 shadow-sm ${isDarkMode ? 'bg-slate-900/50 border-white/10' : 'bg-slate-50 border-slate-200'}`}>
                             <input type="text" placeholder="성명 입력" className={`w-full border rounded-xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${isDarkMode ? 'bg-slate-950 border-white/5 text-white' : 'bg-white border-slate-200 text-slate-950'
