@@ -128,7 +128,7 @@ export const Landing: React.FC = () => {
                                 className="flex items-center gap-2 px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-full transition-all transform hover:scale-105 shadow-lg shadow-emerald-600/20 text-sm font-semibold tracking-wide"
                             >
                                 <LogIn className="w-4 h-4" />
-                                <span>관계자 시스템 접속</span>
+                                <span>kcqaadmin</span>
                             </Link>
                         </div>
 
@@ -172,7 +172,7 @@ export const Landing: React.FC = () => {
                         </span>
                     </h1>
                     <p className={`max-w-3xl mx-auto text-xl mb-12 leading-relaxed font-medium ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-                        한국 민간자격관리 정보서비스는 기관과 개인이 민간자격을 보다 편리하고 체계적으로 관리할 수 있도록 지원합니다.
+                        한국 민간자격관리 정보서비스는 기관과 개인의 민간자격을 보다 편리하고 체계적으로 관리할 수 있도록 지원합니다.
                     </p>
 
                     <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
@@ -297,7 +297,7 @@ export const Landing: React.FC = () => {
                                     <Globe className="w-6 h-6" />
                                 </div>
                                 <h3 className={`text-lg font-bold mb-2 ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>글로벌 인정</h3>
-                                <p className={isDarkMode ? 'text-slate-500' : 'text-slate-500'}>국경과 산업을 초월하여 인정받는 전문 자격입니다.</p>
+                                <p className={isDarkMode ? 'text-slate-500' : 'text-slate-500'}>전세계 어디에서든 등록된 자격의 유효성을 확인하실수 있습니다.</p>
                             </div>
                         </div>
                     </div>
@@ -356,9 +356,9 @@ export const Landing: React.FC = () => {
                 <div className="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-[3.5rem] p-1 shadow-2xl shadow-emerald-600/20">
                     <div className={`rounded-[3.4rem] p-8 lg:p-20 grid lg:grid-cols-2 gap-16 items-center ${isDarkMode ? 'bg-slate-950' : 'bg-white'}`}>
                         <div className="space-y-8">
-                            <h2 className={`text-4xl lg:text-5xl font-black font-display ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>전문성을 입증할 <br />준비가 되셨습니까?</h2>
+                            <h2 className={`text-4xl lg:text-5xl font-black font-display ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>민간자격증을 입증할 <br />준비가 되셨습니까?</h2>
                             <p className={`text-xl leading-relaxed font-bold ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-                                이미 수천 명의 전문가들이 KCQA를 통해 자신의 가치를 증명했습니다.
+                                이미 수백 명의 민간자격 보유자들이 등록하여 소중한 자신의 가치를 증명했습니다.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-4">
                                 <button className="px-10 py-5 bg-emerald-600 text-white rounded-full font-black hover:bg-emerald-500 transition-all shadow-xl shadow-emerald-600/20">자격 신청</button>
@@ -390,7 +390,7 @@ export const Landing: React.FC = () => {
                                 <span className={`text-3xl font-black font-display tracking-tighter ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>KCQA</span>
                             </div>
                             <p className={`text-lg max-w-sm leading-relaxed font-bold ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
-                                혁신적인 글로벌 표준 수립을 통해 전문 자격 제도의 미래를 선도합니다.
+                                혁신적인 민간자격 관리를 통해 여러분의 소중한 민간자격을 관리 보호 합니다.
                             </p>
                         </div>
 
@@ -407,7 +407,7 @@ export const Landing: React.FC = () => {
                             <ul className={`space-y-4 font-bold ${isDarkMode ? 'text-slate-500' : 'text-slate-500'}`}>
                                 <li>yjisc@naver.com</li>
                                 <li>010-5909-9320</li>
-                                <li>길주로270 <br />경기도 부천시</li>
+                                <li>경기도 부천시<br />길주로 270</li>
                             </ul>
                         </div>
                     </div>
