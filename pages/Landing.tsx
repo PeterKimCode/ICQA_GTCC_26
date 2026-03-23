@@ -190,7 +190,7 @@ export const Landing: React.FC = () => {
 
   {/* 협회 소개 링크: 외부 주소로 연결 */}
   <a 
-    href="http://yfloavmotj9hz8g2ivvxyqpfin2ciap.quickconnect.to/sharing/W9iDI9Am7" 
+    href="http://yfloavmotj9hz8g2ivvxyqpfin2ciap.quickconnect.to/sharing/0WoH0deY2" 
     target="_blank" 
     rel="noopener noreferrer"
     className={`px-10 py-5 border rounded-full font-black transition-all ${isDarkMode ? 'bg-slate-800/40 border-white/10 text-white hover:bg-slate-800' : 'bg-white border-slate-200 text-slate-900 hover:bg-slate-50'}`}
