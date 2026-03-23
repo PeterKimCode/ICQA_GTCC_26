@@ -387,10 +387,10 @@ export const Landing: React.FC = () => {
                         <div className="col-span-1 lg:col-span-2 space-y-8">
                             <div className="flex items-center gap-3">
                                 <img src="/logo.png" alt="KCQA Logo" className="w-12 h-12 object-contain" />
-                                <span className={`text-3xl font-black font-display tracking-tighter ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>KCQA부설 Korea Private Qualification Management Information Service</span>
+                                <span className={`text-3xl font-black font-display tracking-tighter ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>KCQA</span>
                             </div>
                             <p className={`text-lg max-w-sm leading-relaxed font-bold ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
-                                혁신적인 민간자격 관리를 통해 여러분의 소중한 민간자격을 관리 보호 합니다.
+                                부설기관:Korea Private Qualification Management Information Service
                             </p>
                         </div>
 
