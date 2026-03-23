@@ -106,8 +106,8 @@ export const CertificateEditor: React.FC = () => {
     setLoading(true);
 
     // Simple validation
-    if (!formData.kcqaNumber || !formData.name || !formData.dob || !formData.holderEmail) {
-      alert("Please fill in all required fields (Name, DOB, Email, KCQA Number)");
+    if (!formData.kcqaNumber || !formData.name || !formData.dob || !formData.holderPhone) {
+      alert("Please fill in all required fields (Name, DOB, Phone Number, KCQA Number)");
       setLoading(false);
       return;
     }
@@ -166,8 +166,8 @@ export const CertificateEditor: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-gray-700 uppercase mb-1">Email (Required)</label>
-            <input type="email" name="holderEmail" value={formData.holderEmail || ''} onChange={handleInputChange} required className={inputClassName} placeholder="user@example.com" />
+            <label className="block text-xs font-semibold text-gray-700 uppercase mb-1">Phone Number (Required)</label>
+            <input type="tel" name="holderPhone" value={formData.holderPhone || ''} onChange={handleInputChange} required className={inputClassName} placeholder="Ex: 010-1234-5678" />
             <p className="text-[10px] text-gray-500 mt-1">Required for user identification and search</p>
           </div>
 

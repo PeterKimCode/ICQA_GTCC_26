@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS holders (
   name text NOT NULL,
   dob text NOT NULL,
   email text,
+  phone_number text, -- Added phone_number
   created_at timestamp with time zone DEFAULT timezone('utc'::text, now()) NOT NULL,
   updated_at timestamp with time zone DEFAULT timezone('utc'::text, now()) NOT NULL
 );
@@ -32,16 +33,18 @@ CREATE TABLE IF NOT EXISTS certificates (
 
 -- 2. Create Unique Indexes (Required for ON CONFLICT to work)
 CREATE UNIQUE INDEX IF NOT EXISTS idx_holders_email ON holders(email);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_holders_phone ON holders(phone_number); -- Added index
 CREATE UNIQUE INDEX IF NOT EXISTS idx_certificates_icqa ON certificates(icqa_number);
 
 -- 3. Insert Holders (Using ON CONFLICT to avoid duplicates)
-INSERT INTO holders (name, dob, email) VALUES 
-('KIM CHUL SOO', '1980-01-01', 'kim@example.com'),
-('LEE YOUNG HEE', '1990-05-15', 'lee@example.com'),
-('PARK JI SUNG', '1985-02-20', 'park@example.com'),
-('CHOI MIN SU', '1995-12-10', 'choi@example.com'),
-('JUNG DA BIN', '2000-07-07', 'jung@example.com')
-ON CONFLICT (email) DO NOTHING;
+-- Updated with phone numbers
+INSERT INTO holders (name, dob, email, phone_number) VALUES 
+('KIM CHUL SOO', '1980-01-01', 'kim@example.com', '010-1234-5678'),
+('LEE YOUNG HEE', '1990-05-15', 'lee@example.com', '010-9876-5432'),
+('PARK JI SUNG', '1985-02-20', 'park@example.com', '010-1111-2222'),
+('CHOI MIN SU', '1995-12-10', 'choi@example.com', '010-3333-4444'),
+('JUNG DA BIN', '2000-07-07', 'jung@example.com', '010-5555-6666')
+ON CONFLICT (email) DO UPDATE SET phone_number = EXCLUDED.phone_number;
 
 -- 4. Insert Certificates (Linking via Subquery)
 -- Kim's Cert 1
