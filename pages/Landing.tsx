@@ -175,6 +175,38 @@ export const Landing: React.FC = () => {
                         한국 민간자격관리 정보서비스는 기관과 개인의 민간자격을 보다 편리하고 체계적으로 관리할 수 있도록 지원합니다.
                     </p>
 
+                    
+<div className="flex flex-col sm:flex-row justify-center items-center gap-6">
+  {/* 민간자격확인 링크: 외부 주소로 연결 */}
+  <a 
+    href="http://yfloavmotj9hz8g2ivvxyqpfin2ciap.quickconnect.to/sharing/W9iDI9Am7" 
+    target="_blank" 
+    rel="noopener noreferrer"
+    className={`group px-10 py-5 rounded-full font-black transition-all transform hover:scale-105 shadow-xl flex items-center gap-2 ${isDarkMode ? 'bg-white text-slate-900' : 'bg-slate-900 text-white'}`}
+  >
+    민간자격확인
+    <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+  </a>
+
+  {/* 협회 소개 링크: 외부 주소로 연결 */}
+  <a 
+    href="http://yfloavmotj9hz8g2ivvxyqpfin2ciap.quickconnect.to/sharing/W9iDI9Am7" 
+    target="_blank" 
+    rel="noopener noreferrer"
+    className={`px-10 py-5 border rounded-full font-black transition-all ${isDarkMode ? 'bg-slate-800/40 border-white/10 text-white hover:bg-slate-800' : 'bg-white border-slate-200 text-slate-900 hover:bg-slate-50'}`}
+  >
+    협회 소개
+  </a>
+</div>
+
+
+
+
+
+
+
+
+                    
                     <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
                         <a href="#checker" className={`group px-10 py-5 rounded-full font-black transition-all transform hover:scale-105 shadow-xl flex items-center gap-2 ${isDarkMode ? 'bg-white text-slate-950 hover:bg-emerald-400 shadow-white/5' : 'bg-slate-900 text-white hover:bg-emerald-600 shadow-slate-200'
                             }`}>
