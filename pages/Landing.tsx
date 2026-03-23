@@ -174,34 +174,29 @@ export const Landing: React.FC = () => {
                     <p className={`max-w-3xl mx-auto text-xl mb-12 leading-relaxed font-medium ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
                         한국 민간자격관리 정보서비스는 기관과 개인의 민간자격을 보다 편리하고 체계적으로 관리할 수 있도록 지원합니다.
                     </p>
-
-                    
- <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
-  {/* 민간자격확인 링크: 외부 주소로 연결 */}
-  <a 
-    href="http://yfloavmotj9hz8g2ivvxyqpfin2ciap.quickconnect.to/sharing/XyOv74frJ" 
-    target="_blank" 
-    rel="noopener noreferrer"
-    className={`group px-10 py-5 rounded-full font-black transition-all transform hover:scale-105 shadow-xl flex items-center gap-2 ${isDarkMode ? 'bg-white text-slate-900' : 'bg-slate-900 text-white'}`}
-  >
-    민간자격확인이란?
-    <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-  </a>
-
-  {/* 협회 소개 링크: 외부 주소로 연결 */}
-  <a 
-    href="http://yfloavmotj9hz8g2ivvxyqpfin2ciap.quickconnect.to/sharing/0WoH0deY2" 
-    target="_blank" 
-    rel="noopener noreferrer"
-    className={`px-10 py-5 border rounded-full font-black transition-all ${isDarkMode ? 'bg-slate-800/40 border-white/10 text-white hover:bg-slate-800' : 'bg-white border-slate-200 text-slate-900 hover:bg-slate-50'}`}
-  >
-    KCQA 소개
-  </a>
-</div>
-
-                </div>
+                  <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
+                   {/* 민간자격확인 링크: 외부 주소로 연결 */}
+                   <a 
+                   href="http://yfloavmotj9hz8g2ivvxyqpfin2ciap.quickconnect.to/sharing/XyOv74frJ" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                 className={`group px-10 py-5 rounded-full font-black transition-all transform hover:scale-105 shadow-xl flex items-center gap-2 ${isDarkMode ? 'bg-white text-slate-900' : 'bg-slate-900 text-white'}`}
+                 >
+                 민간자격확인이란?
+                 <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                 </a>
+                 {/* 협회 소개 링크: 외부 주소로 연결 */}
+                 <a 
+                 href="http://yfloavmotj9hz8g2ivvxyqpfin2ciap.quickconnect.to/sharing/0WoH0deY2" 
+                 target="_blank" 
+                 rel="noopener noreferrer"
+                 className={`px-10 py-5 border rounded-full font-black transition-all ${isDarkMode ? 'bg-slate-800/40 border-white/10 text-white hover:bg-slate-800' : 'bg-white border-slate-200 text-slate-900 hover:bg-slate-50'}`}
+                 >
+                KCQA 소개
+                </a>
+               </div>
+              </div>
             </section>
-
             {/* Qualification Checker Section */}
             <section id="checker" className={`py-24 relative transition-colors ${isDarkMode ? 'bg-slate-900/50' : 'bg-slate-50'}`}>
                 <div className="max-w-5xl mx-auto px-4">
@@ -373,35 +368,31 @@ export const Landing: React.FC = () => {
                             <p className={`text-xl leading-relaxed font-bold ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
                                 이미 수백 명의 민간자격 보유자들이 등록하여 소중한 자신의 가치를 증명했습니다.
                             </p>
-
-
-<div className="flex flex-col sm:flex-row gap-4">
-  {/* 자격 신청 링크 (초록색 버튼) */}
-  <a 
-    href=" http://yfloavmotj9hz8g2ivvxyqpfin2ciap.quickconnect.to/sharing/sZKYTeIzP" 
-    target="_blank" 
-    rel="noreferrer"
-    className="px-10 py-5 bg-emerald-600 text-white rounded-full font-black hover:bg-emerald-500 transition-all shadow-xl shadow-emerald-600/20 text-center"
-  >
-    자격등록절차
-  </a>
-
-  {/* 상담 문의 링크 (다크모드 대응 버튼) */}
-  <a 
-    href="http://yfloavmotj9hz8g2ivvxyqpfin2ciap.quickconnect.to/sharing/Mz6k7oxkB" 
-    target="_blank" 
-    rel="noreferrer"
-    className={`px-10 py-5 border rounded-full font-black transition-all text-center ${
-      isDarkMode 
-        ? 'bg-white/5 border-white/10 text-white hover:bg-white/10' 
-        : 'bg-slate-50 border-slate-200 text-slate-900 hover:bg-slate-100'
-    }`}
-  >
-    상담 문의
-  </a>
-</div>
-
-                        </div>
+                          <div className="flex flex-col sm:flex-row gap-4">
+                          {/* 자격 신청 링크 (초록색 버튼) */}
+                         <a 
+                          href=" http://yfloavmotj9hz8g2ivvxyqpfin2ciap.quickconnect.to/sharing/sZKYTeIzP" 
+                          target="_blank" 
+                          rel="noreferrer"
+                         className="px-10 py-5 bg-emerald-600 text-white rounded-full font-black hover:bg-emerald-500 transition-all shadow-xl shadow-emerald-600/20 text-center"
+                         >
+                         자격등록절차
+                       </a>
+                     {/* 상담 문의 링크 (다크모드 대응 버튼) */}
+                   <a 
+                    href="http://yfloavmotj9hz8g2ivvxyqpfin2ciap.quickconnect.to/sharing/Mz6k7oxkB" 
+                    target="_blank" 
+                    rel="noreferrer"
+                   className={`px-10 py-5 border rounded-full font-black transition-all text-center ${
+                   isDarkMode 
+                   ? 'bg-white/5 border-white/10 text-white hover:bg-white/10' 
+                   : 'bg-slate-50 border-slate-200 text-slate-900 hover:bg-slate-100'
+                     }`}
+                   >
+                  상담 문의
+                </a>
+               </div>
+                   </div>
                         <div className={`border p-8 rounded-[2rem] space-y-4 shadow-sm ${isDarkMode ? 'bg-slate-900/50 border-white/10' : 'bg-slate-50 border-slate-200'}`}>
                             <input type="text" placeholder="성명 입력" className={`w-full border rounded-xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${isDarkMode ? 'bg-slate-950 border-white/5 text-white' : 'bg-white border-slate-200 text-slate-950'
                                 }`} />
@@ -409,34 +400,29 @@ export const Landing: React.FC = () => {
                                 }`} />
                             <textarea placeholder="문의 내용 입력" rows={4} className={`w-full border rounded-xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 resize-none ${isDarkMode ? 'bg-slate-950 border-white/5 text-white' : 'bg-white border-slate-200 text-slate-950'
                                 }`}></textarea>
-                           
-                            
-<button 
-  onClick={() => {
-    // 1. 입력창에 쓴 이름과 문의내용을 가져옵니다.
-    const name = document.querySelector('input[placeholder="성명 입력"]')?.value || "";
-    const content = document.querySelector('textarea[placeholder="문의 내용 입력"]')?.value || "";
-
-    if (!name || !content) {
-      alert("성함과 문의 내용을 입력해 주세요.");
-      return;
-    }
-
-    // 2. 알림창을 띄우고 본인의 카톡 오픈채팅으로 연결합니다.
-    alert(`${name}님, 문의 내용을 복사하여 카카오톡 상담창에 붙여넣어 주세요!`);
-    window.open("https://open.kakao.com/o/sksqjRmi", "_blank");
-  }}
-  className={`w-full py-4 rounded-xl font-black transition-all ${
-    isDarkMode 
-      ? 'bg-white text-slate-950 hover:bg-emerald-400' 
-      : 'bg-slate-900 text-white hover:bg-emerald-600'
-  }`}
->
-  문의하기
-</button>                            
-                            
-                       </div>
-                    </div>
+                           <button 
+                          onClick={() => {
+                       // 1. 입력창에 쓴 이름과 문의내용을 가져옵니다.
+                     const name = document.querySelector('input[placeholder="성명 입력"]')?.value || "";
+                   const content = document.querySelector('textarea[placeholder="문의 내용 입력"]')?.value || "";
+                  if (!name || !content) {
+                 alert("성함과 문의 내용을 입력해 주세요.");
+                 return;
+                 }
+               // 2. 알림창을 띄우고 본인의 카톡 오픈채팅으로 연결합니다.
+             alert(`${name}님, 문의 내용을 복사하여 카카오톡 상담창에 붙여넣어 주세요!`);
+           window.open("https://open.kakao.com/o/sksqjRmi", "_blank");
+           }}
+           className={`w-full py-4 rounded-xl font-black transition-all ${
+              isDarkMode 
+              ? 'bg-white text-slate-950 hover:bg-emerald-400' 
+              : 'bg-slate-900 text-white hover:bg-emerald-600'
+              }`}
+              >
+             문의하기
+            </button>                            
+             </div>
+           </div>
                 </div>
             </section>
 
