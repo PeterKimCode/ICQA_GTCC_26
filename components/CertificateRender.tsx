@@ -76,7 +76,7 @@ export const CertificateRender: React.FC<Props> = ({ data, isPreview = false }) 
 
       {/* Row 1: ICQA Number (Red) */}
       <div className="absolute z-[10]" style={{ top: `${ROW_1_Y}px`, left: `${LABEL_X}px` }}>
-        <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>KCQA Number :</span>
+        <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>KCQA 번호 :</span>
       </div>
       <div className="absolute z-[10]" style={{ top: `${ROW_1_Y}px`, left: `${VALUE_X}px`, width: '500px', height: '34px' }}>
         <span className="font-serif font-bold text-kcqa-red block" style={{ fontSize: FONT_KCQA, lineHeight: LEADING_NORMAL }}>
@@ -86,7 +86,7 @@ export const CertificateRender: React.FC<Props> = ({ data, isPreview = false }) 
 
       {/* Row 2: Name (Black, Bold) */}
       <div className="absolute z-[10]" style={{ top: `${ROW_2_Y}px`, left: `${LABEL_X}px` }}>
-        <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>Name :</span>
+        <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>성명 :</span>
       </div>
       <div className="absolute z-[10]" style={{ top: `${ROW_2_Y}px`, left: `${VALUE_X}px`, width: MAX_TEXT_WIDTH, height: '34px' }}>
         <span className="font-serif font-bold text-black uppercase truncate block" style={{ fontSize: FONT_NAME, lineHeight: LEADING_NORMAL }}>
@@ -96,7 +96,7 @@ export const CertificateRender: React.FC<Props> = ({ data, isPreview = false }) 
 
       {/* Row 3: Civil Qualification Number (Black) */}
       <div className="absolute z-[10]" style={{ top: `${ROW_3_Y}px`, left: `${LABEL_X}px` }}>
-        <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>Civil Qualification Number :</span>
+        <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>민간자격번호 :</span>
       </div>
       <div className="absolute z-[10]" style={{ top: `${ROW_3_Y}px`, left: `${VALUE_X}px`, width: '500px', height: '34px' }}>
         <span className="font-serif font-bold text-black block" style={{ fontSize: FONT_VALUE, lineHeight: LEADING_NORMAL }}>
@@ -106,7 +106,7 @@ export const CertificateRender: React.FC<Props> = ({ data, isPreview = false }) 
 
       {/* Row 4: Qualification Type (Black) */}
       <div className="absolute z-[10]" style={{ top: `${ROW_4_Y}px`, left: `${LABEL_X}px` }}>
-        <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>Qualification type :</span>
+        <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>민간자격종목 :</span>
       </div>
       <div className="absolute z-[10]" style={{ top: `${ROW_4_Y}px`, left: `${VALUE_X}px`, width: MAX_TEXT_WIDTH, height: '34px' }}>
         <span className="font-serif font-bold text-black truncate block" style={{ fontSize: FONT_VALUE, lineHeight: LEADING_NORMAL }}>
@@ -116,7 +116,7 @@ export const CertificateRender: React.FC<Props> = ({ data, isPreview = false }) 
 
       {/* Row 5: Date Issue (Black) */}
       <div className="absolute z-[10]" style={{ top: `${ROW_5_Y}px`, left: `${LABEL_X}px` }}>
-        <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>Date Issue :</span>
+        <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>발급일 :</span>
       </div>
       <div className="absolute z-[10]" style={{ top: `${ROW_5_Y}px`, left: `${VALUE_X}px`, width: '500px', height: '34px' }}>
         <span className="font-serif font-bold text-black block" style={{ fontSize: FONT_VALUE, lineHeight: LEADING_NORMAL }}>
@@ -126,7 +126,7 @@ export const CertificateRender: React.FC<Props> = ({ data, isPreview = false }) 
 
       {/* Row 6: Education Dept (Black) */}
       <div className="absolute z-[10]" style={{ top: `${ROW_6_Y}px`, left: `${LABEL_X}px` }}>
-        <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>Education Department :</span>
+        <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>교육기관 :</span>
       </div>
       <div className="absolute z-[10]" style={{ top: `${ROW_6_Y}px`, left: `${VALUE_X}px`, width: MAX_TEXT_WIDTH, height: '40px' }}>
         <span className="font-serif font-bold text-black block line-clamp-1" style={{ fontSize: FONT_VALUE, lineHeight: LEADING_NORMAL }}>
@@ -136,7 +136,7 @@ export const CertificateRender: React.FC<Props> = ({ data, isPreview = false }) 
 
       {/* Row 7: Issuing Office (Black) */}
       <div className="absolute z-[10]" style={{ top: `${ROW_7_Y}px`, left: `${LABEL_X}px` }}>
-        <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>Issuing Office :</span>
+        <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>발급기관 :</span>
       </div>
       <div className="absolute z-[10]" style={{ top: `${ROW_7_Y}px`, left: `${VALUE_X}px`, width: MAX_TEXT_WIDTH, height: '40px' }}>
         <span className="font-serif font-bold text-black block line-clamp-1" style={{ fontSize: FONT_VALUE, lineHeight: LEADING_NORMAL }}>
@@ -146,7 +146,7 @@ export const CertificateRender: React.FC<Props> = ({ data, isPreview = false }) 
 
       {/* Row 8: Issuing Country (Black) */}
       <div className="absolute z-[10]" style={{ top: `${ROW_8_Y}px`, left: `${LABEL_X}px` }}>
-        <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>Issuing Country :</span>
+        <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>발급국가 :</span>
       </div>
       <div className="absolute z-[10]" style={{ top: `${ROW_8_Y}px`, left: `${VALUE_X}px`, width: '500px', height: '34px' }}>
         <span className="font-serif font-bold text-black block" style={{ fontSize: FONT_VALUE, lineHeight: LEADING_NORMAL }}>
@@ -156,7 +156,7 @@ export const CertificateRender: React.FC<Props> = ({ data, isPreview = false }) 
 
       {/* Row 9: Expiration Date (Black) */}
       <div className="absolute z-[10]" style={{ top: `${ROW_9_Y}px`, left: `${LABEL_X}px` }}>
-        <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>Expiration Date :</span>
+        <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>유효기간 :</span>
       </div>
       <div className="absolute z-[10]" style={{ top: `${ROW_9_Y}px`, left: `${VALUE_X}px`, width: '500px', height: '34px' }}>
         <span className="font-serif font-bold text-black block" style={{ fontSize: FONT_VALUE, lineHeight: LEADING_NORMAL }}>
@@ -166,7 +166,7 @@ export const CertificateRender: React.FC<Props> = ({ data, isPreview = false }) 
 
       {/* Row 10: Verified Body (Black) */}
       <div className="absolute z-[10]" style={{ top: `${ROW_10_Y}px`, left: `${LABEL_X}px` }}>
-        <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>Verified Body :</span>
+        <span className="font-serif font-bold text-gray-600 block leading-none" style={{ fontSize: FONT_LABEL }}>검증기관 :</span>
       </div>
       <div className="absolute z-[10]" style={{ top: `${ROW_10_Y}px`, left: `${VALUE_X}px`, width: MAX_TEXT_WIDTH, height: '34px' }}>
         <span className="font-serif font-extrabold text-black block tracking-tight" style={{ fontSize: FONT_VALUE, lineHeight: LEADING_NORMAL }}>
@@ -214,7 +214,7 @@ export const CertificateRender: React.FC<Props> = ({ data, isPreview = false }) 
         }}
       >
         <p className="mb-4">
-          The above person obtains this certificate by passing the domestic private qualification test and confirms that the obtained private qualification after passing the document examination by the <strong>{KCQA_NAME}</strong> has been replaced with the international private certificate and is being qualified and managed.
+          위 사람은 자격기본법 제17조에 의거 한국직업능력연구원에 등록된 단체에서 시행한 국내 민간자격 시험에 합격하여, 해당 자격을 취득하였음을 확인합니다.
         </p>
       </div>
 

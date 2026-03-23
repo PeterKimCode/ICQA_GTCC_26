@@ -77,6 +77,11 @@ export const CertificateEditor: React.FC = () => {
       finalValue = value.toUpperCase();
     }
 
+    // Only allow numbers for phone number
+    if (name === 'holderPhone') {
+      finalValue = value.replace(/[^0-9]/g, '');
+    }
+
     setFormData(prev => ({
       ...prev,
       [name]: finalValue
@@ -167,7 +172,7 @@ export const CertificateEditor: React.FC = () => {
 
           <div>
             <label className="block text-xs font-semibold text-gray-700 uppercase mb-1">Phone Number (Required)</label>
-            <input type="tel" name="holderPhone" value={formData.holderPhone || ''} onChange={handleInputChange} required className={inputClassName} placeholder="Ex: 010-1234-5678" />
+            <input type="tel" name="holderPhone" value={formData.holderPhone || ''} onChange={handleInputChange} required className={inputClassName} placeholder="Ex: 01012345678" />
             <p className="text-[10px] text-gray-500 mt-1">Required for user identification and search</p>
           </div>
 
