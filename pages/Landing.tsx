@@ -248,13 +248,13 @@ export const Landing: React.FC = () => {
                                     <input
                                         type="tel"
                                         required
-                                        placeholder="010-1234-5678"
+                                        placeholder="01012345678"
                                         className={`w-full pl-10 pr-4 py-3 rounded-xl focus:ring-2 focus:outline-none transition-all ${isDarkMode
                                             ? 'bg-slate-800 border-slate-700 text-white focus:ring-emerald-500 placeholder-slate-500'
                                             : 'bg-slate-50 border-slate-200 text-slate-800 focus:ring-blue-500 placeholder-slate-400'
                                             } border`}
                                         value={searchPhone}
-                                        onChange={(e) => setSearchPhone(e.target.value)}
+                                        onChange={(e) => setSearchPhone(e.target.value.replace(/[^0-9]/g, ''))}
                                     />
                                     <div className="absolute left-3 top-1/2 -translate-y-1/2">
                                         <Phone className={`w-5 h-5 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`} />
@@ -403,8 +403,8 @@ export const Landing: React.FC = () => {
                            <button 
                           onClick={() => {
                        // 1. 입력창에 쓴 이름과 문의내용을 가져옵니다.
-                     const name = document.querySelector('input[placeholder="성명 입력"]')?.value || "";
-                   const content = document.querySelector('textarea[placeholder="문의 내용 입력"]')?.value || "";
+                     const name = (document.querySelector('input[placeholder="성명 입력"]') as HTMLInputElement)?.value || "";
+                   const content = (document.querySelector('textarea[placeholder="문의 내용 입력"]') as HTMLTextAreaElement)?.value || "";
                   if (!name || !content) {
                  alert("성함과 문의 내용을 입력해 주세요.");
                  return;

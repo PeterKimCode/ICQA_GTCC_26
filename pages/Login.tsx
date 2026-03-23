@@ -16,7 +16,7 @@ export const Login: React.FC = () => {
     if (success) {
       navigate('/dashboard');
     } else {
-      setError('Invalid email or password. Try admin@kcqa.org / password');
+      setError('Invalid email or password.');
     }
   };
 
@@ -72,19 +72,7 @@ export const Login: React.FC = () => {
           </button>
         </form>
 
-        <div className="mt-6 text-xs text-gray-500 bg-gray-50 p-3 rounded border border-gray-200">
-          <p className="font-bold mb-2 text-gray-700">Demo Credentials:</p>
-          <div className="space-y-1 font-mono">
-            <div className="flex justify-between">
-              <span className="font-semibold text-gray-600">Admin:</span>
-              <span>admin@kcqa.org / password</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="font-semibold text-gray-600">Staff:</span>
-              <span>staff@kcqa.org / password</span>
-            </div>
-          </div>
-        </div>
+
 
         <div className="mt-8 pt-6 border-t border-gray-100 text-center">
           <p className="text-sm text-gray-500 mb-4">Public Verification?</p>

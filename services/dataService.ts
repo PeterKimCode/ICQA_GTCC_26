@@ -65,7 +65,20 @@ export const CertificateService = {
       .single();
 
     if (error) return undefined;
-    return mapFromDB(data);
+    
+    const cert = mapFromDB(data);
+    if (cert.holderId) {
+      const { data: holderData } = await supabase
+        .from('holders')
+        .select('phone_number, email')
+        .eq('id', cert.holderId)
+        .single();
+      if (holderData) {
+        if (holderData.phone_number) cert.holderPhone = holderData.phone_number;
+        if (holderData.email) cert.holderEmail = holderData.email;
+      }
+    }
+    return cert;
   },
 
   // Updated to return multiple certificates
@@ -219,6 +232,14 @@ export const CertificateService = {
       .single();
 
     if (error) throw error;
+    
+    if (data.holder_id && updates.holderPhone !== undefined) {
+      await supabase
+        .from('holders')
+        .update({ phone_number: updates.holderPhone })
+        .eq('id', data.holder_id);
+    }
+    
     return mapFromDB(data);
   },
 
