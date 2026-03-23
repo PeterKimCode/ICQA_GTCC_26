@@ -375,26 +375,35 @@ export const Landing: React.FC = () => {
                             </p>
 
 
-<div className="flex flex-col sm:flex-row gap-4">
-  {/* 카카오톡 상담하기 버튼: 주석의 실제 주소를 적용했습니다 */}
-  <a 
-    href="https://open.kakao.com/o/sksqjRmi" 
-    target="_blank" 
-    rel="noopener noreferrer"
-    className="px-10 py-5 bg-emerald-600 text-white rounded-full font-black hover:bg-emerald-500 transition-all shadow-xl flex items-center justify-center"
-  >
-    카카오톡 상담하기
-  </a>
+const handleKakaoSubmit = () => {
+  // 1. 입력창에 있는 값들을 가져옵니다 (상태관리 변수 이름에 맞게 수정하세요)
+  const name = document.querySelector('input[placeholder="성명 입력"]').value;
+  const email = document.querySelector('input[placeholder="이메일 입력"]').value;
+  const message = document.querySelector('textarea[placeholder="문의 내용 입력"]').value;
 
-  {/* 전화 문의 버튼: 전화번호만 실제 번호로 바꾸시면 됩니다 */}
-  <a 
-    href="tel:010-XXXX-XXXX" 
-    className={`px-10 py-5 border rounded-full font-black text-center ${isDarkMode ? 'bg-slate-800/40 border-white/10 text-white hover:bg-slate-800' : 'bg-white border-slate-200 text-slate-900 hover:bg-slate-50'}`}
-  >
-    전화 문의
-  </a>
-</div>
+  if (!name || !message) {
+    alert("성함과 문의 내용을 입력해주세요.");
+    return;
+  }
 
+  // 2. 카카오톡으로 보낼 메시지 구성
+  const baseText = `[등록 문의]\n- 성함: ${name}\n- 이메일: ${email}\n- 내용: ${message}`;
+  
+  // 3. 카카오톡 오픈채팅 주소 (본인 주소로 확인)
+  const chatUrl = "https://open.kakao.com/o/sksqjRmi";
+
+  // 4. 알림 후 이동 (사용자가 내용을 복사할 수 있게 안내하거나 바로 이동)
+  alert("카카오톡 상담으로 연결됩니다. 상담창이 뜨면 내용을 다시 한번 말씀해 주세요!");
+  window.open(chatUrl, '_blank');
+};
+
+// ... 버튼 부분
+<button 
+  onClick={handleKakaoSubmit}
+  className={`w-full py-4 rounded-xl font-black transition-all ${isDarkMode ? 'bg-white text-slate-950' : 'bg-slate-900 text-white'}`}
+>
+  문의하기
+</button>
 
 
 
