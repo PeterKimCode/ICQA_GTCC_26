@@ -80,14 +80,14 @@ export const Landing: React.FC = () => {
     };
 
     const services = [
-        { title: '상담', icon: <Users className="w-8 h-8" />, desc: '모든 상담 관련 과정을 포함한 자격.', bg: isDarkMode ? 'bg-blue-900/40' : 'bg-blue-50' },
-        { title: '관리', icon: <Briefcase className="w-8 h-8" />, desc: '자격 기준과 운영 전반을 포함한 관리 자격.', bg: isDarkMode ? 'bg-emerald-900/40' : 'bg-emerald-50' },
-        { title: '특성화', icon: <Wrench className="w-8 h-8" />, desc: '산업 맞춤 교육과 훈련을 포함한 특성화 자격.', bg: isDarkMode ? 'bg-indigo-900/40' : 'bg-indigo-50' },
-        { title: '연구', icon: <Microscope className="w-8 h-8" />, desc: '직무 역량 평가와 연구를 포함한 연구 자격.', bg: isDarkMode ? 'bg-cyan-900/40' : 'bg-cyan-50' },
-        { title: '복지', icon: <Heart className="w-8 h-8" />, desc: '전문가 지원과 복지를 포함한 복지 자격.', bg: isDarkMode ? 'bg-rose-900/40' : 'bg-rose-50' },
-        { title: '행정', icon: <Shield className="w-8 h-8" />, desc: '자격 검증과 행정 업무를 포함한 행정 자격.', bg: isDarkMode ? 'bg-slate-800/40' : 'bg-slate-50' },
-        { title: '교육', icon: <BookOpen className="w-8 h-8" />, desc: '인재 양성과 교육 과정을 포함한 교육 자격.', bg: isDarkMode ? 'bg-teal-900/40' : 'bg-teal-50' },
-        { title: '외국어', icon: <Globe className="w-8 h-8" />, desc: '외국어 소통 능력 평가를 포함한 외국어 자격.', bg: isDarkMode ? 'bg-violet-900/40' : 'bg-violet-50' },
+        { title: '상담[코드C]', icon: <Users className="w-8 h-8" />, desc: '모든 상담 관련 과정을 포함한 자격.', bg: isDarkMode ? 'bg-blue-900/40' : 'bg-blue-50' },
+        { title: '관리[코드M]', icon: <Briefcase className="w-8 h-8" />, desc: '자격 기준과 운영 전반을 포함한 관리 자격.', bg: isDarkMode ? 'bg-emerald-900/40' : 'bg-emerald-50' },
+        { title: '특성화[코드S]', icon: <Wrench className="w-8 h-8" />, desc: '산업 맞춤 교육과 훈련을 포함한 특성화 자격.', bg: isDarkMode ? 'bg-indigo-900/40' : 'bg-indigo-50' },
+        { title: '연구[코드R]', icon: <Microscope className="w-8 h-8" />, desc: '직무 역량 평가와 연구를 포함한 연구 자격.', bg: isDarkMode ? 'bg-cyan-900/40' : 'bg-cyan-50' },
+        { title: '복지[코드W]', icon: <Heart className="w-8 h-8" />, desc: '전문가 지원과 복지를 포함한 복지 자격.', bg: isDarkMode ? 'bg-rose-900/40' : 'bg-rose-50' },
+        { title: '행정[코드A]', icon: <Shield className="w-8 h-8" />, desc: '자격 검증과 행정 업무를 포함한 행정 자격.', bg: isDarkMode ? 'bg-slate-800/40' : 'bg-slate-50' },
+        { title: '교육[코드E]', icon: <BookOpen className="w-8 h-8" />, desc: '인재 양성과 교육 과정을 포함한 교육 자격.', bg: isDarkMode ? 'bg-teal-900/40' : 'bg-teal-50' },
+        { title: '외국어[코드F]', icon: <Globe className="w-8 h-8" />, desc: '외국어 소통 능력 평가를 포함한 외국어 자격.', bg: isDarkMode ? 'bg-violet-900/40' : 'bg-violet-50' },
     ];
 
     const themeClasses = isDarkMode
@@ -387,7 +387,7 @@ export const Landing: React.FC = () => {
                         <div className="col-span-1 lg:col-span-2 space-y-8">
                             <div className="flex items-center gap-3">
                                 <img src="/logo.png" alt="KCQA Logo" className="w-12 h-12 object-contain" />
-                                <span className={`text-3xl font-black font-display tracking-tighter ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>KCQA</span>
+                                <span className={`text-3xl font-black font-display tracking-tighter ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>KCQA부설 Korea Private Qualification Management Information Service</span>
                             </div>
                             <p className={`text-lg max-w-sm leading-relaxed font-bold ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
                                 혁신적인 민간자격 관리를 통해 여러분의 소중한 민간자격을 관리 보호 합니다.
