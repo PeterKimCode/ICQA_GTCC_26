@@ -199,25 +199,6 @@ export const Landing: React.FC = () => {
   </a>
 </div>
 
-
-
-
-
-
-
-
-                    
-                    <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
-                        <a href="#checker" className={`group px-10 py-5 rounded-full font-black transition-all transform hover:scale-105 shadow-xl flex items-center gap-2 ${isDarkMode ? 'bg-white text-slate-950 hover:bg-emerald-400 shadow-white/5' : 'bg-slate-900 text-white hover:bg-emerald-600 shadow-slate-200'
-                            }`}>
-                            민간자격확인
-                            <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                        </a>
-                        <button className={`px-10 py-5 border rounded-full font-black transition-all ${isDarkMode ? 'bg-slate-800/40 border-white/10 text-white hover:bg-slate-800' : 'bg-white border-slate-200 text-slate-900 hover:bg-slate-50'
-                            }`}>
-                            협회 소개
-                        </button>
-                    </div>
                 </div>
             </section>
 
