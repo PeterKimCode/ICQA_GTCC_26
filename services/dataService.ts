@@ -233,11 +233,33 @@ export const CertificateService = {
 
     if (error) throw error;
     
-    if (data.holder_id && updates.holderPhone !== undefined) {
-      await supabase
-        .from('holders')
-        .update({ phone_number: updates.holderPhone })
-        .eq('id', data.holder_id);
+    if (data.holder_id) {
+      const holderUpdates: any = { updated_at: new Date().toISOString() };
+      let hasHolderUpdates = false;
+
+      if (updates.holderPhone !== undefined) {
+        holderUpdates.phone_number = updates.holderPhone.trim();
+        hasHolderUpdates = true;
+      }
+      if (updates.holderEmail !== undefined) {
+        holderUpdates.email = updates.holderEmail.trim();
+        hasHolderUpdates = true;
+      }
+      if (updates.name !== undefined) {
+        holderUpdates.name = updates.name.trim().toUpperCase();
+        hasHolderUpdates = true;
+      }
+      if (updates.dob !== undefined) {
+        holderUpdates.dob = updates.dob.trim();
+        hasHolderUpdates = true;
+      }
+
+      if (hasHolderUpdates) {
+        await supabase
+          .from('holders')
+          .update(holderUpdates)
+          .eq('id', data.holder_id);
+      }
     }
     
     return mapFromDB(data);
