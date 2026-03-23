@@ -113,7 +113,7 @@ export const Landing: React.FC = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-20">
                         <div className="flex items-center gap-3">
-                            <img src="/kcqa로고.png" alt="KCQA Logo" className="w-12 h-12 object-contain" />
+                            <img src="/logo.png" alt="KCQA Logo" className="w-12 h-12 object-contain" />
                             <span className={`text-lg sm:text-xl font-bold tracking-tight font-display ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>KCQA</span>
                         </div>
 
@@ -386,7 +386,7 @@ export const Landing: React.FC = () => {
                     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
                         <div className="col-span-1 lg:col-span-2 space-y-8">
                             <div className="flex items-center gap-3">
-                                <img src="/public/kcqa로고.png" alt="KCQA Logo" className="w-12 h-12 object-contain" />
+                                <img src="/logo.png" alt="KCQA Logo" className="w-12 h-12 object-contain" />
                                 <span className={`text-3xl font-black font-display tracking-tighter ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>KCQA</span>
                             </div>
                             <p className={`text-lg max-w-sm leading-relaxed font-bold ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
