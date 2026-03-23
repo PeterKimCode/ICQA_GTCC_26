@@ -179,7 +179,7 @@ export const Landing: React.FC = () => {
  <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
   {/* 민간자격확인 링크: 외부 주소로 연결 */}
   <a 
-    href="http://yfloavmotj9hz8g2ivvxyqpfin2ciap.quickconnect.to/sharing/W9iDI9Am7" 
+    href="http://yfloavmotj9hz8g2ivvxyqpfin2ciap.quickconnect.to/sharing/XyOv74frJ" 
     target="_blank" 
     rel="noopener noreferrer"
     className={`group px-10 py-5 rounded-full font-black transition-all transform hover:scale-105 shadow-xl flex items-center gap-2 ${isDarkMode ? 'bg-white text-slate-900' : 'bg-slate-900 text-white'}`}
