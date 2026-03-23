@@ -413,17 +413,7 @@ export const Landing: React.FC = () => {
   문의하기
 </button>                            
                             
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            <button className={`w-full py-4 rounded-xl font-black transition-all ${isDarkMode ? 'bg-white text-slate-950 hover:bg-emerald-400' : 'bg-slate-900 text-white hover:bg-emerald-600'
-                                }`}>문의하기</button>
-                        </div>
+                       </div>
                     </div>
                 </div>
             </section>
