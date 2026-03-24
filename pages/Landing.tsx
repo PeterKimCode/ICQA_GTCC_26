@@ -574,7 +574,7 @@ export const Landing: React.FC = () => {
                                         : 'bg-blue-600 hover:bg-blue-700 text-white shadow-blue-600/20'
                                         }`}
                                 >
-                                    증서 보기
+                                    자격증 확인
                                 </button>
                             </div>
                         </div>
