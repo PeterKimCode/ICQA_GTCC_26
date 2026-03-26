@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useNavigate, Outlet } from 'react-router-dom';
-import { ShieldCheck, Users, LogOut, Home, PlusCircle, Settings } from 'lucide-react';
+import { ShieldCheck, Users, LogOut, Home, PlusCircle, Settings, Bell, HelpCircle } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { UserRole } from '../types';
 
@@ -52,8 +52,20 @@ export const Layout: React.FC = () => {
           </div>
 
           {user.role === UserRole.ADMIN && (
-            <div className="mt-8 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">
-              Admin
+            <div className="pt-4 mt-2 border-t border-slate-800">
+              <div className="px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
+                Admin
+              </div>
+              <NavLink to="/admin/notices"
+                className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-md transition-colors ${isActive ? 'bg-blue-700 text-white' : 'text-slate-300 hover:bg-slate-800'}`}>
+                <Bell className="w-5 h-5" />
+                Manage Notices
+              </NavLink>
+              <NavLink to="/admin/faqs"
+                className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-md transition-colors ${isActive ? 'bg-blue-700 text-white' : 'text-slate-300 hover:bg-slate-800'}`}>
+                <HelpCircle className="w-5 h-5" />
+                Manage FAQs
+              </NavLink>
             </div>
           )}
         </nav>

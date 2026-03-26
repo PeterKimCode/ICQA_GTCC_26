@@ -54,3 +54,19 @@ export interface CertificateSearchParams {
   query?: string;
   status?: CertificateStatus | 'ALL';
 }
+
+export interface NoticeItem {
+  id: string;
+  title: string;
+  date: string;
+  content: string;
+  created_at?: string;
+}
+
+export interface FAQItem {
+  id: string;
+  question: string;
+  answer: string;
+  sort_order: number;
+  created_at?: string;
+}

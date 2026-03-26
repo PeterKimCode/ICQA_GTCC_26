@@ -278,3 +278,43 @@ export const CertificateService = {
     if (error) throw error;
   }
 };
+
+export const NoticeService = {
+  getAll: async (): Promise<any[]> => {
+    const { data, error } = await supabase.from('notices').select('*').order('created_at', { ascending: false });
+    if (error) throw error;
+    return data || [];
+  },
+  create: async (notice: { title: string; date: string; content: string }): Promise<void> => {
+    const { error } = await supabase.from('notices').insert(notice);
+    if (error) throw error;
+  },
+  update: async (id: string, updates: Partial<{ title: string; date: string; content: string }>): Promise<void> => {
+    const { error } = await supabase.from('notices').update(updates).eq('id', id);
+    if (error) throw error;
+  },
+  delete: async (id: string): Promise<void> => {
+    const { error } = await supabase.from('notices').delete().eq('id', id);
+    if (error) throw error;
+  }
+};
+
+export const FAQService = {
+  getAll: async (): Promise<any[]> => {
+    const { data, error } = await supabase.from('faqs').select('*').order('sort_order', { ascending: true }).order('created_at', { ascending: false });
+    if (error) throw error;
+    return data || [];
+  },
+  create: async (faq: { question: string; answer: string; sort_order: number }): Promise<void> => {
+    const { error } = await supabase.from('faqs').insert(faq);
+    if (error) throw error;
+  },
+  update: async (id: string, updates: Partial<{ question: string; answer: string; sort_order: number }>): Promise<void> => {
+    const { error } = await supabase.from('faqs').update(updates).eq('id', id);
+    if (error) throw error;
+  },
+  delete: async (id: string): Promise<void> => {
+    const { error } = await supabase.from('faqs').delete().eq('id', id);
+    if (error) throw error;
+  }
+};

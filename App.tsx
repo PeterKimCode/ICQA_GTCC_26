@@ -10,6 +10,8 @@ import { Profile } from './pages/Profile';
 import { Landing } from './pages/Landing';
 import { Notice } from './pages/Notice';
 import { FAQ } from './pages/FAQ';
+import { AdminNotices } from './pages/AdminNotices';
+import { AdminFAQs } from './pages/AdminFAQs';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
 // --- Protected Route ---
@@ -41,6 +43,8 @@ const App: React.FC = () => {
             <Route path="/profile" element={<Profile />} />
             <Route path="/certificate/new" element={<CertificateEditor />} />
             <Route path="/certificate/edit/:id" element={<CertificateEditor />} />
+            <Route path="/admin/notices" element={<AdminNotices />} />
+            <Route path="/admin/faqs" element={<AdminFAQs />} />
           </Route>
         </Routes>
       </HashRouter>
