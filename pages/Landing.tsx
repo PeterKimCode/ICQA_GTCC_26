@@ -138,13 +138,23 @@ export const Landing: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Mobile Menu */}
+                {/* Hamburger Menu Dropdown */}
                 {isMenuOpen && (
-                    <div className={`md:hidden p-4 space-y-4 border-b animate-in slide-in-from-top duration-300 ${isDarkMode ? 'bg-slate-900 border-white/10' : 'bg-white border-slate-100'
-                        }`}>
-                        <Link to="/login" className="block py-4 px-4 bg-emerald-600 text-white rounded-xl text-center font-bold">
-                            KCQAADMIN
-                        </Link>
+                    <div className="absolute top-full right-4 sm:right-6 lg:right-8 mt-2 w-64 md:w-72 bg-transparent z-[100] animate-in slide-in-from-top-2 duration-300">
+                        <div className={`p-4 rounded-3xl shadow-2xl border ${isDarkMode ? 'bg-slate-900 border-white/10 shadow-slate-950/50' : 'bg-white border-slate-100 shadow-slate-200/50'}`}>
+                            <div className="flex flex-col space-y-1">
+                                <Link to="/notice" className={`px-4 py-3 rounded-xl transition-colors font-bold ${isDarkMode ? 'text-slate-200 hover:bg-slate-800' : 'text-slate-700 hover:bg-slate-50'}`}>
+                                    공지사항 (Notice)
+                                </Link>
+                                <Link to="/faq" className={`px-4 py-3 rounded-xl transition-colors font-bold ${isDarkMode ? 'text-slate-200 hover:bg-slate-800' : 'text-slate-700 hover:bg-slate-50'}`}>
+                                    FAQ (자주 묻는 질문)
+                                </Link>
+                                <div className={`my-2 border-t ${isDarkMode ? 'border-white/10' : 'border-slate-100'}`}></div>
+                                <Link to="/login" className="md:hidden flex items-center justify-center gap-2 px-4 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-center font-bold shadow-lg shadow-emerald-600/20 transition-all">
+                                    <LogIn className="w-4 h-4" /> kcqaadmin 로그인
+                                </Link>
+                            </div>
+                        </div>
                     </div>
                 )}
             </nav>

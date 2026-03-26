@@ -8,6 +8,8 @@ import { GuestSearch } from './pages/GuestSearch';
 import { GuestView } from './pages/GuestView';
 import { Profile } from './pages/Profile';
 import { Landing } from './pages/Landing';
+import { Notice } from './pages/Notice';
+import { FAQ } from './pages/FAQ';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
 // --- Protected Route ---
@@ -28,6 +30,8 @@ const App: React.FC = () => {
           {/* Public Routes */}
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/notice" element={<Notice />} />
+          <Route path="/faq" element={<FAQ />} />
           <Route path="/guest" element={<GuestSearch />} />
           <Route path="/guest/view/:id" element={<GuestView />} />
 
