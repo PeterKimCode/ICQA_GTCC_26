@@ -98,7 +98,8 @@ export const CertificateService = {
       const { data: allCerts, error: fetchError } = await supabase
         .from('certificates')
         .select('*')
-        .eq('holder_id', authCert.holder_id);
+        .eq('holder_id', authCert.holder_id)
+        .neq('status', 'PENDING');
 
       if (fetchError) throw fetchError;
       return (allCerts || []).map(mapFromDB);
@@ -111,7 +112,8 @@ export const CertificateService = {
       .select('*')
       .eq('icqa_number', kcqaNumber.trim().toUpperCase())
       .eq('name', name.trim().toUpperCase())
-      .single();
+      .neq('status', 'PENDING')
+      .maybeSingle();
 
     return legacyCert ? [mapFromDB(legacyCert)] : [];
   },
@@ -133,6 +135,7 @@ export const CertificateService = {
       .from('certificates')
       .select('*')
       .eq('holder_id', holder.id)
+      .neq('status', 'PENDING')
       .order('created_at', { ascending: false });
 
     if (error) throw error;
@@ -156,6 +159,7 @@ export const CertificateService = {
       .from('certificates')
       .select('*')
       .eq('holder_id', holder.id)
+      .neq('status', 'PENDING')
       .order('created_at', { ascending: false });
 
     if (error) throw error;

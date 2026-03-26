@@ -8,13 +8,35 @@ import { Printer, CheckCircle, ArrowLeft } from 'lucide-react';
 export const GuestView: React.FC = () => {
   const { id } = useParams();
   const [cert, setCert] = useState<Certificate | null>(null);
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (containerRef.current) {
+        const availableWidth = containerRef.current.clientWidth;
+        const targetWidth = availableWidth - 32; // 16px padding each side
+        const newScale = Math.max(Math.min(targetWidth / 2480, 1), 0.1);
+        setScale(newScale);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    setTimeout(handleResize, 50);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, [cert]);
 
   useEffect(() => {
     const fetchCert = async () => {
       if (id) {
         try {
           const found = await CertificateService.getById(id);
-          setCert(found || null);
+          if (found && found.status !== 'PENDING') {
+            setCert(found);
+          } else {
+            setCert(null);
+          }
         } catch (err) {
           console.error(err);
           setCert(null);
@@ -56,10 +78,27 @@ export const GuestView: React.FC = () => {
       </div>
 
       {/* Content */}
-      <div className="py-8 flex justify-center no-print overflow-auto">
-        {/* Scale down slightly for viewability on common screens, or scroll */}
-        <div className="shadow-2xl origin-top transform scale-50 md:scale-75 lg:scale-100">
-          <CertificateRender data={cert} />
+      <div 
+        className="py-8 flex justify-center no-print overflow-hidden w-full px-4" 
+        ref={containerRef}
+      >
+        <div 
+          className="shadow-2xl relative bg-white" 
+          style={{ 
+            width: `${2480 * scale}px`, 
+            height: `${1748 * scale}px` 
+          }}
+        >
+          <div 
+            style={{ 
+              transform: `scale(${scale})`, 
+              transformOrigin: 'top left',
+              width: '2480px',
+              height: '1748px'
+            }}
+          >
+            <CertificateRender data={cert} />
+          </div>
         </div>
       </div>
 

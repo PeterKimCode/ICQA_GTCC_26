@@ -7,7 +7,8 @@ export enum UserRole {
 export enum CertificateStatus {
   ACTIVE = 'ACTIVE',
   EXPIRED = 'EXPIRED',
-  REVOKED = 'REVOKED'
+  REVOKED = 'REVOKED',
+  PENDING = 'PENDING'
 }
 
 export interface User {

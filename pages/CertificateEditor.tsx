@@ -6,6 +6,8 @@ import { Certificate, CertificateStatus } from '../types';
 import { formatDateForDisplay, parseDateForInput } from '../utils';
 import { CertificateRender } from '../components/CertificateRender';
 import { Save, Printer, ArrowLeft, Upload } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import { UserRole } from '../types';
 
 const INITIAL_FORM: Certificate = {
   id: '',
@@ -28,6 +30,7 @@ const INITIAL_FORM: Certificate = {
 export const CertificateEditor: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [formData, setFormData] = useState<Certificate>(INITIAL_FORM);
   const [loading, setLoading] = useState(false);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
@@ -121,7 +124,11 @@ export const CertificateEditor: React.FC = () => {
       if (id) {
         await CertificateService.update(id, formData);
       } else {
-        await CertificateService.create(formData);
+        const createData = {
+          ...formData,
+          status: user?.role === UserRole.STAFF ? CertificateStatus.PENDING : CertificateStatus.ACTIVE
+        };
+        await CertificateService.create(createData);
       }
       navigate('/dashboard');
     } catch (err: any) {
