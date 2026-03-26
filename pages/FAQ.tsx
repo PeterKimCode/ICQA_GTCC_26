@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronDown, ArrowLeft, HelpCircle } from 'lucide-react';
+import { PublicHeader } from '../components/PublicHeader';
 
 export const FAQ: React.FC = () => {
     const isDarkMode = localStorage.getItem('kcqa_theme') !== 'light';
@@ -29,20 +30,7 @@ export const FAQ: React.FC = () => {
 
     return (
         <div className={`min-h-screen font-sans pt-20 ${themeClasses}`}>
-            {/* Nav */}
-            <nav className={`fixed top-0 w-full z-50 border-b backdrop-blur-md ${isDarkMode ? 'bg-slate-950/80 border-white/10' : 'bg-white/80 border-slate-200'}`}>
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex items-center justify-between h-20">
-                        <Link to="/" className="flex items-center gap-3">
-                            <ArrowLeft className={`w-6 h-6 ${isDarkMode ? 'text-white' : 'text-slate-900'}`} />
-                            <span className={`text-xl font-bold font-display ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>뒤로가기</span>
-                        </Link>
-                        <span className={`text-xl font-bold tracking-tight font-display flex items-center gap-2 ${isDarkMode ? 'text-emerald-400' : 'text-emerald-600'}`}>
-                            <HelpCircle className="w-5 h-5" /> FAQ
-                        </span>
-                    </div>
-                </div>
-            </nav>
+            <PublicHeader isDarkMode={isDarkMode} />
 
             <main className="max-w-4xl mx-auto px-4 py-16">
                 <div className="text-center mb-12">
