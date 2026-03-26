@@ -40,9 +40,9 @@ export const AdminFAQs: React.FC = () => {
       try {
         await FAQService.delete(id);
         fetchFaqs();
-      } catch (err) {
+      } catch (err: any) {
         console.error(err);
-        alert("Failed to delete FAQ");
+        alert("Failed to delete FAQ: " + (err.message || JSON.stringify(err)));
       }
     }
   };
@@ -56,9 +56,9 @@ export const AdminFAQs: React.FC = () => {
       }
       setIsEditing(null);
       fetchFaqs();
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      alert("Failed to save FAQ");
+      alert("Failed to save FAQ: " + (err.message || JSON.stringify(err)));
     }
   };
 

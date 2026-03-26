@@ -40,9 +40,9 @@ export const AdminNotices: React.FC = () => {
       try {
         await NoticeService.delete(id);
         fetchNotices();
-      } catch (err) {
+      } catch (err: any) {
         console.error(err);
-        alert("Failed to delete notice");
+        alert("Failed to delete notice: " + (err.message || JSON.stringify(err)));
       }
     }
   };
@@ -56,9 +56,9 @@ export const AdminNotices: React.FC = () => {
       }
       setIsEditing(null);
       fetchNotices();
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      alert("Failed to save notice");
+      alert("Failed to save notice: " + (err.message || JSON.stringify(err)));
     }
   };
 
