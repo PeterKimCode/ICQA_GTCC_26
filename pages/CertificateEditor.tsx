@@ -144,7 +144,12 @@ export const CertificateEditor: React.FC = () => {
       }
       navigate('/dashboard');
     } catch (err: any) {
-      alert("Failed to save data: " + (err.message || "Unknown error"));
+      const errorMsg = err.message || "";
+      if (errorMsg.includes('duplicate key') && errorMsg.includes('idx_certificates_icqa')) {
+        alert("이미 등록된 KCQA 번호입니다. 다른 번호를 입력해주세요. (KCQA 번호 중복)");
+      } else {
+        alert("Failed to save data: " + (errorMsg || "Unknown error"));
+      }
       console.error(err);
     } finally {
       setLoading(false);
