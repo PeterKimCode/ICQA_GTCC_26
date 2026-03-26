@@ -58,7 +58,6 @@ export const Landing: React.FC = () => {
             setSearchError('성명과 전화번호를 모두 입력해주세요.');
             return;
         }
-
         try {
             const certs = await CertificateService.getByNameAndPhone(searchName, searchPhone);
 
@@ -333,7 +332,7 @@ export const Landing: React.FC = () => {
                           <div className="flex flex-col sm:flex-row gap-4">
                           {/* 자격 신청 링크 (초록색 버튼) */}
                          <a 
-                          href=" http://yfloavmotj9hz8g2ivvxyqpfin2ciap.quickconnect.to/sharing/sZKYTeIzP" 
+                          href="http://yfloavmotj9hz8g2ivvxyqpfin2ciap.quickconnect.to/sharing/BWxNs6ORh" 
                           target="_blank" 
                           rel="noreferrer"
                          className="px-10 py-5 bg-emerald-600 text-white rounded-full font-black hover:bg-emerald-500 transition-all shadow-xl shadow-emerald-600/20 text-center"
