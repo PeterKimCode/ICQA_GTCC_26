@@ -332,7 +332,7 @@ export const Landing: React.FC = () => {
                           <div className="flex flex-col sm:flex-row gap-4">
                           {/* 자격 신청 링크 (초록색 버튼) */}
                          <a 
-                          href="http://yfloavmotj9hz8g2ivvxyqpfin2ciap.quickconnect.to/sharing/uAQ2YYrYR" 
+                          href="http://yfloavmotj9hz8g2ivvxyqpfin2ciap.quickconnect.to/sharing/AqJ1ll2xs" 
                           target="_blank"  
                           rel="noreferrer"
                          className="px-10 py-5 bg-emerald-600 text-white rounded-full font-black hover:bg-emerald-500 transition-all shadow-xl shadow-emerald-600/20 text-center"
