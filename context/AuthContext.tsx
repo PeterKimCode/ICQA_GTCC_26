@@ -15,19 +15,20 @@ const AuthContext = createContext<AuthContextType>(null!);
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [user, setUser] = useState<User | null>(null);
-
-    useEffect(() => {
-        // Check localStorage for session persistence logic
+    const [user, setUser] = useState<User | null>(() => {
         const stored = localStorage.getItem('kcqa_user');
         if (stored) {
-            const parsedUser = JSON.parse(stored);
-            // Strip password from state just in case, though we store it in LS for this demo
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const { password, ...safeUser } = parsedUser;
-            setUser(safeUser);
+            try {
+                const parsedUser = JSON.parse(stored);
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                const { password, ...safeUser } = parsedUser;
+                return safeUser;
+            } catch (e) {
+                return null;
+            }
         }
-    }, []);
+        return null;
+    });
 
     const login = (email: string, pass: string) => {
         // 1. Check Mock Users

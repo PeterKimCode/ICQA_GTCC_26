@@ -85,6 +85,18 @@ export const CertificateEditor: React.FC = () => {
       finalValue = value.replace(/[^0-9]/g, '');
     }
 
+    // Auto format Date of Birth to YYYY-MM-DD
+    if (name === 'dob') {
+      const nums = value.replace(/[^0-9]/g, '');
+      if (nums.length <= 4) {
+        finalValue = nums;
+      } else if (nums.length <= 6) {
+        finalValue = `${nums.slice(0, 4)}-${nums.slice(4)}`;
+      } else {
+        finalValue = `${nums.slice(0, 4)}-${nums.slice(4, 6)}-${nums.slice(6, 8)}`;
+      }
+    }
+
     setFormData(prev => ({
       ...prev,
       [name]: finalValue
@@ -172,7 +184,7 @@ export const CertificateEditor: React.FC = () => {
             </div>
             <div>
               <label className="block text-xs font-semibold text-gray-700 uppercase mb-1">Date of Birth</label>
-              <input name="dob" value={formData.dob} onChange={handleInputChange} required className={inputClassName} placeholder="YYYY-MM-DD" />
+              <input name="dob" value={formData.dob} onChange={handleInputChange} required maxLength={10} className={inputClassName} placeholder="YYYY-MM-DD" />
               <p className="text-[10px] text-gray-500 mt-1">Required for linking to user profile</p>
             </div>
           </div>
