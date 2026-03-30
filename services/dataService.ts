@@ -41,7 +41,7 @@ const mapToDB = (cert: Partial<Certificate>) => {
 
 export const CertificateService = {
   getAll: async (params?: CertificateSearchParams): Promise<Certificate[]> => {
-    let query = supabase.from('certificates').select('*').order('created_at', { ascending: false });
+    let query = supabase.from('certificates').select('id, holder_id, icqa_number, name, dob, ncqa_number, qualification_type, issue_date, edu_dept, issuing_office, issuing_country, expiration_date, status, created_at, updated_at').order('created_at', { ascending: false });
 
     if (params?.query) {
       const q = `%${params.query}%`;

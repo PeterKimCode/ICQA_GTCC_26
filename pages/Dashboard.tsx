@@ -25,7 +25,7 @@ export const Dashboard: React.FC = () => {
   useEffect(() => {
     refreshData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query, statusFilter]);
+  }, []);
 
   const handleApprove = async (id: string) => {
     if (!window.confirm("Approve this certificate?")) return;
@@ -64,6 +64,7 @@ export const Dashboard: React.FC = () => {
             className="pl-10 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:outline-none"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && refreshData()}
           />
         </div>
         {user?.role !== 'STAFF' && (
@@ -82,6 +83,12 @@ export const Dashboard: React.FC = () => {
             </select>
           </div>
         )}
+        <button
+          onClick={refreshData}
+          className="flex items-center justify-center bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition-colors w-full md:w-auto whitespace-nowrap font-medium shadow-sm"
+        >
+          Search
+        </button>
       </div>
 
       {/* Table */}
