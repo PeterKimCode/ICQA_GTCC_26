@@ -1,46 +1,117 @@
-# International Civil Qualification Association (ICQA) - GTCC
+# ICQA GTCC
 
-This project is a certificate verification and issuance platform for the International Civil Qualification Association (ICQA). It supports public credential lookup, printable certificates, and admin workflows for managing qualifications, notices, and FAQs.
+ICQA GTCC is an English-first certificate verification and issuance platform for the International Civil Qualification Association (ICQA). It includes a public lookup flow, printable certificate views, and an internal admin dashboard for certificate, notice, and FAQ management.
 
-## Key Features
+## Stack
 
-### Public Portal
-- Certificate lookup by full name and phone number
-- Digital certificate rendering optimized for desktop and mobile
-- Public notices and FAQs
-- English-first public experience with optional translation support
+- React + Vite + TypeScript
+- Supabase for database/storage access
+- Local mock admin login for the current prototype
 
-### Admin Dashboard
-- Role-based access for staff and administrators
-- Certificate issuance, review, and approval workflows
-- Notice and FAQ management
-- Profile and password management for internal users
+## What Supabase Is Used For
 
-## Setup
+Supabase is the data backend for:
 
-### Environment Variables
-Create a `.env.local` file in the project root:
+- `holders`
+- `certificates`
+- `notices`
+- `faqs`
+
+This project currently does **not** use Supabase Auth. The admin login in the app is mock/local-state based.
+
+## Supabase Setup
+
+### 1. Create a Supabase project
+
+Create a new project in Supabase and wait until it finishes provisioning.
+
+### 2. Get project credentials
+
+From Supabase:
+
+1. Open `Project Settings`
+2. Open `API`
+3. Copy:
+   - `Project URL`
+   - `anon public` key
+
+### 3. Add local environment variables
+
+Create `.env.local` in the project root:
 
 ```env
-VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_URL=https://your-project-id.supabase.co
 VITE_SUPABASE_ANON_KEY=your-anon-key
 ```
 
-### Run Locally
+### 4. Run the SQL setup
+
+In Supabase:
+
+1. Open `SQL Editor`
+2. Open the local file [supabase_setup.sql](/c:/Users/ABC/Documents/Codex/Test/supabase_setup.sql)
+3. Paste the full contents into the SQL Editor
+4. Run it once
+
+That single file creates:
+
+- all required tables
+- indexes
+- notice/FAQ RLS policies
+- sample holders
+- sample certificates
+- sample notices
+- sample FAQs
+
+## Tables Created
+
+- `public.holders`
+- `public.certificates`
+- `public.notices`
+- `public.faqs`
+
+## Notes About Policies
+
+- `notices` and `faqs` have RLS enabled with public read access
+- the current setup keeps broad write access behavior for notices/faqs because the app is still using mock admin login instead of Supabase Auth
+- `holders` and `certificates` are created as the operational data tables used by the frontend
+
+If you later switch to real Supabase Auth, you should tighten policies before production use.
+
+## Local Development
+
+Install dependencies:
 
 ```bash
 npm install
+```
+
+Run development server:
+
+```bash
 npm run dev
 ```
 
-## Database Notes
+Create a production build:
 
-- `holders` stores certificate holder identity records
-- `certificates` stores issued qualifications
-- `notices` stores public announcements
-- `faqs` stores public frequently asked questions
+```bash
+npm run build
+```
 
-## Development Notes
+## Demo Admin Accounts
 
-- Authentication currently uses local mock users for prototype and demo use
-- Supabase remains the system of record for holders, certificates, notices, and FAQs
+- `admin@icqa.org` / `password`
+- `staff@icqa.org` / `password`
+
+## Public Verification Demo Data
+
+Sample seeded holder lookups include:
+
+- `KIM CHUL SOO` / `01012345678`
+- `LEE YOUNG HEE` / `01098765432`
+
+## Project Notes
+
+- Certificate holder search uses full name + phone number
+- Certificate numbers are stored in the `icqa_number` database column and mapped to `kcqaNumber` in the current frontend type shape for compatibility with the existing codebase
+- The app expects Supabase tables to exist before the UI is used
