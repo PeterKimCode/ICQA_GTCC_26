@@ -29,8 +29,8 @@ export const Login: React.FC = () => {
               <ShieldCheck className="w-10 h-10 text-blue-900" />
             </div>
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">KCQA Certificate Manager</h1>
-          <p className="text-gray-500 mt-2">Internal System Access</p>
+          <h1 className="text-2xl font-bold text-gray-900">ICQA Certificate Manager</h1>
+          <p className="text-gray-500 mt-2">Internal system access</p>
         </div>
 
         {error && (
@@ -48,7 +48,7 @@ export const Login: React.FC = () => {
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="staff@kcqa.org"
+              placeholder="staff@icqa.org"
             />
           </div>
 
@@ -60,26 +60,18 @@ export const Login: React.FC = () => {
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
+              placeholder="Enter your password"
             />
           </div>
 
-          <button
-            type="submit"
-            className="w-full bg-blue-900 text-white py-2 rounded-md hover:bg-blue-800 transition-colors font-medium"
-          >
+          <button type="submit" className="w-full bg-blue-900 text-white py-2 rounded-md hover:bg-blue-800 transition-colors font-medium">
             Sign In
           </button>
         </form>
 
-
-
         <div className="mt-8 pt-6 border-t border-gray-100 text-center">
-          <p className="text-sm text-gray-500 mb-4">Public Verification?</p>
-          <Link
-            to="/guest"
-            className="inline-block px-6 py-2 bg-white text-blue-900 border border-blue-900 rounded-md hover:bg-blue-50 transition-colors text-sm font-medium"
-          >
+          <p className="text-sm text-gray-500 mb-4">Need public verification?</p>
+          <Link to="/guest" className="inline-block px-6 py-2 bg-white text-blue-900 border border-blue-900 rounded-md hover:bg-blue-50 transition-colors text-sm font-medium">
             Guest Access
           </Link>
         </div>

@@ -1,5 +1,5 @@
 {
-  "name": "KCQA Certificate Manager",
-  "description": "A web application for managing, verifying, and printing Korea Civil Qualification Association certificates with precise layout requirements.",
+  "name": "ICQA Certificate Manager",
+  "description": "A web application for managing, verifying, and printing International Civil Qualification Association certificates with precise layout requirements.",
   "requestFramePermissions": []
 }

@@ -34,16 +34,16 @@ export interface Certificate {
   holderId?: string; // New FK
   holderEmail?: string; // Optional: For creating/linking holder
   holderPhone?: string; // Optional: For creating/linking holder
-  kcqaNumber: string; // Red text
-  name: string; // Blue text (Legacy/Display redundancy)
-  dob: string; // MMM DD, YYYY (Legacy/Display redundancy)
+  kcqaNumber: string; // ICQA display number
+  name: string;
+  dob: string;
   ncqaNumber: string;
-  qualificationType: string; // Blue text
-  issueDate: string; // MMM DD, YYYY
-  eduDept: string; // Blue text
-  issuingOffice: string; // Blue text
-  issuingCountry: string; // Blue text
-  expirationDate: string; // MMM DD, YYYY
+  qualificationType: string;
+  issueDate: string;
+  eduDept: string;
+  issuingOffice: string;
+  issuingCountry: string;
+  expirationDate: string;
   photoUrl: string; // Base64 or URL
   status: CertificateStatus;
   createdAt: string;
