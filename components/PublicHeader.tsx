@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, LogIn } from 'lucide-react';
 import { ORGANIZATION_SHORT_NAME } from '../constants';
@@ -9,6 +9,10 @@ interface PublicHeaderProps {
 
 export const PublicHeader: React.FC<PublicHeaderProps> = ({ isDarkMode }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', isDarkMode);
+  }, [isDarkMode]);
 
   return (
     <nav className={`fixed top-0 w-full z-50 border-b backdrop-blur-md transition-all duration-300 ${isDarkMode ? 'bg-slate-950/80 border-white/10' : 'bg-white/80 border-slate-200'}`}>

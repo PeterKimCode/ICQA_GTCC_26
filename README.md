@@ -1,117 +1,171 @@
-# ICQA GTCC
+# ICQA GTCC 자격증 확인 및 발급 시스템
 
-ICQA GTCC is an English-first certificate verification and issuance platform for the International Civil Qualification Association (ICQA). It includes a public lookup flow, printable certificate views, and an internal admin dashboard for certificate, notice, and FAQ management.
+이 프로젝트는 ICQA 자격증을 온라인에서 확인하고, 관리자가 발급과 공지 운영을 함께 처리할 수 있도록 만든 웹 시스템입니다.
 
-## Stack
+ICQA는 `International Civil Qualification Association`의 약자입니다.
+처음 보는 분도 쉽게 이해할 수 있도록 말하면, 이 서비스는 "자격증 진위 확인 사이트 + 관리자용 발급 관리 화면"을 하나로 묶은 구조입니다.
 
-- React + Vite + TypeScript
-- Supabase for database/storage access
-- Local mock admin login for the current prototype
+## 무엇을 할 수 있나요
 
-## What Supabase Is Used For
+- 일반 이용자는 이름과 등록된 휴대폰 번호로 자격증을 조회할 수 있습니다.
+- 한 사람이 여러 자격증을 갖고 있으면 조회 결과에서 함께 확인할 수 있습니다.
+- 자격증 상세 화면을 열어 증서를 보고, 인쇄하거나 PDF로 저장할 수 있습니다.
+- 관리자는 로그인 후 자격증을 새로 만들고 수정할 수 있습니다.
+- 관리자는 발급 대기 상태의 자격증을 승인할 수 있습니다.
+- 공지사항과 자주 묻는 질문도 관리자 화면에서 관리할 수 있습니다.
+- 랜딩 페이지, 공지, FAQ 화면은 다크모드와 언어 선택 기능을 함께 사용합니다.
 
-Supabase is the data backend for:
+## 이 시스템이 필요한 경우
+
+- 자격증이 실제 발급된 문서인지 빠르게 확인하게 하고 싶을 때
+- 기관에서 여러 명의 자격증을 같은 양식으로 관리해야 할 때
+- 종이 증서뿐 아니라 온라인 확인 화면도 함께 제공하고 싶을 때
+- 공지사항과 FAQ까지 한곳에서 운영하고 싶을 때
+
+## 주요 화면 안내
+
+### 1. 랜딩 페이지
+
+서비스 소개, 자격 조회, 관리자 로그인 이동, 언어 선택, 다크모드 전환을 제공합니다.
+
+### 2. 공개 자격 조회
+
+이용자는 다음 두 가지를 입력합니다.
+
+- 자격증 보유자 이름
+- 등록된 휴대폰 번호
+
+입력값이 맞으면 해당 보유자의 자격증 목록을 확인할 수 있습니다.
+
+### 3. 자격증 상세 화면
+
+선택한 자격증을 공식 증서 형태로 보여줍니다.
+이 화면에서 인쇄 또는 PDF 저장을 할 수 있습니다.
+
+### 4. 관리자 로그인
+
+현재 저장소는 실제 인증 서버 대신 데모용 로컬 로그인 방식을 사용합니다.
+운영 전에는 반드시 실제 인증 체계로 교체하는 것이 좋습니다.
+
+### 5. 관리자 대시보드
+
+관리자는 다음 작업을 할 수 있습니다.
+
+- 자격증 목록 확인
+- 검색과 상태별 필터링
+- 발급 대기 문서 승인
+- 자격증 상세 수정 화면 이동
+
+### 6. 자격증 등록 및 수정
+
+관리자는 다음 정보를 입력하거나 조정할 수 있습니다.
+
+- ICQA 번호
+- 보유자 이름
+- 생년월일
+- 보유자 이메일과 휴대폰 번호
+- 자격 등록 번호
+- 자격 종류
+- 발급일과 만료일
+- 교육 기관
+- 발급 사무소
+- 발급 국가
+- 증명사진
+- 상태값
+
+입력한 내용은 증서 미리보기에 반영되어 출력 전 확인이 쉽습니다.
+
+### 7. 공지사항과 FAQ
+
+공지사항과 자주 묻는 질문은 공개 화면에서 확인할 수 있고, 관리자용 화면에서 등록·수정·삭제할 수 있습니다.
+
+## 데이터는 어디에 저장되나요
+
+이 프로젝트는 Supabase를 데이터 저장소로 사용합니다.
+
+주요 테이블은 다음과 같습니다.
 
 - `holders`
 - `certificates`
 - `notices`
 - `faqs`
 
-This project currently does **not** use Supabase Auth. The admin login in the app is mock/local-state based.
+`holders`는 자격증 보유자 정보를 저장하고, `certificates`는 실제 자격증 문서를 저장합니다.
+`notices`와 `faqs`는 공개 공지와 질문답변 화면에 사용됩니다.
 
-## Supabase Setup
+## 필요한 환경 변수
 
-### 1. Create a Supabase project
-
-Create a new project in Supabase and wait until it finishes provisioning.
-
-### 2. Get project credentials
-
-From Supabase:
-
-1. Open `Project Settings`
-2. Open `API`
-3. Copy:
-   - `Project URL`
-   - `anon public` key
-
-### 3. Add local environment variables
-
-Create `.env.local` in the project root:
+프로젝트 루트에 `.env.local` 파일을 만들고 아래 값을 넣습니다.
 
 ```env
 VITE_SUPABASE_URL=https://your-project-id.supabase.co
 VITE_SUPABASE_ANON_KEY=your-anon-key
 ```
 
-### 4. Run the SQL setup
+## Supabase 초기 설정
 
-In Supabase:
+Supabase 프로젝트를 만든 뒤, SQL Editor에서 아래 파일 내용을 한 번 실행합니다.
 
-1. Open `SQL Editor`
-2. Open the local file [supabase_setup.sql](/c:/Users/ABC/Documents/Codex/Test/supabase_setup.sql)
-3. Paste the full contents into the SQL Editor
-4. Run it once
+- `supabase_setup.sql`
 
-That single file creates:
+이 파일은 다음을 준비합니다.
 
-- all required tables
-- indexes
-- notice/FAQ RLS policies
-- sample holders
-- sample certificates
-- sample notices
-- sample FAQs
+- 필요한 테이블 생성
+- 인덱스 생성
+- 공지와 FAQ 공개 읽기 정책 설정
+- 예시 보유자 데이터 입력
+- 예시 자격증 데이터 입력
+- 예시 공지와 FAQ 입력
 
-## Tables Created
+## 로컬 실행 방법
 
-- `public.holders`
-- `public.certificates`
-- `public.notices`
-- `public.faqs`
-
-## Notes About Policies
-
-- `notices` and `faqs` have RLS enabled with public read access
-- the current setup keeps broad write access behavior for notices/faqs because the app is still using mock admin login instead of Supabase Auth
-- `holders` and `certificates` are created as the operational data tables used by the frontend
-
-If you later switch to real Supabase Auth, you should tighten policies before production use.
-
-## Local Development
-
-Install dependencies:
+### 1. 의존성 설치
 
 ```bash
 npm install
 ```
 
-Run development server:
+### 2. 개발 서버 실행
 
 ```bash
 npm run dev
 ```
 
-Create a production build:
+### 3. 배포용 빌드 확인
 
 ```bash
 npm run build
 ```
 
-## Demo Admin Accounts
+## 데모 관리자 계정
 
-- `admin@icqa.org` / `password`
-- `staff@icqa.org` / `password`
+```text
+admin@icqa.org / password
+staff@icqa.org / password
+```
 
-## Public Verification Demo Data
+## 공개 조회 예시
 
-Sample seeded holder lookups include:
+초기 SQL 데이터를 넣었다면 다음 예시로 조회할 수 있습니다.
 
-- `KIM CHUL SOO` / `01012345678`
-- `LEE YOUNG HEE` / `01098765432`
+```text
+KIM CHUL SOO / 01012345678
+LEE YOUNG HEE / 01098765432
+```
 
-## Project Notes
+## 운영 전 꼭 확인할 점
 
-- Certificate holder search uses full name + phone number
-- Certificate numbers are stored in the `icqa_number` database column and mapped to `kcqaNumber` in the current frontend type shape for compatibility with the existing codebase
-- The app expects Supabase tables to exist before the UI is used
+- 현재 관리자 로그인은 데모용입니다.
+- 실제 운영에서는 Supabase Auth 등 정식 인증 방식이 필요합니다.
+- 공지와 FAQ 쓰기 권한도 운영 환경에 맞게 더 엄격히 조정하는 것이 좋습니다.
+- 자격증 배경 이미지와 텍스트 위치는 출력 품질에 직접 영향을 주므로 실제 증서 샘플로 최종 검수가 필요합니다.
+
+## 프로젝트 폴더 구성
+
+```text
+pages/        화면 구성
+components/   공통 UI와 증서 렌더링
+services/     Supabase 연동
+context/      로그인 상태 관리
+public/       로고, 랜딩 이미지, 증서 배경
+```
