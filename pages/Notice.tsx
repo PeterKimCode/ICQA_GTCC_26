@@ -33,7 +33,7 @@ export const Notice: React.FC = () => {
         <div className="text-center mb-12">
           <h1 className={`text-4xl font-black mb-4 font-display ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>ICQA Notices</h1>
           <p className={`${isDarkMode ? 'text-slate-500' : 'text-slate-600'} text-lg`}>
-            Official announcements, operational updates, and public guidance from the International Civil Qualification Association.
+            Official announcements, operational updates, and public guidance from the International Certification & Qualification Association.
           </p>
         </div>
 

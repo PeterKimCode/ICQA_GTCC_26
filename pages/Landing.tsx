@@ -100,7 +100,7 @@ export const Landing: React.FC = () => {
             ENGLISH-FIRST GLOBAL QUALIFICATION PLATFORM
           </div>
           <h1 className={`text-5xl lg:text-7xl font-black mb-8 font-display tracking-tight leading-tight ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-            International Civil
+            International Certification &
             <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 via-emerald-600 to-cyan-600">
               Qualification Association

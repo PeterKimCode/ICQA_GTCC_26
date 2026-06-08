@@ -1,6 +1,6 @@
 import { Certificate, CertificateStatus, UserRole } from './types';
 
-export const ICQA_NAME = 'International Civil Qualification Association';
+export const ICQA_NAME = 'International Certification & Qualification Association';
 export const ORGANIZATION_SHORT_NAME = 'ICQA';
 export const DIRECTOR_NAME = 'William Alexander Davis';
 export const DIRECTOR_TITLE = 'ICQA Executive Director';

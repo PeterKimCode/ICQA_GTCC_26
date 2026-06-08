@@ -2,7 +2,7 @@
 
 이 프로젝트는 ICQA 자격증을 온라인에서 확인하고, 관리자가 발급과 공지 운영을 함께 처리할 수 있도록 만든 웹 시스템입니다.
 
-ICQA는 `International Civil Qualification Association`의 약자입니다.
+ICQA는 `International Certification & Qualification Association`의 약자입니다.
 처음 보는 분도 쉽게 이해할 수 있도록 말하면, 이 서비스는 "자격증 진위 확인 사이트 + 관리자용 발급 관리 화면"을 하나로 묶은 구조입니다.
 
 ## 무엇을 할 수 있나요
