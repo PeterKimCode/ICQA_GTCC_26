@@ -20,7 +20,7 @@ export const Layout: React.FC = () => {
       <aside className="w-64 bg-slate-900 text-white flex-col hidden md:flex no-print">
         <div className="p-6 border-b border-slate-700">
           <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="ICQA logo" className="w-10 h-10 object-contain" />
+            <img src="/logo.png?v=transparent-a0e9d17" alt="ICQA logo" className="w-10 h-10 object-contain" />
             <span className="font-bold text-xl tracking-tight">ICQA Manager</span>
           </div>
           <div className="mt-4 text-xs text-slate-400">

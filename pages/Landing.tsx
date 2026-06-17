@@ -295,7 +295,7 @@ export const Landing: React.FC = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
             <div className="col-span-1 lg:col-span-2 space-y-8">
               <div className="flex items-center gap-3">
-                <img src="/logo.png" alt="ICQA logo" className="w-12 h-12 object-contain" />
+                <img src="/logo.png?v=transparent-a0e9d17" alt="ICQA logo" className="w-12 h-12 object-contain" />
                 <span className={`text-3xl font-black font-display tracking-tighter ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>{ORGANIZATION_SHORT_NAME}</span>
               </div>
               <p className={`text-lg max-w-sm leading-relaxed font-bold ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>

@@ -19,7 +19,7 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({ isDarkMode }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-            <img src="/logo.png" alt={`${ORGANIZATION_SHORT_NAME} logo`} className="w-12 h-12 object-contain" />
+            <img src="/logo.png?v=transparent-a0e9d17" alt={`${ORGANIZATION_SHORT_NAME} logo`} className="w-12 h-12 object-contain" />
             <span className={`text-lg sm:text-xl font-bold tracking-tight font-display ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>
               {ORGANIZATION_SHORT_NAME}
             </span>
