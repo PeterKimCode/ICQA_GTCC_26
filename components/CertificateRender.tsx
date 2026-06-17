@@ -37,7 +37,7 @@ export const CertificateRender: React.FC<Props> = ({ data }) => {
   const FONT_VALUE = '28px';
   const FONT_NAME = '36px';
   const FONT_ICQA = '32px';
-  const FONT_PARAGRAPH = '35px';
+  const FONT_PARAGRAPH = '32px';
   const MAX_TEXT_WIDTH = '760px';
   const START_Y = 520;
   const ROW_STEP = 50;
@@ -76,7 +76,7 @@ export const CertificateRender: React.FC<Props> = ({ data }) => {
         )}
       </div>
 
-      <div className="absolute z-[10] text-center font-serif text-gray-700" style={{ top: '1040px', left: '400px', width: '1680px', height: '450px', fontSize: FONT_PARAGRAPH, lineHeight: '1.5', overflow: 'hidden' }}>
+      <div className="absolute z-[10] text-center font-serif text-gray-700" style={{ top: '960px', left: '400px', width: '1680px', height: '360px', fontSize: FONT_PARAGRAPH, lineHeight: '1.35', overflow: 'hidden' }}>
         <p className="mb-4">
           This certifies that the individual named above has successfully met the qualification standards and assessment requirements recognized by the International Certification & Qualification Association and is hereby recorded as an approved credential holder in good standing.
         </p>
