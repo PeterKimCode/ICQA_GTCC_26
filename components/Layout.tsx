@@ -17,7 +17,7 @@ export const Layout: React.FC = () => {
 
   return (
     <div className="flex h-screen bg-gray-100 font-sans print:bg-white">
-      <aside className="w-64 bg-slate-900 text-white flex-col hidden md:flex no-print">
+      <aside className="w-64 shrink-0 bg-slate-900 text-white flex-col hidden md:flex no-print">
         <div className="p-6 border-b border-slate-700">
           <div className="flex items-center gap-3">
             <img src="/logo.png?v=transparent-a0e9d17" alt="ICQA logo" className="w-10 h-10 object-contain" />
@@ -71,8 +71,8 @@ export const Layout: React.FC = () => {
         </div>
       </aside>
 
-      <main className="flex-1 overflow-auto relative">
-        <div className="no-print p-6 md:p-12 max-w-7xl mx-auto">
+      <main className="min-w-0 flex-1 overflow-auto relative">
+        <div className="no-print w-full max-w-[1800px] mx-auto p-6 md:px-8 md:py-12 xl:px-10">
           <Outlet />
         </div>
       </main>

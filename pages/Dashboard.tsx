@@ -80,8 +80,17 @@ export const Dashboard: React.FC = () => {
       </div>
 
       <div className="bg-white rounded-lg shadow overflow-hidden border border-gray-200">
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
+        <div className="w-full overflow-hidden">
+          <table className="w-full table-fixed divide-y divide-gray-200">
+            <colgroup>
+              <col className="w-[9%]" />
+              <col className="w-[15%]" />
+              <col className="w-[31%]" />
+              <col className="w-[12%]" />
+              <col className="w-[12%]" />
+              <col className="w-[9%]" />
+              <col className="w-[12%]" />
+            </colgroup>
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ICQA No.</th>
@@ -105,11 +114,11 @@ export const Dashboard: React.FC = () => {
                   const expired = isExpired(cert.expirationDate);
                   return (
                     <tr key={cert.id} className="hover:bg-gray-50 transition-colors">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-kcqa-red">{cert.kcqaNumber}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-semibold">{cert.name}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{cert.qualificationType}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{cert.issueDate}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{cert.expirationDate || 'N/A'}</td>
+                      <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-kcqa-red">{cert.kcqaNumber}</td>
+                      <td className="px-4 py-4 truncate text-sm text-gray-900 font-semibold" title={cert.name}>{cert.name}</td>
+                      <td className="px-4 py-4 truncate text-sm text-gray-600" title={cert.qualificationType}>{cert.qualificationType}</td>
+                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500">{cert.issueDate}</td>
+                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500">{cert.expirationDate || 'N/A'}</td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium ${expired || cert.status === CertificateStatus.EXPIRED ? 'bg-red-100 text-red-800' : cert.status === CertificateStatus.PENDING ? 'bg-yellow-100 text-yellow-800' : cert.status === CertificateStatus.ACTIVE ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
                           {expired || cert.status === CertificateStatus.EXPIRED ? (
@@ -123,7 +132,7 @@ export const Dashboard: React.FC = () => {
                           )}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <td className="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <div className="flex items-center justify-end gap-3">
                           {cert.status === CertificateStatus.PENDING && user?.role === 'ADMIN' && (
                             <button onClick={() => handleApprove(cert.id)} className="text-green-600 hover:text-green-900 flex items-center gap-1 transition-colors">
